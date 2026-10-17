@@ -398,6 +398,29 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .row.still { cursor: default; }
 .row.still:hover .row-title, .row.still:hover .row-work { transform: none; }
 
+/* The About page: biography, press, press kit */
+#aboutpage { padding-top: calc(var(--bar) + 8px); padding-bottom: var(--section); }
+#aboutpage h1 { margin: 22px 0 var(--head); font-family: var(--serif); font-size: var(--fs-display); font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; }
+#aboutpage .railed + .railed { margin-top: var(--section); }
+.ab-portrait { margin: 0 0 var(--section); }
+.ab-portrait img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center 30%; }
+.ab-portrait figcaption { display: block; margin-top: 12px; }
+@media (min-width: 900px) { .ab-portrait { margin-left: calc(var(--rail) + var(--rail-gap)); } }
+.bio { max-width: 36em; }
+.bio p { margin: 0 0 1.1em; font-size: var(--fs-body); line-height: 1.6; }
+.bio .lead { font-size: var(--fs-lead); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 0.9em; }
+.press { display: grid; gap: var(--block); }
+.press figure { margin: 0; }
+.press blockquote { margin: 0 0 12px; font-family: var(--serif); font-size: var(--fs-lead); line-height: 1.1; letter-spacing: -0.01em; }
+.kit-rows .vrow .row-head { grid-template-columns: minmax(0, 1fr) 44px; }
+.kit-rows .vrow .vplay { grid-row: 1; grid-column: 2; }
+.kit-rows .row-main { grid-column: 1; grid-row: 1; }
+.ab-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (min-width: 900px) { .ab-photos { gap: var(--rail-gap); } }
+.ab-photos a { display: grid; gap: 10px; }
+.ab-photos img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: opacity var(--fast) var(--ease); }
+.ab-photos a:hover img { opacity: 0.85; }
+
 /* Project page */
 #project { padding-top: calc(var(--bar) + 8px); padding-bottom: 80px; }
 .back { display: inline-flex; align-items: center; gap: 10px; height: 44px; font-weight: 500; }
@@ -494,7 +517,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     <div>
     <p class="lead rise">Oliver Herbert is a concert cellist known for performances that combine intensity, clarity, and a strong sense of musical direction.</p>
     <p class="more-text rise">The recipient of a 2021 Avery Fisher Career Grant, his work spans solo performance, chamber music, and curatorial projects. Oliver approaches his projects with a wide-ranging curiosity, exploring lesser-known repertoire, music of today, and connections that reveal new perspectives on familiar works.</p>
-    <div class="btn-row rise"><a class="btn" href="#about">Full biography<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
+    <div class="btn-row rise"><a class="btn" href="#biography" id="full-bio">Full biography<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
     </div>
     </div>
   </section>
@@ -574,6 +597,52 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 
 <article id="project" hidden></article>
 <article id="calendar" class="wrap" hidden></article>
+<article id="aboutpage" class="wrap" hidden>
+  <button class="back" id="ab-back"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Home</span></button>
+  <h1 class="rise">About</h1>
+  <figure class="ab-portrait rise"><img src="img/press-134.jpg" alt="Oliver Herbert seated with his cello" loading="lazy"><figcaption class="label muted">Photo: Todd Rosenberg</figcaption></figure>
+  <div class="railed">
+    <span class="label lab rise">Biography</span>
+    <div class="bio">
+      <p class="lead rise">Oliver Herbert is a concert cellist known for performances that combine intensity, clarity, and a strong sense of musical direction.</p>
+      <p class="rise">The recipient of a 2021 Avery Fisher Career Grant, his work spans solo performance, chamber music, and curatorial projects.</p>
+      <p class="rise">As a concerto soloist he has appeared across the Americas and Europe, collaborating with conductors such as Michael Tilson Thomas, Giancarlo Guerrero, Juanjo Mena, Teddy Abrams, and Alexander Shelley. Of his subscription debut with the San Francisco Symphony under MTT, San Francisco Classical Voice wrote: “His technical command, full-throated but never indulgent tone, crisp yet expressive phrasing, and tactful use of vibrato flowed together… youthful but magisterial.”</p>
+      <p class="rise">Oliver approaches his projects with a wide-ranging curiosity, exploring lesser-known repertoire, music of today, and connections that reveal new perspectives on familiar works. His projects have included concert curations for Deutschlandfunk Raderbergkonzerte and the TICA Festival in Hong Kong, as well as premieres of works by Andrew Moses, Žibuoklė Martinaitytė, and Helena Winkelman.</p>
+      <p class="rise">As a chamber musician, he appears regularly at leading festivals and venues including Marlboro Music, Moritzburg Festival, La Jolla SummerFest, Rheingau Festival, ChamberFest Cleveland, Philadelphia Chamber Music Society, Utrecht Festival, 92nd Street Y, and the Ravinia Festival. A highlight of recent seasons was a North American tour with Mitsuko Uchida and musicians from Marlboro Music, including a performance at Carnegie Hall. He has collaborated with artists such as Janine Jansen, Jonathan Biss, and Tabea Zimmermann.</p>
+      <p class="rise">His recordings include Haydn’s D Major Cello Concerto with the San Francisco Symphony and Michael Tilson Thomas, released by Warner Classics. In June 2020, he released his debut album with pianist Xiaohui Yang, Frame of Mind: Fauré and Janáček.</p>
+      <p class="rise">Oliver is the recipient of the Verbier Festival Jean-Nicolas Firmenich Prize and top prizes at the Lutosławski International Cello Competition, the Klein and Stulberg Competitions. In 2025, he was selected for the Orpheum Foundation’s development program for young soloists.</p>
+      <p class="rise">Born and raised in San Francisco, he is a graduate of the Colburn School, Curtis Institute of Music, and Kronberg Academy. He plays on a Guadagnini cello that once belonged to Antonio Janigro, on generous loan from the Janigro family.</p>
+    </div>
+  </div>
+  <div class="railed">
+    <span class="label lab rise">Press</span>
+    <div class="press">
+      <figure class="rise"><blockquote>Youthful but magisterial.</blockquote><figcaption class="label muted">San Francisco Classical Voice</figcaption></figure>
+      <figure class="rise"><blockquote>…he makes his cello sing.</blockquote><figcaption class="label muted">Santa Cruz Sentinel</figcaption></figure>
+      <figure class="rise"><blockquote>The performance was transfixing.</blockquote><figcaption class="label muted">Cleveland Classical</figcaption></figure>
+      <figure class="rise"><blockquote>All the depth of an established soloist.</blockquote><figcaption class="label muted">Philadelphia Inquirer</figcaption></figure>
+    </div>
+  </div>
+  <div class="railed">
+    <span class="label lab rise">Press kit</span>
+    <div class="rows kit-rows">
+      <a class="vrow rise" href="#presskit"><span class="row-head"><span class="row-main"><span class="row-title">Biography, long</span><span class="row-work">About 450 words · PDF</span></span><span class="vplay" aria-hidden="true"><svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 1 V11 M1.5 6.5 L6 11 L10.5 6.5 M1 13 H11" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg></span></span></a>
+      <a class="vrow rise" href="#presskit"><span class="row-head"><span class="row-main"><span class="row-title">Biography, short</span><span class="row-work">About 150 words · PDF</span></span><span class="vplay" aria-hidden="true"><svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 1 V11 M1.5 6.5 L6 11 L10.5 6.5 M1 13 H11" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg></span></span></a>
+      <a class="vrow rise" href="#presskit"><span class="row-head"><span class="row-main"><span class="row-title">Press photos</span><span class="row-work">Six portraits, high resolution · Todd Rosenberg</span></span><span class="vplay" aria-hidden="true"><svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 1 V11 M1.5 6.5 L6 11 L10.5 6.5 M1 13 H11" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg></span></span></a>
+      <a class="vrow rise" href="#presskit"><span class="row-head"><span class="row-main"><span class="row-title">Selected reviews</span><span class="row-work">PDF</span></span><span class="vplay" aria-hidden="true"><svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 1 V11 M1.5 6.5 L6 11 L10.5 6.5 M1 13 H11" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg></span></span></a>
+    </div>
+  </div>
+  <div class="railed top">
+    <span class="label lab rise">Photos</span>
+    <div class="ab-photos">
+      <a class="rise" href="img/press-040.jpg" download><img src="img/press-040.jpg" alt="Press photo of Oliver Herbert" loading="lazy"><span class="label muted">Download</span></a>
+      <a class="rise" href="img/press-113.jpg" download><img src="img/press-113.jpg" alt="Press photo of Oliver Herbert" loading="lazy"><span class="label muted">Download</span></a>
+      <a class="rise" href="img/press-190.jpg" download><img src="img/press-190.jpg" alt="Press photo of Oliver Herbert" loading="lazy"><span class="label muted">Download</span></a>
+      <a class="rise" href="img/press-304.jpg" download><img src="img/press-304.jpg" alt="Press photo of Oliver Herbert" loading="lazy"><span class="label muted">Download</span></a>
+    </div>
+  </div>
+  <div class="btn-row on-line rise"><a class="btn fill" href="#contact" id="ab-contact">Contact<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
+</article>
 <div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-labelledby="vtitle" hidden>
   <button class="vclose" id="vclose" type="button">Close</button>
   <div class="vframe" id="vframe"></div>
@@ -800,7 +869,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     var same = lastCard && from && to && from.getAttribute('src') === to.getAttribute('src');
     if (!same && from) from.style.viewTransitionName = '';
     var t = change(function () {
-      project.hidden = true; cal.hidden = true; home.hidden = false; project.innerHTML = ''; cal.innerHTML = '';
+      project.hidden = true; cal.hidden = true; ab.hidden = true; home.hidden = false; project.innerHTML = ''; cal.innerHTML = '';
       document.body.dataset.tone = lastCard ? 'dark' : 'light';
       if (same) to.style.viewTransitionName = 'shot';
       root.style.scrollBehavior = 'auto'; window.scrollTo(0, lastScroll); root.style.scrollBehavior = '';
@@ -816,6 +885,23 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     if (next) { openProject(next.dataset.id, null); return; }
     if (e.target.closest('#back')) { closeProject(); return; }
     if ((e.target.closest('#top-link') || e.target.closest('#mono')) && home.hidden) { e.preventDefault(); closeProject(); }
+  });
+
+  /* The About page opens as its own page */
+  var ab = $('aboutpage');
+  function openAbout() {
+    lastScroll = window.scrollY; lastCard = null;
+    change(function () {
+      home.hidden = true; project.hidden = true; cal.hidden = true; ab.hidden = false;
+      document.body.dataset.tone = 'light';
+      root.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); root.style.scrollBehavior = '';
+      watch(ab); settle();
+    });
+  }
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('#full-bio')) { e.preventDefault(); openAbout(); return; }
+    if (e.target.closest('#ab-back')) { closeProject(); return; }
+    if (e.target.closest('#ab-contact')) { e.preventDefault(); closeProject(); setTimeout(function () { var t = $('contact'); if (t) t.scrollIntoView({ behavior: 'smooth' }); }, 650); }
   });
 
   /* The full calendar opens as its own page */
@@ -834,7 +920,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     lastScroll = window.scrollY; lastCard = null;
     change(function () {
       renderCalendar();
-      home.hidden = true; project.hidden = true; cal.hidden = false;
+      home.hidden = true; project.hidden = true; ab.hidden = true; cal.hidden = false;
       document.body.dataset.tone = 'light';
       root.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); root.style.scrollBehavior = '';
       settle();
