@@ -113,7 +113,7 @@ main, .listen, .name { transition: opacity 600ms var(--ease); }
 .sig { display: block; width: 46px; height: auto; margin-top: 56px; color: var(--orange); }
 .sig path { fill: currentColor; }
 
-/* Two ways to close the gap above the portrait, chosen with ?top=tight or ?top=portrait */
+/* The landing: the portrait fills the first screen (default). ?top=tight and ?top=current remain for comparison */
 .top-tight .hero-space { height: calc(env(safe-area-inset-top, 0px) + 18px + var(--dy) + 20px * var(--k) + 26px); }
 .top-tight .hero-meta, .top-portrait .hero-meta { padding-top: 22px; }
 .top-portrait { --k: 1; --dy: 0px; --mx: 0px; }
@@ -316,7 +316,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   })();
   /* Layout variant for review */
   (function () {
-    var v = new URLSearchParams(location.search).get('top');
+    var v = new URLSearchParams(location.search).get('top') || 'portrait';  /* ?top=current or ?top=tight to compare */
     if (v !== 'tight' && v !== 'portrait') return;
     document.body.classList.add('top-' + v);
     var meta = document.querySelector('.hero-meta'), img = document.querySelector('.hero-img');
