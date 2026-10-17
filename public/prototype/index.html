@@ -202,6 +202,13 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 
 /* Quote and closing */
 .quote { padding-block: 84px; }
+/* Press quotes take turns: one at a time, crossfading; tap to move on */
+.quotes { display: grid; width: 100%; cursor: pointer; }
+.quotes .q { grid-area: 1 / 1; margin: 0; opacity: 0; transform: translateY(14px); transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); }
+.quotes .q.on { opacity: 1; transform: none; }
+.qdots { display: flex; gap: 8px; margin-top: 30px; }
+.qdots span { width: 22px; height: 2px; background: currentColor; opacity: 0.35; transition: opacity var(--slow) var(--ease); }
+.qdots span.on { opacity: 1; }
 .quote blockquote { margin: 0 0 22px; font-size: clamp(38px, 8vw, 118px); font-weight: 700; letter-spacing: -0.045em; line-height: 0.96; max-width: 11em; text-wrap: balance; }
 .close { padding-block: 84px 72px; }
 .close .big { display: inline-block; font-size: clamp(46px, 8vw, 118px); font-weight: 700; letter-spacing: -0.045em; line-height: 1; border-bottom: 4px solid var(--orange); }
@@ -326,9 +333,14 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     </div>
   </section>
 
-  <section class="quote wrap" data-tone="orange">
-    <blockquote class="rise">A knockout. Youthful but magisterial.</blockquote>
-    <span class="label rise">San Francisco Classical Voice</span>
+  <section class="quote wrap" data-tone="orange" aria-label="Press">
+    <button class="quotes rise" id="quotes" type="button" aria-label="Next quote">
+      <figure class="q on" aria-hidden="false"><blockquote>A knockout. Youthful but magisterial.</blockquote><figcaption class="label">San Francisco Classical Voice</figcaption></figure>
+      <figure class="q" aria-hidden="true"><blockquote>…he makes his cello sing.</blockquote><figcaption class="label">Santa Cruz Sentinel</figcaption></figure>
+      <figure class="q" aria-hidden="true"><blockquote>The performance was transfixing.</blockquote><figcaption class="label">Cleveland Classical</figcaption></figure>
+      <figure class="q" aria-hidden="true"><blockquote>All the depth of an established soloist.</blockquote><figcaption class="label">Philadelphia Inquirer</figcaption></figure>
+    </button>
+    <div class="qdots rise" aria-hidden="true"><span class="on"></span><span></span><span></span><span></span></div>
   </section>
 
   <section class="close wrap" id="contact" data-tone="dark">
@@ -564,6 +576,21 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     if (e.target.closest('#back')) { closeProject(); return; }
     if ((e.target.closest('#top-link') || e.target.closest('#mono')) && home.hidden) { e.preventDefault(); closeProject(); }
   });
+
+  /* Press quotes */
+  (function () {
+    var box = $('quotes'), qs = box.querySelectorAll('.q'), dots = document.querySelectorAll('.qdots span'), i = 0, timer = null;
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function show(n) {
+      qs.item(i).classList.remove('on'); qs.item(i).setAttribute('aria-hidden', 'true'); dots.item(i).classList.remove('on');
+      i = (n + qs.length) % qs.length;
+      qs.item(i).classList.add('on'); qs.item(i).setAttribute('aria-hidden', 'false'); dots.item(i).classList.add('on');
+    }
+    function run() { stop(); if (!still) timer = setInterval(function () { show(i + 1); }, 6000); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    box.addEventListener('click', function () { show(i + 1); run(); });
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) run(); else stop(); }); }).observe(box);
+  })();
 
   /* Menu */
   var menu = $('menu'), openBtn = $('menu-open');
