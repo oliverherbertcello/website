@@ -61,7 +61,7 @@ img { display: block; }
   --w: calc(800 - 100 * var(--p));
   font-size: 20px; font-weight: 700; letter-spacing: -0.035em; line-height: 1; white-space: nowrap;
   transform-origin: left top; display: flex;
-  transform: translate(calc((var(--p) - 1) * var(--mw)), calc((1 - var(--p)) * var(--dy))) scale(calc(1 + (var(--k) - 1) * (1 - var(--p))));
+  transform: translate(calc((var(--p) - 1) * var(--mx, var(--mw))), calc((1 - var(--p)) * var(--dy))) scale(calc(1 + (var(--k) - 1) * (1 - var(--p))));
   view-transition-name: sitename;
 }
 .mono { position: fixed; z-index: 22; left: var(--gutter); top: calc(env(safe-area-inset-top, 0px) + 13px); width: 36px; display: block; color: var(--fg); transition: color var(--slow) var(--ease); view-transition-name: mono; }
@@ -105,13 +105,21 @@ main, .listen, .name { transition: opacity 600ms var(--ease); }
 .next span:last-child { border-bottom: 1px solid color-mix(in srgb, currentColor 35%, transparent); transition: border-color var(--fast) var(--ease); }
 .next:hover span:last-child { border-bottom-color: var(--accent); }
 .curtain { clip-path: inset(0 0 0 0); }
-.js .curtain { clip-path: inset(100% 0 0 0); }
-.landed .curtain { animation: curtain 1500ms var(--ease) 650ms both; }
-.landed .curtain img { animation: curtain-img 1900ms var(--ease) 650ms both; }
-@keyframes curtain { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
-@keyframes curtain-img { from { transform: translateY(14%) scale(1.06); } to { transform: none; } }
+.js .curtain { opacity: 0; }
+.landed .curtain { animation: curtain 1100ms var(--ease) 500ms both; }
+.landed .curtain img { animation: curtain-img 1800ms var(--ease) 500ms both; }
+@keyframes curtain { from { opacity: 0; } to { opacity: 1; } }
+@keyframes curtain-img { from { transform: scale(1.04); } to { transform: none; } }
 .sig { display: block; width: 46px; height: auto; margin-top: 56px; color: var(--orange); }
 .sig path { fill: currentColor; }
+
+/* Two ways to close the gap above the portrait, chosen with ?top=tight or ?top=portrait */
+.top-tight .hero-space { height: calc(env(safe-area-inset-top, 0px) + 18px + var(--dy) + 20px * var(--k) + 26px); }
+.top-tight .hero-meta, .top-portrait .hero-meta { padding-top: 22px; }
+.top-portrait { --k: 1; --dy: 0px; --mx: 0px; }
+.top-portrait .hero-space { height: var(--bar); }
+.top-portrait .hero-img { aspect-ratio: auto; height: calc(100svh - var(--bar)); }
+.top-portrait .hero-img img { height: 100%; }
 
 /* Sections */
 section.list { padding-block: 72px; }
@@ -208,7 +216,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   *, *::before, *::after { transition-duration: 1ms !important; transition-delay: 0ms !important; animation-duration: 1ms !important; }
   .js .rise, .js .open-img img { opacity: 1; transform: none; }
   .name span { animation: none !important; }
-  .js .curtain, .js .curtain img { animation: none !important; clip-path: none; transform: none; }
+  .js .curtain, .js .curtain img { animation: none !important; opacity: 1; transform: none; }
   .overture main, .overture .listen, .overture .name { opacity: 1; }
 }
 </style>
@@ -305,6 +313,14 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     el.innerHTML = html;
     var spans = el.querySelectorAll('span:not(.gap)'), lastSpan = spans[spans.length - 1];
     lastSpan.addEventListener('animationend', function () { el.classList.remove('go'); }, { once: true });
+  })();
+  /* Layout variant for review */
+  (function () {
+    var v = new URLSearchParams(location.search).get('top');
+    if (v !== 'tight' && v !== 'portrait') return;
+    document.body.classList.add('top-' + v);
+    var meta = document.querySelector('.hero-meta'), img = document.querySelector('.hero-img');
+    img.parentNode.insertBefore(meta, img.nextSibling);
   })();
   /* The overture: on a first visit the monogram opens the page, then settles into the corner */
   (function () {
