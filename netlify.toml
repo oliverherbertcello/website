@@ -10,3 +10,10 @@
   for = "/prototype/*"
   [headers.values]
     X-Robots-Tag = "noindex"
+
+# Until the real homepage is built, the preview opens on the prototype.
+[[redirects]]
+  from = "/"
+  to = "/prototype/"
+  status = 302
+  force = true
