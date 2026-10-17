@@ -216,8 +216,28 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .quote blockquote { margin: 0 0 22px; font-size: clamp(38px, 8vw, 118px); font-weight: 700; letter-spacing: -0.045em; line-height: 0.96; max-width: 11em; text-wrap: balance; }
 .close { padding-block: 84px 72px; }
 .close .big { display: inline-block; font-size: clamp(46px, 8vw, 118px); font-weight: 700; letter-spacing: -0.045em; line-height: 1; border-bottom: 4px solid var(--orange); }
-.close nav { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 6px 26px; font-weight: 500; }
-.close nav a { padding: 10px 0; border-bottom: 1px solid currentColor; }
+.close .big { border: 0; margin: 0 0 40px; }
+.contact-grid { display: grid; gap: 56px; }
+@media (min-width: 900px) { .contact-grid { grid-template-columns: minmax(0, 560px) minmax(0, 1fr); gap: 110px; } }
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+.field label { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; }
+.field input, .field textarea { font-family: var(--text); font-size: 18px; color: inherit; background: transparent; border: 0; border-bottom: 1px solid color-mix(in srgb, currentColor 40%, transparent); border-radius: 0; padding: 10px 0; outline: none; transition: border-color var(--fast) var(--ease); }
+.field textarea { resize: vertical; min-height: 96px; }
+.field input:focus, .field textarea:focus { border-bottom-color: var(--orange); }
+.send { height: 48px; padding: 0 26px; border: 1px solid currentColor; border-radius: 24px; font-size: 16px; font-weight: 600; transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease); }
+.send:hover { background: var(--paper); color: var(--ink); }
+.sent { margin: 18px 0 0; font-family: var(--text); font-size: 18px; }
+.pro { display: flex; flex-direction: column; gap: 12px; }
+.addr { align-self: flex-start; font-size: clamp(20px, 2.4vw, 30px); font-weight: 600; letter-spacing: -0.02em; overflow-wrap: anywhere; padding-bottom: 4px; border-bottom: 1px solid var(--orange); }
+
+/* Videos play here, in a window over the page */
+.vmodal { position: fixed; inset: 0; z-index: 50; background: rgba(17, 19, 20, 0.97); color: var(--white); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 64px var(--gutter) 32px; opacity: 0; transition: opacity var(--fast) var(--ease); }
+.vmodal.open { opacity: 1; }
+.vframe { width: min(100%, 1100px, calc((100svh - 160px) * 16 / 9)); aspect-ratio: 16 / 9; background: #000; transform: scale(0.97); transition: transform var(--slow) var(--ease); }
+.vmodal.open .vframe { transform: none; }
+.vframe iframe { width: 100%; height: 100%; border: 0; display: block; }
+.vtitle { margin: 0; width: min(100%, 1100px); font-size: 15px; font-weight: 500; }
+.vclose { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 12px); right: var(--gutter); height: 40px; padding: 0 2px 0 16px; font-size: 15px; font-weight: 600; color: var(--white); }
 .creds { margin-top: 30px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
 @media (min-width: 900px) { .quote { padding-block: 150px; } .close { padding-block: 150px 100px; } }
 
@@ -349,12 +369,20 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   </section>
 
   <section class="close wrap" id="contact" data-tone="dark">
-    <span class="big rise">Write to me</span>
-    <nav class="rise" aria-label="For presenters">
-      <a href="#top">About</a>
-      <a href="#top">Press photos</a>
-      <a href="#top">Contact</a>
-    </nav>
+    <h2 class="big rise">Contact</h2>
+    <div class="contact-grid">
+      <form class="cform rise" id="cform" name="contact" method="POST" data-netlify="true" novalidate>
+        <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="message" rows="4" required></textarea></div>
+        <button type="submit" class="send">Send message</button>
+        <p class="sent" id="c-sent" role="status" hidden>Thank you. Your message is on its way.</p>
+      </form>
+      <div class="pro rise">
+        <span class="label muted">Professional inquiries</span>
+        <a class="addr" href="mailto:contact@oliverherbertcello.com">contact@oliverherbertcello.com</a>
+      </div>
+    </div>
     <div class="creds muted rise">
       <span>Avery Fisher Career Grant</span>
       <span>Verbier Festival Jean-Nicolas Firmenich Prize</span>
@@ -366,6 +394,11 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 </main>
 
 <article id="project" hidden></article>
+<div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-labelledby="vtitle" hidden>
+  <button class="vclose" id="vclose" type="button">Close</button>
+  <div class="vframe" id="vframe"></div>
+  <p class="vtitle" id="vtitle"></p>
+</div>
 
 <script>
 (function () {
@@ -639,6 +672,38 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     icon.innerHTML = playing ? '<path d="M2 1 V13 M10 1 V13" stroke="currentColor" stroke-width="2.5" fill="none"></path>' : '<path d="M1 1 L11 7 L1 13 Z" fill="currentColor"></path>';
     if (audio) { if (playing) audio.play().catch(function () {}); else audio.pause(); }
     if (playing) { last = performance.now(); requestAnimationFrame(frame); }
+  });
+  function pauseMusic() { if (playing) btn.click(); }
+
+  /* Videos: open in a window over the page; the music pauses while a film plays */
+  var vmodal = $('vmodal'), vframe = $('vframe'), vtitle = $('vtitle'), vback = null;
+  function openVideo(id, title) {
+    pauseMusic();
+    vback = document.activeElement;
+    vframe.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0&playsinline=1" title="' + esc(title) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    vtitle.textContent = title;
+    vmodal.hidden = false; document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function () { requestAnimationFrame(function () { vmodal.classList.add('open'); }); });
+    $('vclose').focus();
+  }
+  function closeVideo() {
+    vmodal.classList.remove('open'); document.body.style.overflow = '';
+    setTimeout(function () { vframe.innerHTML = ''; vmodal.hidden = true; }, 320);
+    if (vback) vback.focus();
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href*="youtube.com/watch?v="]');
+    if (a) { e.preventDefault(); openVideo(new URL(a.href).searchParams.get('v'), a.textContent.trim()); return; }
+    if (!vmodal.hidden && (e.target === vmodal || e.target.closest('#vclose'))) closeVideo();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !vmodal.hidden) closeVideo(); });
+
+  /* Contact form (in the built site this posts to Netlify Forms) */
+  $('cform').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!this.checkValidity()) { this.reportValidity(); return; }
+    this.querySelectorAll('.field, .send').forEach(function (el) { el.hidden = true; });
+    $('c-sent').hidden = false;
   });
 })();
 </script>
