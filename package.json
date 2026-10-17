@@ -8,8 +8,8 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@fontsource-variable/bricolage-grotesque": "5.2.8",
-    "@fontsource/barlow": "5.2.8",
+    "@fontsource-variable/schibsted-grotesk": "^5.2.8",
+    "@fontsource/dm-serif-display": "^5.2.8",
     "astro": "5.18.2"
   }
 }

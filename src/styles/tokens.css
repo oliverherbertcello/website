@@ -1,4 +1,4 @@
-/* Design tokens. Settled in the spec: three colors, two typefaces, one easing curve, two speeds. */
+/* Design tokens. Settled in the spec: three colors, two typefaces (a serif for the name, headings and quotes; a sans for everything else), one easing curve, two speeds. */
 :root {
   --paper: #FBFBF9;
   --ink: #111314;
@@ -9,8 +9,9 @@
   --fg: var(--ink);
   --accent: var(--orange);
 
-  --display: 'Bricolage Grotesque Variable', 'Helvetica Neue', Arial, sans-serif;
-  --text: 'Barlow', 'Helvetica Neue', Arial, sans-serif;
+  --serif: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --display: 'Schibsted Grotesk Variable', 'Helvetica Neue', Arial, sans-serif;
+  --text: var(--display);
 
   --ease: cubic-bezier(0.45, 0, 0.15, 1);
   --fast: 320ms;
