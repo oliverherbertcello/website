@@ -386,6 +386,18 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .vclose { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 12px); right: var(--gutter); height: 40px; padding: 0 2px 0 16px; font-size: 15px; font-weight: 600; color: var(--white); }
 .creds { display: flex; flex-direction: column; gap: 6px; font-size: var(--fs-label); line-height: 1.5; }
 
+/* The full calendar: every concert, upcoming first, then year by year */
+#calendar { padding-top: calc(var(--bar) + 8px); padding-bottom: var(--section); }
+#calendar h1 { margin: 22px 0 var(--head); font-family: var(--serif); font-size: var(--fs-display); font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; }
+#calendar h3 { margin: var(--block) 0 16px; font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.62; }
+#calendar h1 + h3 { margin-top: 0; }
+#calendar .rows { border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.cal-years { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 var(--block); font-size: var(--fs-body); font-variant-numeric: tabular-nums; }
+.cal-years a { padding: 10px 0; border-bottom: 1px solid transparent; opacity: 0.62; transition: opacity var(--fast) var(--ease), border-color var(--fast) var(--ease); }
+.cal-years a:hover { opacity: 1; border-bottom-color: var(--accent); }
+.row.still { cursor: default; }
+.row.still:hover .row-title, .row.still:hover .row-work { transform: none; }
+
 /* Project page */
 #project { padding-top: calc(var(--bar) + 8px); padding-bottom: 80px; }
 .back { display: inline-flex; align-items: center; gap: 10px; height: 44px; font-weight: 500; }
@@ -494,7 +506,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     <div class="today label rise" id="today">Today</div>
     <h3 class="rise" id="past-h">Past</h3>
     <div id="past"></div>
-    <div class="btn-row on-line rise"><a class="btn fill" href="#concerts">All concerts<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
+    <div class="btn-row on-line rise"><a class="btn fill" href="#all-concerts" id="all-concerts">All concerts<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
   </section>
 
   <div class="frame interlude open-img"><img src="img/live.jpg" alt="Oliver Herbert in performance" loading="lazy"></div>
@@ -561,6 +573,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 </main>
 
 <article id="project" hidden></article>
+<article id="calendar" class="wrap" hidden></article>
 <div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-labelledby="vtitle" hidden>
   <button class="vclose" id="vclose" type="button">Close</button>
   <div class="vframe" id="vframe"></div>
@@ -607,19 +620,19 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   var TRI = '<svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"></path></svg>';
   var YT = 'https://www.youtube.com/watch?v=';
 
-  /* when, title, where, what (one line), details */
-  var UPCOMING = [
-    ['1 Nov 2026', 'Noe Music', 'San Francisco', 'Smith · Schnittke · Beethoven', 'Gabriella Smith: Carrot Revolution. Schnittke: String Quartet No. 3. Beethoven: String Quartet in B-flat, Op. 130, with the Grosse Fuge. With Alexi Kenney, Owen Dalby and Milena Pajaro-van de Stadt. Noe Valley Ministry, San Francisco.'],
-    ['14–16 Nov 2026', 'Santa Rosa Symphony', 'Rohnert Park, California', 'Saint-Saëns: Cello Concerto No. 1', 'Francesco Lecce-Chong, conductor. Weill Hall, Green Music Center.'],
-    ['10–17 Jan 2027', 'Festival de Musique de Saint-Barthélemy', 'St. Barthélemy', 'Saint-Saëns: Cello Concerto No. 1', 'With the Festival Orchestra. Further programs to be announced.'],
-    ['7 Mar 2027', 'Kulturkreis Springe', 'Springe, Germany', 'Brücken: recital with Martin Klett, piano', 'Beethoven: Sonata in F major, Op. 5 No. 1. Debussy: Sonata in D minor. Bach: Sonata in G minor, BWV 1029. Bridge: Sonata in D minor. Jagdschloss Springe.'],
-    ['18 Mar 2027', 'Chamber Music Society of Palm Beach', 'West Palm Beach, Florida', 'Beethoven and Dvořák string quintets', 'Beethoven: String Quintet in C major, Op. 29. Dvořák: String Quintet No. 3 in E-flat, Op. 97 “American”. With Karen Gomyo, Arnaud Sussmann, Matthew Lipman and Ettore Causa. Kravis Center.']
-  ];
-  var PAST = [
-    ['4 Oct 2026', 'Kronberg Festival, closing concert', 'Kronberg', 'C.P.E. Bach: Cello Concerto in B-flat', 'Reinhard Goebel, conductor. Casals Forum, Kronberg.'],
-    ['29 Sep 2026', 'Kronberg Festival: Löwenherz', 'Kronberg', 'Erzähl mir von Courage', 'Solo cello works by Casals, Dawn Avery, Henze and Xenakis, woven into a literary collage with the actor Michael Rotschopf. Casals Forum, Kronberg.'],
-    ['13–20 Sep 2026', 'Utah Chamber Music Festival', 'Utah', 'Schubert · Brahms · Schoenberg · Ravel', 'Six concerts across Logan, Salt Lake City, Provo, St. George and Park City with Martin Helmchen, William Hagen, Stephen Waarts and others: Schubert Piano Trio in E-flat, Brahms String Quintet No. 2 and Piano Quintet, Schoenberg Verklärte Nacht, Ravel Sonata for Violin and Cello.']
-  ];
+  /* Every concert, newest first: start, end, title, place, program in one line, details. The homepage and the full calendar both read from this. */
+  var CONCERTS = [["2027-03-18", "", "Chamber Music Society of Palm Beach", "West Palm Beach, Florida", "Beethoven and Dvořák string quintets", "Beethoven: String Quintet in C major, Op. 29. Dvořák: String Quintet No. 3 in E-flat, Op. 97 “American”. With Karen Gomyo, Arnaud Sussmann, Matthew Lipman and Ettore Causa. Kravis Center."], ["2027-03-07", "", "Kulturkreis Springe", "Springe, Germany", "Brücken: recital with Martin Klett, piano", "Beethoven: Sonata in F major, Op. 5 No. 1. Debussy: Sonata in D minor. Bach: Sonata in G minor, BWV 1029. Bridge: Sonata in D minor. Jagdschloss Springe."], ["2027-01-10", "2027-01-17", "Festival de Musique de Saint-Barthélemy", "St. Barthélemy", "Saint-Saëns: Cello Concerto No. 1", "With the Festival Orchestra. Further programs to be announced."], ["2026-11-14", "2026-11-16", "Santa Rosa Symphony", "Rohnert Park, California", "Saint-Saëns: Cello Concerto No. 1", "Francesco Lecce-Chong, conductor. Weill Hall, Green Music Center."], ["2026-11-01", "", "Noe Music", "San Francisco", "Smith · Schnittke · Beethoven", "Gabriella Smith: Carrot Revolution. Schnittke: String Quartet No. 3. Beethoven: String Quartet in B-flat, Op. 130, with the Grosse Fuge. With Alexi Kenney, Owen Dalby and Milena Pajaro-van de Stadt. Noe Valley Ministry."], ["2026-10-04", "", "Kronberg Festival, closing concert", "Kronberg", "C.P.E. Bach: Cello Concerto in B-flat", "Reinhard Goebel, conductor. Casals Forum."], ["2026-09-29", "", "Kronberg Festival: Löwenherz", "Kronberg", "Erzähl mir von Courage", "Solo cello works by Casals, Dawn Avery, Henze and Xenakis, woven into a literary collage with the actor Michael Rotschopf. Casals Forum."], ["2026-09-13", "2026-09-20", "Utah Chamber Music Festival", "Logan, Salt Lake City, Provo, St. George, Park City", "Schubert · Brahms · Schoenberg · Ravel", "Six concerts with Martin Helmchen, William Hagen, Stephen Waarts, Milena Pajaro-van de Stadt and others: Schubert Piano Trio in E-flat, Brahms String Quintet No. 2 and Piano Quintet, Schoenberg Verklärte Nacht, Schumann Fantasiestücke, Ravel Sonata for Violin and Cello."], ["2026-08-14", "2026-08-16", "Tippet Rise Art Center", "Fishtail, Montana", "Schubert Octet · Beethoven Septet · Tabakova", "Tabakova: Moreni. Beethoven: Septet in E-flat, Op. 20, with works by Caroline Shaw and Svante Henryson, at the Domo. Schubert: Octet in F, D. 803. With Yasmina Spiegelberg, Stephen Waarts, Yura Lee, Natalie Loughran and others."], ["2026-07-23", "", "Copenhagen Summer Festival", "Copenhagen", "Bach: Goldberg Variations for string trio", "Cloud String Trio, with Claire Wells, violin, and Nicholas Swensen, viola. Kunsthal Charlottenborg."], ["2026-07-14", "", "ChamberFest West", "Calgary", "Season 5: Continental Drifts", ""], ["2026-06-17", "", "Grant Park Music Festival", "Chicago", "Shostakovich: Cello Concerto No. 1", "Giancarlo Guerrero, conductor. Jay Pritzker Pavilion."], ["2026-06-10", "", "ChamberFest Cleveland", "Cleveland", "Season 14: Continental Drifts", ""], ["2026-05-30", "2026-05-31", "Marin Symphony", "San Rafael, California", "Shostakovich: Cello Concerto No. 1", "Fawzi Haimor, conductor. Three performances. Marin Veterans’ Memorial Auditorium."], ["2026-05-19", "", "Carnegie Hall, Zankel Hall", "New York", "The complete Brahms piano quartets", "With Kirill Gerstein and Kronberg Academy musicians."], ["2026-05-13", "", "Studio Teatr", "Warsaw", "Chamber music", "With Veriko Tchumburidze, Claire Wells and Piotr Szumiel. Palace of Culture and Science."], ["2026-04-26", "", "FreundschaftsSpiele III: Christian Tetzlaff & Friends", "Kronberg", "Widmann · Bartók · Brahms", "Widmann: String Quartet No. 2 “Choralquartett”. Bartók: from 44 Duos. Brahms: Piano Trio No. 3 in C minor, Op. 101. With Christian Tetzlaff, Hana Chang, Julian Rhee, Charlotte Spruit, Dmytro Udovychenko, Brian Isaacs, Benjamin Kruithof and Kiveli Dörken. Casals Forum."], ["2026-04-17", "", "Capital Region Classical: Spring Benefit", "Schenectady, New York", "Solo recital", ""], ["2026-04-12", "", "Elgin Symphony", "Elgin, Illinois", "Schumann: Cello Concerto", "Chad Goodman, conductor. The Hemmens."], ["2026-03-25", "", "Mittwochskonzerte", "Kronberg", "Wie Bitte?: a curated program", "Casals Forum."], ["2026-03-05", "", "Bach im Fluss: Marcel Ponseele", "Kronberg", "Bach: Suite No. 5 in C minor", "Casals Forum."], ["2026-02-28", "2026-03-01", "Amarillo Symphony", "Amarillo, Texas", "John Williams: Cello Concerto", ""], ["2026-02-06", "", "Macalester College, Mairs Concert Hall", "St. Paul, Minnesota", "Dawn Avery · Passamaquoddy music · Dvořák", "Music by Dawn Avery, Passamaquoddy traditional music, and Dvořák: String Sextet."], ["2026-01-31", "", "Brahms Piano Quartets", "Kronberg", "With Kirill Gerstein and Kronberg Academy musicians", "Casals Forum."], ["2026-01-10", "", "Festival de Musique de Saint-Barthélemy", "St. Barthélemy", "", ""], ["2025-12-13", "2025-12-15", "Martin Helmchen & Friends", "Kronberg", "Dvořák: Piano Quartet in E-flat", "With Martin Helmchen, Antje Weithaas and Brian Isaacs. Casals Forum."], ["2025-11-29", "", "Württembergisches Kammerorchester Heilbronn", "Kronberg", "Lutosławski: Grave", "Concerti Brillanti series. Casals Forum."], ["2025-11-15", "2025-11-24", "Musicians from Marlboro tour", "London (Ontario), Brattleboro, Washington, New York, Greenwich", "Including Carnegie Hall, Weill Recital Hall", "Western University, London, Ontario (15 Nov). Brattleboro Music Center (17 Nov). Freer Gallery, National Museum of Asian Art, Washington (20 Nov). Weill Recital Hall, Carnegie Hall, New York (22 Nov). Friends Performing Arts Series, Greenwich (24 Nov)."], ["2025-11-19", "", "Philadelphia Chamber Music Society", "Philadelphia", "Haydn · Schumann · Schubert", "Haydn: Piano Trio Hob. XV:22. Schumann: Canonic Etudes. Schubert: Piano Trio in E-flat, D. 929. With Alexi Kenney, violin, and Eric Lu, piano."], ["2025-10-05", "", "Sarasota Orchestra", "Sarasota, Florida", "Tchaikovsky: Rococo Variations (original version)", "Giancarlo Guerrero, conductor."], ["2025-09-15", "", "IMS Prussia Cove: Open Chamber Music", "Cornwall", "", ""], ["2025-08-10", "", "Moritzburg Festival", "Moritzburg, Germany", "Three weeks of chamber music", ""], ["2025-07-14", "", "ChamberFest West", "Calgary", "", ""], ["2025-07-07", "", "Festival Janigro", "Montagano, Italy", "Performances and teaching", ""], ["2025-06-16", "", "ChamberFest Cleveland", "Cleveland", "Schubert · Schoenberg · Errollyn Wallen", ""], ["2025-05-17", "", "Tonhalle Zürich", "Zurich", "Schubert: String Quintet and “Trout” Quintet", "With Julia Fischer and others."], ["2025-04-27", "", "Nashville Symphony", "Nashville", "Tchaikovsky: Rococo Variations (original version)", "Giancarlo Guerrero, conductor. Schermerhorn Symphony Center."], ["2025-03-19", "", "Mittwochskonzerte", "Kronberg", "A curated program", ""], ["2025-02-28", "", "Tabea Zimmermann & Friends", "Kronberg", "Chamber music", "With Tabea Zimmermann, Kanneh-Mason, Hoppe and Kronberg Academy students. Casals Forum."], ["2025-02-23", "", "Omaha Symphony", "Omaha", "Dvořák: Cello Concerto", "Alasdair Neale, conductor. Holland Performing Arts Center."], ["2025-01-26", "", "New World Symphony: The Chamber Cello", "Miami Beach", "García · Yi · Desenne · Brahms", "García: Prohibido. Yi: Suite for Cello and Chamber Winds. Desenne: Pizziquitiplas. Brahms: Piano Trio No. 1. New World Center."], ["2025-01-17", "", "St Barts Music Festival", "St. Barthélemy", "", ""], ["2024-12-26", "", "Internationaal Kamermuziekfestival Utrecht", "Utrecht", "Including Gubaidulina: In Croce", "With Janine Jansen and friends."], ["2024-12-08", "", "Mihaela Martin, Frans Helmerson & Friends", "Kronberg", "Chamber music", "Casals Forum."], ["2024-11-24", "", "Hindemith Tage Hanau", "Hanau, Germany", "With Tabea Zimmermann", ""], ["2024-11-19", "", "Deutschlandfunk Raderbergkonzerte", "Cologne", "Desenne · Crawford Seeger · Villa-Lobos · Fauré", "A program curated by Oliver Herbert, with Kronberg Academy scholarship holders."], ["2024-11-13", "", "Carnegie Hall: Chamber Sessions", "New York", "Schumann · Kurtág · Beethoven", "Schumann: Piano Quartet. Kurtág. Beethoven: Piano Trio, Op. 70 No. 2. With Mitsuko Uchida, Stephanie Zyzak and Beth Guterman Chu."], ["2024-11-10", "", "Capital Region Classical", "Albany, New York", "With Mitsuko Uchida and Musicians from Marlboro", "Schumann: Piano Quartet, Op. 47. Kurtág. Beethoven: Piano Trio, Op. 70 No. 2."], ["2024-11-09", "", "Philadelphia Chamber Music Society", "Philadelphia", "", ""], ["2024-10-13", "", "Mannheimer Philharmoniker", "Mannheim", "Beethoven: Triple Concerto", "With Dora Bratchkova, violin, and Olga Zado, piano. Boian Videnoff, conductor. Rosengarten."], ["2024-09-20", "", "Max-Planck-Zentrum für Physik und Medizin", "Erlangen, Germany", "Inauguration concert", ""], ["2024-09-07", "", "ARD International Music Competition", "Munich", "", ""], ["2024-08-22", "", "Sion Festival", "Sion, Switzerland", "Kodály · Dvořák · Arensky", "With Janine Jansen. Théâtre de Valère."], ["2024-07-14", "", "Marlboro Music Festival", "Marlboro, Vermont", "", ""], ["2024-06-23", "", "Caramoor", "Katonah, New York", "Mendelssohn · Brahms", "Mendelssohn: String Quintet No. 2, Op. 87. Brahms: Piano Quartet No. 3, Op. 60."], ["2024-06-13", "2024-06-18", "ChamberFest Cleveland", "Cleveland", "Five programs", "Sacred and Profane. Mystical Reveries. Fantastic Tales. Music on the Path. Cello Dualities."], ["2024-06-05", "", "Curtis on Tour", "Paris", "", ""], ["2024-05-15", "2024-05-17", "SWR Schwetzinger Festspiele", "Schwetzingen, Germany", "Two programs with Tabea Zimmermann", "Lamento: Ligeti, Kurtág, Hindemith, Britten, York Bowen. Debussy, Liebowitz, Beethoven."], ["2024-02-24", "2024-03-12", "Curtis on Tour: String Sextets", "Fort Worth, Philadelphia, Davis, Phoenix, Evanston, Bradenton", "", ""], ["2024-02-14", "", "Kronberg Academy: Wo Licht ist…", "Kronberg", "", ""], ["2024-02-02", "", "Eugene Symphony", "Eugene, Oregon", "Dvořák: Cello Concerto", "Francesco Lecce-Chong, conductor."], ["2024-01-25", "", "Yehudi Menuhin Forum", "Bern", "Recital with Olga Zado, piano", "Lyatoshinsky, Lutosławski, Brahms, Gubaidulina, Schnittke, Shostakovich."], ["2023-12-10", "", "Capital Region Classical", "Schenectady, New York", "", ""], ["2023-12-07", "", "92nd Street Y", "New York", "Rachmaninoff: Sonata", "With Conrad Tao, piano."], ["2023-11-17", "", "Finest Classics", "Mannheim", "Recital with Olga Zado, piano", "Lyatoshinsky, Lutosławski, Brahms, Gubaidulina, Schnittke, Shostakovich."], ["2023-11-10", "", "Theater Erfurt", "Erfurt, Germany", "Schnittke: Cello Concerto No. 1", "Alexander Prior, conductor."], ["2023-09-23", "", "Kronberg Festival", "Kronberg", "World premiere: Žibuoklė Martinaitytė", "A solo cello work in memoriam Pablo Casals. Casals Forum."], ["2023-08-19", "", "Krzyżowa Music", "Krzyżowa, Poland", "", ""], ["2023-08-16", "", "Salt Bay Chamberfest", "Damariscotta, Maine", "", ""], ["2023-08-01", "", "Music in the Vineyards", "Napa Valley", "", ""], ["2023-07-26", "", "La Jolla SummerFest", "La Jolla", "", ""], ["2023-07-17", "", "ChamberFest West", "Calgary", "", ""], ["2023-07-05", "", "Janigro Festival", "Montagano, Italy", "With the Zagreb Soloists", "Couperin, Hindemith, Vivaldi."], ["2023-06-15", "", "Romanischer Sommer", "Cologne", "Bach: Suites No. 2 and No. 3", ""], ["2023-06-06", "", "Piano Salon Christophori", "Berlin", "Recital with Olga Zado, piano", "Lyatoshinsky, Lutosławski, Brahms, Gubaidulina, Schnittke, Shostakovich."], ["2023-05-29", "", "Lieder Alive", "San Francisco", "South American music", "With Carlos Ágrada and Esther Rayo."], ["2023-05-21", "", "Bridgehampton Chamber Music Festival", "Bridgehampton, New York", "", ""], ["2023-04-23", "", "TICA Festival", "Hong Kong", "World premiere: Andrew Moses", "A new work for cello and percussion, with Haruka Fujii."], ["2023-03-30", "", "Chamber Music Society of Palm Beach", "West Palm Beach, Florida", "", "With Alessio Bax, piano, and Arnaud Sussmann, violin."], ["2023-03-20", "", "Jupiter Chamber Players", "New York", "Haydn · Spohr · Mozart · Farrenc", ""], ["2023-03-10", "", "Orquesta Sinfónica Nacional de Colombia", "Bogotá", "", ""], ["2023-02-21", "", "Jupiter Chamber Players", "New York", "", ""], ["2023-02-17", "", "Kravis Center", "West Palm Beach, Florida", "Recital: Saint-Saëns · Fauré · Rachmaninoff", ""], ["2023-01-24", "", "Modelroom Musicales", "New York", "Beethoven and Dvořák", "With Mira Wang, Chad Hoopes and others."], ["2023-01-21", "", "Knoxville Symphony", "Knoxville", "Dvořák: Cello Concerto", "Lidiya Yankovskaya, conductor. Tennessee Theatre."], ["2023-01-09", "", "St Barts Music Festival", "St. Barthélemy", "", ""], ["2022-11-13", "", "Illinois Philharmonic", "Park Forest, Illinois", "Haydn: Cello Concerto in C", "Stilian Kirov, conductor."], ["2022-10-16", "", "Amarillo Symphony", "Amarillo, Texas", "", ""], ["2022-09-10", "", "Capital Region Classical", "New Lebanon, New York", "", ""], ["2022-09-03", "", "Beethoven Sonatas on fortepiano", "Cologne", "With Arash Rokni, fortepiano", ""], ["2022-08-28", "", "Rheingau Musik Festival", "Mainz", "Schubert · Martinů · Mozart", "With Chad Hoopes, violin, and Matthew Lipman, viola."], ["2022-08-17", "", "Peninsula Music Festival", "Fish Creek, Wisconsin", "Shostakovich: Cello Concerto No. 1", "Yaniv Dinur, conductor."], ["2022-06-27", "", "Marlboro Music", "Marlboro, Vermont", "", ""], ["2022-05-06", "", "Queen Elisabeth Competition", "Brussels", "", ""], ["2022-04-23", "", "Atlantic Classical Orchestra", "Palm Beach, Florida", "Tchaikovsky: Rococo Variations (original version)", "David Amado, conductor."], ["2022-04-13", "", "Guarneri Hall", "Chicago", "The complete Beethoven sonatas", "Two programs with Xiaohui Yang, piano."], ["2022-04-03", "", "Buffalo Philharmonic", "Buffalo", "Schumann: Cello Concerto", "Elizabeth Schulze, conductor. Kleinhans Music Hall."], ["2022-03-26", "", "Lieder Alive", "San Francisco", "Recital: Beethoven and Schumann", "With Peter Grunberg, piano."], ["2022-03-06", "", "Kitchener-Waterloo Symphony", "Kitchener, Canada", "Barber: Cello Concerto", "Edwin Outwater, conductor."], ["2022-02-13", "", "Rhode Island Philharmonic", "Providence", "", ""], ["2022-02-08", "", "Jupiter Symphony Chamber Players", "New York", "Bach: Goldberg Variations (arr. Sitkovetsky)", "With Robyn Scott, violin, and Milena Pajaro-van de Stadt, viola."], ["2022-02-03", "", "Philadelphia Chamber Music Society", "Philadelphia", "", ""]];
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function when(c, year) {
+    var a = c[0].split('-').map(Number), b = (c[1] || c[0]).split('-').map(Number), y = year ? ' ' + a[0] : '';
+    if (!c[1] || c[1] === c[0]) return a[2] + ' ' + MONTHS[a[1] - 1] + y;
+    if (a[1] === b[1] && a[0] === b[0]) return a[2] + '–' + b[2] + ' ' + MONTHS[a[1] - 1] + y;
+    if (a[0] === b[0]) return a[2] + ' ' + MONTHS[a[1] - 1] + ' – ' + b[2] + ' ' + MONTHS[b[1] - 1] + y;
+    return a[2] + ' ' + MONTHS[a[1] - 1] + ' ' + a[0] + ' – ' + b[2] + ' ' + MONTHS[b[1] - 1] + ' ' + b[0];
+  }
+  var TODAY = new Date().toISOString().slice(0, 10);
+  var UPCOMING = CONCERTS.filter(function (c) { return (c[1] || c[0]) >= TODAY; }).reverse();
+  var PAST = CONCERTS.filter(function (c) { return (c[1] || c[0]) < TODAY; });
   /* rail, title, detail, where, YouTube id */
   var FILMS = [
     ['Schnittke', 'Cello Sonata No. 2', 'Live', '', '7rHCol4Jv0s'],
@@ -669,19 +682,21 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   function $(id) { return document.getElementById(id); }
 
   /* Build the lists */
-  function rows(list, prefix) {
+  function rows(list, prefix, withYear) {
     return list.map(function (c, i) {
-      var pid = prefix + '-panel-' + i;
-      return '<div class="rise"><button class="row" aria-expanded="false" aria-controls="' + pid + '"><span class="row-head">' +
-        '<span class="row-meta"><span class="row-when">' + esc(c[0]) + '</span><span class="row-where">' + esc(c[2]) + '</span></span>' +
-        '<span class="row-main"><span class="row-title">' + esc(c[1]) + '</span><span class="row-work">' + esc(c[3]) + '</span></span>' +
-        '<span class="plus" aria-hidden="true"></span></span></button>' +
-        '<div class="panel" id="' + pid + '"><div><p>' + esc(c[4]) + '</p></div></div></div>';
+      var pid = prefix + '-panel-' + i, open = !!c[5];
+      var head = '<span class="row-head">' +
+        '<span class="row-meta"><span class="row-when">' + esc(when(c, withYear)) + '</span><span class="row-where">' + esc(c[3]) + '</span></span>' +
+        '<span class="row-main"><span class="row-title">' + esc(c[2]) + '</span>' + (c[4] ? '<span class="row-work">' + esc(c[4]) + '</span>' : '') + '</span>' +
+        (open ? '<span class="plus" aria-hidden="true"></span>' : '') + '</span>';
+      return '<div class="rise">' + (open
+        ? '<button class="row" aria-expanded="false" aria-controls="' + pid + '">' + head + '</button><div class="panel" id="' + pid + '"><div><p>' + esc(c[5]) + '</p></div></div>'
+        : '<div class="row still">' + head + '</div>') + '</div>';
     }).join('');
   }
-  $('upcoming').innerHTML = rows(UPCOMING, 'up');
+  $('upcoming').innerHTML = rows(UPCOMING, 'up', true);
   /* The homepage looks forward: past concerts appear only when fewer than three are coming up; the full calendar holds the rest */
-  if (UPCOMING.length < 3) $('past').innerHTML = rows(PAST.slice(0, 2), 'past');
+  if (UPCOMING.length < 3) $('past').innerHTML = rows(PAST.slice(0, 2), 'past', true);
   else { $('today').remove(); $('past-h').remove(); $('past').remove(); }
   $('grid').innerHTML = PROJECTS.map(function (p) {
     var pic = p.img
@@ -785,8 +800,8 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     var same = lastCard && from && to && from.getAttribute('src') === to.getAttribute('src');
     if (!same && from) from.style.viewTransitionName = '';
     var t = change(function () {
-      project.hidden = true; home.hidden = false; project.innerHTML = '';
-      document.body.dataset.tone = 'dark';
+      project.hidden = true; cal.hidden = true; home.hidden = false; project.innerHTML = ''; cal.innerHTML = '';
+      document.body.dataset.tone = lastCard ? 'dark' : 'light';
       if (same) to.style.viewTransitionName = 'shot';
       root.style.scrollBehavior = 'auto'; window.scrollTo(0, lastScroll); root.style.scrollBehavior = '';
       settle();
@@ -801,6 +816,35 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     if (next) { openProject(next.dataset.id, null); return; }
     if (e.target.closest('#back')) { closeProject(); return; }
     if ((e.target.closest('#top-link') || e.target.closest('#mono')) && home.hidden) { e.preventDefault(); closeProject(); }
+  });
+
+  /* The full calendar opens as its own page */
+  var cal = $('calendar');
+  function renderCalendar() {
+    var years = [], byYear = {};
+    PAST.forEach(function (c) { var y = c[0].slice(0, 4); if (!byYear[y]) { byYear[y] = []; years.push(y); } byYear[y].push(c); });
+    cal.innerHTML = '<button class="back" id="cal-back"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Home</span></button>' +
+      '<h1 class="rise">Concerts</h1>' +
+      '<nav class="cal-years rise" aria-label="Jump to a year"><a href="#cal-upcoming">Upcoming</a>' + years.map(function (y) { return '<a href="#cal-' + y + '">' + y + '</a>'; }).join('') + '</nav>' +
+      '<h3 id="cal-upcoming" class="rise">Upcoming</h3><div class="rows">' + rows(UPCOMING, 'cal-up', true) + '</div>' +
+      years.map(function (y) { return '<h3 id="cal-' + y + '" class="rise">' + y + '</h3><div class="rows">' + rows(byYear[y], 'cal-' + y, false) + '</div>'; }).join('');
+    watch(cal);
+  }
+  function openCalendar() {
+    lastScroll = window.scrollY; lastCard = null;
+    change(function () {
+      renderCalendar();
+      home.hidden = true; project.hidden = true; cal.hidden = false;
+      document.body.dataset.tone = 'light';
+      root.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); root.style.scrollBehavior = '';
+      settle();
+    });
+  }
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('#all-concerts')) { e.preventDefault(); openCalendar(); return; }
+    if (e.target.closest('#cal-back')) { closeProject(); return; }
+    var y = e.target.closest('.cal-years a');
+    if (y) { e.preventDefault(); var t = document.querySelector(y.getAttribute('href')); if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' }); }
   });
 
   /* Press quotes */
