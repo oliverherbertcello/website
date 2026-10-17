@@ -286,18 +286,19 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .panel p { margin: 0; padding: 0 0 var(--row); max-width: 36em; font-size: var(--fs-body); line-height: 1.5; opacity: 0; transform: translateY(10px); transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); }
 .row[aria-expanded="true"] + .panel p { opacity: 1; transform: none; }
 @media (min-width: 900px) {
-  .row-head { grid-template-columns: var(--rail) minmax(0, 1fr) minmax(0, 240px) 16px; gap: 0 var(--rail-gap); align-items: baseline; }
+  .row-head { grid-template-columns: var(--rail) minmax(0, 1fr) minmax(0, 240px) 44px; gap: 0 var(--rail-gap); align-items: baseline; }
   .row-meta { display: contents; }
   .row-when { grid-column: 1; grid-row: 1; font-size: var(--fs-body); letter-spacing: 0; }
   .row-main { grid-column: 2; grid-row: 1; }
   .row-where { grid-column: 3; grid-row: 1; font-size: var(--fs-body); letter-spacing: 0; }
   .row-where::before { content: none; }
-  .plus { grid-column: 4; grid-row: 1; align-self: center; margin-top: 0; }
+  .plus { grid-column: 4; grid-row: 1; align-self: center; justify-self: end; margin-top: 0; }
+  .vplay { grid-column: 4; grid-row: 1; align-self: center; justify-self: end; }
   .panel p { margin-left: calc(var(--rail) + var(--rail-gap)); }
 }
 .list h3 { margin: var(--block) 0 16px; font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.62; }
 .list h2 + h3 { margin-top: 0; }
-#upcoming, #past { border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+#upcoming, #past, .rows { border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
 .today { margin-top: 6px; padding-top: 14px; border-top: 3px solid var(--accent); color: var(--accent); font-weight: 700; }
 
 /* Projects */
@@ -314,7 +315,29 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .card-sub { display: block; margin-top: 6px; font-size: var(--fs-label); line-height: 1.35; }
 .blank { aspect-ratio: 4 / 3; background: var(--orange); display: flex; align-items: center; justify-content: center; }
 
-/* Recordings */
+/* Recordings: albums and videos are rows on the same grid as the concerts */
+.vrow { display: block; padding: var(--row) 0; border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.vrow .row-head { grid-template-columns: minmax(0, 1fr) 44px; }
+.vplay { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid currentColor; border-radius: 22px; transition: transform var(--fast) var(--ease), background-color var(--fast) var(--ease), color var(--fast) var(--ease); }
+.vrow:hover .vplay { background: var(--fg); color: var(--bg); }
+.vrow:hover .row-title, .vrow:hover .row-work { transform: translateX(8px); }
+.vrow .vplay { grid-row: 2; grid-column: 2; align-self: center; }
+.arow { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 0 16px; align-items: start; padding: var(--row) 0; border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.arow .cover { aspect-ratio: 1; overflow: hidden; grid-row: span 2; }
+.arow { grid-template-rows: auto 1fr; }
+.arow .cover img { width: 100%; height: 100%; object-fit: cover; }
+.arow .row-where { display: block; grid-column: 2; margin-top: 6px; font-size: var(--fs-label); }
+.arow .row-where::before { content: none; }
+@media (min-width: 900px) {
+  .vrow .row-head { grid-template-columns: var(--rail) minmax(0, 1fr) minmax(0, 240px) 44px; }
+  .vrow .vplay { grid-row: 1; grid-column: 4; }
+  .arow { grid-template-columns: var(--rail) minmax(0, 1fr) minmax(0, 240px) 44px; gap: 0 var(--rail-gap); }
+  .arow .cover { grid-row: 1; }
+  .arow { grid-template-rows: auto; }
+  .arow .row-main { grid-column: 2; }
+  .arow .row-where { grid-column: 3; grid-row: 1; margin-top: 0; font-size: var(--fs-body); padding-top: 0.3em; }
+  .arow .row-main { padding-top: 0.1em; }
+}
 .rec { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 720px; }
 @media (min-width: 900px) { .rec { gap: var(--rail-gap); } }
 .films { border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
@@ -483,17 +506,10 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 
   <section class="list wrap" id="recordings" data-tone="light">
     <h2 class="rise">Recordings</h2>
-    <div class="railed top">
-      <span class="label lab rise">Albums</span>
-      <div class="rec">
-        <div class="rise"><div class="frame"><img src="img/album.jpg" alt="Album cover of Frame of Mind" loading="lazy"></div><span class="card-title">Frame of Mind</span><span class="card-sub muted">Fauré and Janáček, with Xiaohui Yang, piano</span></div>
-        <div class="rise"><div class="frame"><img src="img/haydn.jpg" alt="Album cover of Haydn Cello Concerto No. 2" loading="lazy"></div><span class="card-title">Haydn: Cello Concerto No. 2</span><span class="card-sub muted">San Francisco Symphony, Michael Tilson Thomas. Warner Classics</span></div>
-      </div>
-    </div>
-    <div class="railed">
-      <span class="label lab rise">Videos</span>
-      <div class="films" id="films"></div>
-    </div>
+    <h3 class="rise">Albums</h3>
+    <div class="rows" id="albums"></div>
+    <h3 class="rise">Videos</h3>
+    <div class="rows" id="films"></div>
   </section>
 
   <section class="quote wrap" data-tone="orange" aria-label="Press">
@@ -602,11 +618,17 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     ['29 Sep 2026', 'Kronberg Festival: Löwenherz', 'Kronberg', 'Erzähl mir von Courage', 'Solo cello works by Casals, Dawn Avery, Henze and Xenakis, woven into a literary collage with the actor Michael Rotschopf. Casals Forum, Kronberg.'],
     ['13–20 Sep 2026', 'Utah Chamber Music Festival', 'Utah', 'Schubert · Brahms · Schoenberg · Ravel', 'Six concerts across Logan, Salt Lake City, Provo, St. George and Park City with Martin Helmchen, William Hagen, Stephen Waarts and others: Schubert Piano Trio in E-flat, Brahms String Quintet No. 2 and Piano Quintet, Schoenberg Verklärte Nacht, Ravel Sonata for Violin and Cello.']
   ];
+  /* rail, title, detail, where, YouTube id */
   var FILMS = [
-    ['Schnittke: Cello Sonata No. 2 (live)', '7rHCol4Jv0s'],
-    ['Desenne: Jaguar Songs (live)', 'o55-bh9YSAQ'],
-    ['Beethoven: Sonata Op. 5 No. 2, on fortepiano with Arash Rokni', 'suTU3-AbS0Q'],
-    ['Pressure / Druck: aftermovie', 'W2--KrUIkkc']
+    ['Schnittke', 'Cello Sonata No. 2', 'Live', '', '7rHCol4Jv0s'],
+    ['Desenne', 'Jaguar Songs', 'For solo cello, live', '', 'o55-bh9YSAQ'],
+    ['Beethoven', 'Sonata in G minor, Op. 5 No. 2', 'On fortepiano', 'Arash Rokni, fortepiano', 'suTU3-AbS0Q'],
+    ['Pressure / Druck', 'Aftermovie', 'Hindemith · Shostakovich · Schoenberg', '', 'W2--KrUIkkc']
+  ];
+  /* cover, title, detail, with */
+  var ALBUMS = [
+    ['album', 'Frame of Mind', 'Fauré and Janáček', 'Xiaohui Yang, piano'],
+    ['haydn', 'Haydn: Cello Concerto No. 2', 'Warner Classics', 'San Francisco Symphony, Michael Tilson Thomas']
   ];
   var PROJECTS = [
     { id: 'schnittke', title: 'Alfred Schnittke', sub: 'Cello Concerto No. 1 · Cello Sonata No. 2', img: 'score', ratio: '4 / 5',
@@ -666,7 +688,14 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     return '<button class="card rise" data-id="' + p.id + '">' + pic + '<span class="card-title">' + esc(p.title) + '</span><span class="card-sub muted">' + esc(p.sub) + '</span></button>';
   }).join('');
   $('films').innerHTML = FILMS.map(function (f) {
-    return '<a class="film rise" href="' + YT + f[1] + '" target="_blank" rel="noopener"><span class="dot">' + TRI + '</span><span>' + esc(f[0]) + '</span></a>';
+    return '<a class="vrow rise" href="' + YT + f[4] + '" target="_blank" rel="noopener" data-title="' + esc(f[0] + ': ' + f[1]) + '"><span class="row-head">' +
+      '<span class="row-meta"><span class="row-when">' + esc(f[0]) + '</span>' + (f[3] ? '<span class="row-where">' + esc(f[3]) + '</span>' : '') + '</span>' +
+      '<span class="row-main"><span class="row-title">' + esc(f[1]) + '</span><span class="row-work">' + esc(f[2]) + '</span></span>' +
+      '<span class="vplay" aria-hidden="true">' + TRI + '</span></span></a>';
+  }).join('');
+  $('albums').innerHTML = ALBUMS.map(function (a) {
+    return '<div class="arow rise"><span class="cover"><img src="img/' + a[0] + '.jpg" alt="Album cover of ' + esc(a[1]) + '" loading="lazy"></span>' +
+      '<span class="row-main"><span class="row-title">' + esc(a[1]) + '</span><span class="row-work">' + esc(a[2]) + '</span></span><span class="row-where muted">' + esc(a[3]) + '</span></div>';
   }).join('');
 
   /* Concert rows open in place */
@@ -917,7 +946,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   }
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href*="youtube.com/watch?v="]');
-    if (a) { e.preventDefault(); openVideo(new URL(a.href).searchParams.get('v'), a.textContent.trim()); return; }
+    if (a) { e.preventDefault(); openVideo(new URL(a.href).searchParams.get('v'), a.dataset.title || a.textContent.trim()); return; }
     if (!vmodal.hidden && (e.target === vmodal || e.target.closest('#vclose'))) closeVideo();
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !vmodal.hidden) closeVideo(); });
