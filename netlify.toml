@@ -17,3 +17,45 @@
   to = "/prototype/"
   status = 302
   force = true
+
+# Old addresses from the Wix site and the earlier HTML site, sent to their new homes (permanent, so search engines move with them).
+# 160 concert pages on Wix all lived under /event-details/; they now point to the full calendar.
+[[redirects]]
+  from = "/event-details/*"
+  to = "/concerts/"
+  status = 301
+
+[[redirects]]
+  from = "/calendar"
+  to = "/concerts/"
+  status = 301
+
+[[redirects]]
+  from = "/dates.html"
+  to = "/concerts/"
+  status = 301
+
+[[redirects]]
+  from = "/media-hub"
+  to = "/#recordings"
+  status = 301
+
+[[redirects]]
+  from = "/media.html"
+  to = "/#recordings"
+  status = 301
+
+[[redirects]]
+  from = "/explore.html"
+  to = "/explore/"
+  status = 301
+
+[[redirects]]
+  from = "/contact.html"
+  to = "/#contact"
+  status = 301
+
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
