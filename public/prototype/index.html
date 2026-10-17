@@ -103,6 +103,11 @@ img { display: block; }
 .js .curtain img { animation: curtain-img 1900ms var(--ease) 650ms both; }
 @keyframes curtain { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
 @keyframes curtain-img { from { transform: translateY(14%) scale(1.06); } to { transform: none; } }
+.hero-wrap { position: relative; }
+.seal { position: absolute; z-index: 2; right: var(--gutter); top: 0; --ty: -50%; width: 92px; height: 92px; transform: translateY(var(--ty)) rotate(-8deg); }
+@media (min-width: 900px) { .seal { --ty: 56px; width: 150px; height: 150px; right: calc(var(--gutter) + 8px); } }
+.js .seal { animation: stamp 520ms cubic-bezier(0.2, 0.8, 0.2, 1) 2050ms both; }
+@keyframes stamp { from { opacity: 0; transform: translateY(var(--ty)) scale(1.35) rotate(-20deg); } 70% { opacity: 1; transform: translateY(var(--ty)) scale(0.96) rotate(-7deg); } to { opacity: 1; transform: translateY(var(--ty)) rotate(-8deg); } }
 .sig { display: block; width: 46px; height: auto; margin-top: 56px; color: var(--orange); }
 .sig path { fill: currentColor; }
 
@@ -202,6 +207,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   .js .rise, .js .open-img img { opacity: 1; transform: none; }
   .name span { animation: none !important; }
   .js .curtain, .js .curtain img { animation: none !important; clip-path: none; transform: none; }
+  .js .seal { animation: none !important; }
 }
 </style>
 
@@ -227,7 +233,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
       <a href="#top">Contact</a>
     </nav>
   </div>
-  <div class="frame hero-img curtain" data-tone="light"><img src="img/hero.jpg" alt="Oliver Herbert with his cello"></div>
+  <div class="hero-wrap"><div class="frame hero-img curtain" data-tone="light"><img src="img/hero.jpg" alt="Oliver Herbert with his cello"></div><img class="seal" src="img/seal.svg" alt="" aria-hidden="true"></div>
 
   <section class="list wrap" id="concerts" data-tone="light">
     <h2 class="rise">Concerts</h2>
