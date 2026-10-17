@@ -6,7 +6,7 @@ const { lang } = Astro.props;
 const t = ui[lang];
 const letters = 'Oliver Herbert'.split('');
 ---
-<Base title="Oliver Herbert, cello" lang={lang} description="Oliver Herbert, cellist.">
+<Base lang={lang}>
   <main class="hold">
     <h1 class="name" aria-label="Oliver Herbert">
       {letters.map((ch, i) => ch === ' '

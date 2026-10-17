@@ -1,0 +1,818 @@
+[
+ {
+  "start": "2027-03-18",
+  "end": null,
+  "title": "Chamber Music Society of Palm Beach",
+  "place": "West Palm Beach, Florida",
+  "program": "Beethoven and Dvořák string quintets",
+  "details": "Beethoven: String Quintet in C major, Op. 29. Dvořák: String Quintet No. 3 in E-flat, Op. 97 “American”. With Karen Gomyo, Arnaud Sussmann, Matthew Lipman and Ettore Causa. Kravis Center."
+ },
+ {
+  "start": "2027-03-07",
+  "end": null,
+  "title": "Kulturkreis Springe",
+  "place": "Springe, Germany",
+  "program": "Brücken: recital with Martin Klett, piano",
+  "details": "Beethoven: Sonata in F major, Op. 5 No. 1. Debussy: Sonata in D minor. Bach: Sonata in G minor, BWV 1029. Bridge: Sonata in D minor. Jagdschloss Springe."
+ },
+ {
+  "start": "2027-01-10",
+  "end": "2027-01-17",
+  "title": "Festival de Musique de Saint-Barthélemy",
+  "place": "St. Barthélemy",
+  "program": "Saint-Saëns: Cello Concerto No. 1",
+  "details": "With the Festival Orchestra. Further programs to be announced."
+ },
+ {
+  "start": "2026-11-14",
+  "end": "2026-11-16",
+  "title": "Santa Rosa Symphony",
+  "place": "Rohnert Park, California",
+  "program": "Saint-Saëns: Cello Concerto No. 1",
+  "details": "Francesco Lecce-Chong, conductor. Weill Hall, Green Music Center."
+ },
+ {
+  "start": "2026-11-01",
+  "end": null,
+  "title": "Noe Music",
+  "place": "San Francisco",
+  "program": "Smith · Schnittke · Beethoven",
+  "details": "Gabriella Smith: Carrot Revolution. Schnittke: String Quartet No. 3. Beethoven: String Quartet in B-flat, Op. 130, with the Grosse Fuge. With Alexi Kenney, Owen Dalby and Milena Pajaro-van de Stadt. Noe Valley Ministry."
+ },
+ {
+  "start": "2026-10-04",
+  "end": null,
+  "title": "Kronberg Festival, closing concert",
+  "place": "Kronberg",
+  "program": "C.P.E. Bach: Cello Concerto in B-flat",
+  "details": "Reinhard Goebel, conductor. Casals Forum."
+ },
+ {
+  "start": "2026-09-29",
+  "end": null,
+  "title": "Kronberg Festival: Löwenherz",
+  "place": "Kronberg",
+  "program": "Erzähl mir von Courage",
+  "details": "Solo cello works by Casals, Dawn Avery, Henze and Xenakis, woven into a literary collage with the actor Michael Rotschopf. Casals Forum."
+ },
+ {
+  "start": "2026-09-13",
+  "end": "2026-09-20",
+  "title": "Utah Chamber Music Festival",
+  "place": "Logan, Salt Lake City, Provo, St. George, Park City",
+  "program": "Schubert · Brahms · Schoenberg · Ravel",
+  "details": "Six concerts with Martin Helmchen, William Hagen, Stephen Waarts, Milena Pajaro-van de Stadt and others: Schubert Piano Trio in E-flat, Brahms String Quintet No. 2 and Piano Quintet, Schoenberg Verklärte Nacht, Schumann Fantasiestücke, Ravel Sonata for Violin and Cello."
+ },
+ {
+  "start": "2026-08-14",
+  "end": "2026-08-16",
+  "title": "Tippet Rise Art Center",
+  "place": "Fishtail, Montana",
+  "program": "Schubert Octet · Beethoven Septet · Tabakova",
+  "details": "Tabakova: Moreni. Beethoven: Septet in E-flat, Op. 20, with works by Caroline Shaw and Svante Henryson, at the Domo. Schubert: Octet in F, D. 803. With Yasmina Spiegelberg, Stephen Waarts, Yura Lee, Natalie Loughran and others."
+ },
+ {
+  "start": "2026-07-23",
+  "end": null,
+  "title": "Copenhagen Summer Festival",
+  "place": "Copenhagen",
+  "program": "Bach: Goldberg Variations for string trio",
+  "details": "Cloud String Trio, with Claire Wells, violin, and Nicholas Swensen, viola. Kunsthal Charlottenborg."
+ },
+ {
+  "start": "2026-07-14",
+  "end": null,
+  "title": "ChamberFest West",
+  "place": "Calgary",
+  "program": "Season 5: Continental Drifts",
+  "details": null
+ },
+ {
+  "start": "2026-06-17",
+  "end": null,
+  "title": "Grant Park Music Festival",
+  "place": "Chicago",
+  "program": "Shostakovich: Cello Concerto No. 1",
+  "details": "Giancarlo Guerrero, conductor. Jay Pritzker Pavilion."
+ },
+ {
+  "start": "2026-06-10",
+  "end": null,
+  "title": "ChamberFest Cleveland",
+  "place": "Cleveland",
+  "program": "Season 14: Continental Drifts",
+  "details": null
+ },
+ {
+  "start": "2026-05-30",
+  "end": "2026-05-31",
+  "title": "Marin Symphony",
+  "place": "San Rafael, California",
+  "program": "Shostakovich: Cello Concerto No. 1",
+  "details": "Fawzi Haimor, conductor. Three performances. Marin Veterans’ Memorial Auditorium."
+ },
+ {
+  "start": "2026-05-19",
+  "end": null,
+  "title": "Carnegie Hall, Zankel Hall",
+  "place": "New York",
+  "program": "The complete Brahms piano quartets",
+  "details": "With Kirill Gerstein and Kronberg Academy musicians."
+ },
+ {
+  "start": "2026-05-13",
+  "end": null,
+  "title": "Studio Teatr",
+  "place": "Warsaw",
+  "program": "Chamber music",
+  "details": "With Veriko Tchumburidze, Claire Wells and Piotr Szumiel. Palace of Culture and Science."
+ },
+ {
+  "start": "2026-04-26",
+  "end": null,
+  "title": "FreundschaftsSpiele III: Christian Tetzlaff & Friends",
+  "place": "Kronberg",
+  "program": "Widmann · Bartók · Brahms",
+  "details": "Widmann: String Quartet No. 2 “Choralquartett”. Bartók: from 44 Duos. Brahms: Piano Trio No. 3 in C minor, Op. 101. With Christian Tetzlaff, Hana Chang, Julian Rhee, Charlotte Spruit, Dmytro Udovychenko, Brian Isaacs, Benjamin Kruithof and Kiveli Dörken. Casals Forum."
+ },
+ {
+  "start": "2026-04-17",
+  "end": null,
+  "title": "Capital Region Classical: Spring Benefit",
+  "place": "Schenectady, New York",
+  "program": "Solo recital",
+  "details": null
+ },
+ {
+  "start": "2026-04-12",
+  "end": null,
+  "title": "Elgin Symphony",
+  "place": "Elgin, Illinois",
+  "program": "Schumann: Cello Concerto",
+  "details": "Chad Goodman, conductor. The Hemmens."
+ },
+ {
+  "start": "2026-03-25",
+  "end": null,
+  "title": "Mittwochskonzerte",
+  "place": "Kronberg",
+  "program": "Wie Bitte?: a curated program",
+  "details": "Casals Forum."
+ },
+ {
+  "start": "2026-03-05",
+  "end": null,
+  "title": "Bach im Fluss: Marcel Ponseele",
+  "place": "Kronberg",
+  "program": "Bach: Suite No. 5 in C minor",
+  "details": "Casals Forum."
+ },
+ {
+  "start": "2026-02-28",
+  "end": "2026-03-01",
+  "title": "Amarillo Symphony",
+  "place": "Amarillo, Texas",
+  "program": "John Williams: Cello Concerto",
+  "details": null
+ },
+ {
+  "start": "2026-02-06",
+  "end": null,
+  "title": "Macalester College, Mairs Concert Hall",
+  "place": "St. Paul, Minnesota",
+  "program": "Dawn Avery · Passamaquoddy music · Dvořák",
+  "details": "Music by Dawn Avery, Passamaquoddy traditional music, and Dvořák: String Sextet."
+ },
+ {
+  "start": "2026-01-31",
+  "end": null,
+  "title": "Brahms Piano Quartets",
+  "place": "Kronberg",
+  "program": "With Kirill Gerstein and Kronberg Academy musicians",
+  "details": "Casals Forum."
+ },
+ {
+  "start": "2026-01-10",
+  "end": null,
+  "title": "Festival de Musique de Saint-Barthélemy",
+  "place": "St. Barthélemy",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2025-12-13",
+  "end": "2025-12-15",
+  "title": "Martin Helmchen & Friends",
+  "place": "Kronberg",
+  "program": "Dvořák: Piano Quartet in E-flat",
+  "details": "With Martin Helmchen, Antje Weithaas and Brian Isaacs. Casals Forum."
+ },
+ {
+  "start": "2025-11-29",
+  "end": null,
+  "title": "Württembergisches Kammerorchester Heilbronn",
+  "place": "Kronberg",
+  "program": "Lutosławski: Grave",
+  "details": "Concerti Brillanti series. Casals Forum."
+ },
+ {
+  "start": "2025-11-15",
+  "end": "2025-11-24",
+  "title": "Musicians from Marlboro tour",
+  "place": "London (Ontario), Brattleboro, Washington, New York, Greenwich",
+  "program": "Including Carnegie Hall, Weill Recital Hall",
+  "details": "Western University, London, Ontario (15 Nov). Brattleboro Music Center (17 Nov). Freer Gallery, National Museum of Asian Art, Washington (20 Nov). Weill Recital Hall, Carnegie Hall, New York (22 Nov). Friends Performing Arts Series, Greenwich (24 Nov)."
+ },
+ {
+  "start": "2025-11-19",
+  "end": null,
+  "title": "Philadelphia Chamber Music Society",
+  "place": "Philadelphia",
+  "program": "Haydn · Schumann · Schubert",
+  "details": "Haydn: Piano Trio Hob. XV:22. Schumann: Canonic Etudes. Schubert: Piano Trio in E-flat, D. 929. With Alexi Kenney, violin, and Eric Lu, piano."
+ },
+ {
+  "start": "2025-10-05",
+  "end": null,
+  "title": "Sarasota Orchestra",
+  "place": "Sarasota, Florida",
+  "program": "Tchaikovsky: Rococo Variations (original version)",
+  "details": "Giancarlo Guerrero, conductor."
+ },
+ {
+  "start": "2025-09-15",
+  "end": null,
+  "title": "IMS Prussia Cove: Open Chamber Music",
+  "place": "Cornwall",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2025-08-10",
+  "end": null,
+  "title": "Moritzburg Festival",
+  "place": "Moritzburg, Germany",
+  "program": "Three weeks of chamber music",
+  "details": null
+ },
+ {
+  "start": "2025-07-14",
+  "end": null,
+  "title": "ChamberFest West",
+  "place": "Calgary",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2025-07-07",
+  "end": null,
+  "title": "Festival Janigro",
+  "place": "Montagano, Italy",
+  "program": "Performances and teaching",
+  "details": null
+ },
+ {
+  "start": "2025-06-16",
+  "end": null,
+  "title": "ChamberFest Cleveland",
+  "place": "Cleveland",
+  "program": "Schubert · Schoenberg · Errollyn Wallen",
+  "details": null
+ },
+ {
+  "start": "2025-05-17",
+  "end": null,
+  "title": "Tonhalle Zürich",
+  "place": "Zurich",
+  "program": "Schubert: String Quintet and “Trout” Quintet",
+  "details": "With Julia Fischer and others."
+ },
+ {
+  "start": "2025-04-27",
+  "end": null,
+  "title": "Nashville Symphony",
+  "place": "Nashville",
+  "program": "Tchaikovsky: Rococo Variations (original version)",
+  "details": "Giancarlo Guerrero, conductor. Schermerhorn Symphony Center."
+ },
+ {
+  "start": "2025-03-19",
+  "end": null,
+  "title": "Mittwochskonzerte",
+  "place": "Kronberg",
+  "program": "A curated program",
+  "details": null
+ },
+ {
+  "start": "2025-02-28",
+  "end": null,
+  "title": "Tabea Zimmermann & Friends",
+  "place": "Kronberg",
+  "program": "Chamber music",
+  "details": "With Tabea Zimmermann, Kanneh-Mason, Hoppe and Kronberg Academy students. Casals Forum."
+ },
+ {
+  "start": "2025-02-23",
+  "end": null,
+  "title": "Omaha Symphony",
+  "place": "Omaha",
+  "program": "Dvořák: Cello Concerto",
+  "details": "Alasdair Neale, conductor. Holland Performing Arts Center."
+ },
+ {
+  "start": "2025-01-26",
+  "end": null,
+  "title": "New World Symphony: The Chamber Cello",
+  "place": "Miami Beach",
+  "program": "García · Yi · Desenne · Brahms",
+  "details": "García: Prohibido. Yi: Suite for Cello and Chamber Winds. Desenne: Pizziquitiplas. Brahms: Piano Trio No. 1. New World Center."
+ },
+ {
+  "start": "2025-01-17",
+  "end": null,
+  "title": "St Barts Music Festival",
+  "place": "St. Barthélemy",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2024-12-26",
+  "end": null,
+  "title": "Internationaal Kamermuziekfestival Utrecht",
+  "place": "Utrecht",
+  "program": "Including Gubaidulina: In Croce",
+  "details": "With Janine Jansen and friends."
+ },
+ {
+  "start": "2024-12-08",
+  "end": null,
+  "title": "Mihaela Martin, Frans Helmerson & Friends",
+  "place": "Kronberg",
+  "program": "Chamber music",
+  "details": "Casals Forum."
+ },
+ {
+  "start": "2024-11-24",
+  "end": null,
+  "title": "Hindemith Tage Hanau",
+  "place": "Hanau, Germany",
+  "program": "With Tabea Zimmermann",
+  "details": null
+ },
+ {
+  "start": "2024-11-19",
+  "end": null,
+  "title": "Deutschlandfunk Raderbergkonzerte",
+  "place": "Cologne",
+  "program": "Desenne · Crawford Seeger · Villa-Lobos · Fauré",
+  "details": "A program curated by Oliver Herbert, with Kronberg Academy scholarship holders."
+ },
+ {
+  "start": "2024-11-13",
+  "end": null,
+  "title": "Carnegie Hall: Chamber Sessions",
+  "place": "New York",
+  "program": "Schumann · Kurtág · Beethoven",
+  "details": "Schumann: Piano Quartet. Kurtág. Beethoven: Piano Trio, Op. 70 No. 2. With Mitsuko Uchida, Stephanie Zyzak and Beth Guterman Chu."
+ },
+ {
+  "start": "2024-11-10",
+  "end": null,
+  "title": "Capital Region Classical",
+  "place": "Albany, New York",
+  "program": "With Mitsuko Uchida and Musicians from Marlboro",
+  "details": "Schumann: Piano Quartet, Op. 47. Kurtág. Beethoven: Piano Trio, Op. 70 No. 2."
+ },
+ {
+  "start": "2024-11-09",
+  "end": null,
+  "title": "Philadelphia Chamber Music Society",
+  "place": "Philadelphia",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2024-10-13",
+  "end": null,
+  "title": "Mannheimer Philharmoniker",
+  "place": "Mannheim",
+  "program": "Beethoven: Triple Concerto",
+  "details": "With Dora Bratchkova, violin, and Olga Zado, piano. Boian Videnoff, conductor. Rosengarten."
+ },
+ {
+  "start": "2024-09-20",
+  "end": null,
+  "title": "Max-Planck-Zentrum für Physik und Medizin",
+  "place": "Erlangen, Germany",
+  "program": "Inauguration concert",
+  "details": null
+ },
+ {
+  "start": "2024-09-07",
+  "end": null,
+  "title": "ARD International Music Competition",
+  "place": "Munich",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2024-08-22",
+  "end": null,
+  "title": "Sion Festival",
+  "place": "Sion, Switzerland",
+  "program": "Kodály · Dvořák · Arensky",
+  "details": "With Janine Jansen. Théâtre de Valère."
+ },
+ {
+  "start": "2024-07-14",
+  "end": null,
+  "title": "Marlboro Music Festival",
+  "place": "Marlboro, Vermont",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2024-06-23",
+  "end": null,
+  "title": "Caramoor",
+  "place": "Katonah, New York",
+  "program": "Mendelssohn · Brahms",
+  "details": "Mendelssohn: String Quintet No. 2, Op. 87. Brahms: Piano Quartet No. 3, Op. 60."
+ },
+ {
+  "start": "2024-06-13",
+  "end": "2024-06-18",
+  "title": "ChamberFest Cleveland",
+  "place": "Cleveland",
+  "program": "Five programs",
+  "details": "Sacred and Profane. Mystical Reveries. Fantastic Tales. Music on the Path. Cello Dualities."
+ },
+ {
+  "start": "2024-06-05",
+  "end": null,
+  "title": "Curtis on Tour",
+  "place": "Paris",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2024-05-15",
+  "end": "2024-05-17",
+  "title": "SWR Schwetzinger Festspiele",
+  "place": "Schwetzingen, Germany",
+  "program": "Two programs with Tabea Zimmermann",
+  "details": "Lamento: Ligeti, Kurtág, Hindemith, Britten, York Bowen. Debussy, Liebowitz, Beethoven."
+ },
+ {
+  "start": "2024-02-24",
+  "end": "2024-03-12",
+  "title": "Curtis on Tour: String Sextets",
+  "place": "Fort Worth, Philadelphia, Davis, Phoenix, Evanston, Bradenton",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2024-02-14",
+  "end": null,
+  "title": "Kronberg Academy: Wo Licht ist…",
+  "place": "Kronberg",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2024-02-02",
+  "end": null,
+  "title": "Eugene Symphony",
+  "place": "Eugene, Oregon",
+  "program": "Dvořák: Cello Concerto",
+  "details": "Francesco Lecce-Chong, conductor."
+ },
+ {
+  "start": "2024-01-25",
+  "end": null,
+  "title": "Yehudi Menuhin Forum",
+  "place": "Bern",
+  "program": "Recital with Olga Zado, piano",
+  "details": "Lyatoshinsky, Lutosławski, Brahms, Gubaidulina, Schnittke, Shostakovich."
+ },
+ {
+  "start": "2023-12-10",
+  "end": null,
+  "title": "Capital Region Classical",
+  "place": "Schenectady, New York",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2023-12-07",
+  "end": null,
+  "title": "92nd Street Y",
+  "place": "New York",
+  "program": "Rachmaninoff: Sonata",
+  "details": "With Conrad Tao, piano."
+ },
+ {
+  "start": "2023-11-17",
+  "end": null,
+  "title": "Finest Classics",
+  "place": "Mannheim",
+  "program": "Recital with Olga Zado, piano",
+  "details": "Lyatoshinsky, Lutosławski, Brahms, Gubaidulina, Schnittke, Shostakovich."
+ },
+ {
+  "start": "2023-11-10",
+  "end": null,
+  "title": "Theater Erfurt",
+  "place": "Erfurt, Germany",
+  "program": "Schnittke: Cello Concerto No. 1",
+  "details": "Alexander Prior, conductor."
+ },
+ {
+  "start": "2023-09-23",
+  "end": null,
+  "title": "Kronberg Festival",
+  "place": "Kronberg",
+  "program": "World premiere: Žibuoklė Martinaitytė",
+  "details": "A solo cello work in memoriam Pablo Casals. Casals Forum."
+ },
+ {
+  "start": "2023-08-19",
+  "end": null,
+  "title": "Krzyżowa Music",
+  "place": "Krzyżowa, Poland",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2023-08-16",
+  "end": null,
+  "title": "Salt Bay Chamberfest",
+  "place": "Damariscotta, Maine",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2023-08-01",
+  "end": null,
+  "title": "Music in the Vineyards",
+  "place": "Napa Valley",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2023-07-26",
+  "end": null,
+  "title": "La Jolla SummerFest",
+  "place": "La Jolla",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2023-07-17",
+  "end": null,
+  "title": "ChamberFest West",
+  "place": "Calgary",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2023-07-05",
+  "end": null,
+  "title": "Janigro Festival",
+  "place": "Montagano, Italy",
+  "program": "With the Zagreb Soloists",
+  "details": "Couperin, Hindemith, Vivaldi."
+ },
+ {
+  "start": "2023-06-15",
+  "end": null,
+  "title": "Romanischer Sommer",
+  "place": "Cologne",
+  "program": "Bach: Suites No. 2 and No. 3",
+  "details": null
+ },
+ {
+  "start": "2023-06-06",
+  "end": null,
+  "title": "Piano Salon Christophori",
+  "place": "Berlin",
+  "program": "Recital with Olga Zado, piano",
+  "details": "Lyatoshinsky, Lutosławski, Brahms, Gubaidulina, Schnittke, Shostakovich."
+ },
+ {
+  "start": "2023-05-29",
+  "end": null,
+  "title": "Lieder Alive",
+  "place": "San Francisco",
+  "program": "South American music",
+  "details": "With Carlos Ágrada and Esther Rayo."
+ },
+ {
+  "start": "2023-05-21",
+  "end": null,
+  "title": "Bridgehampton Chamber Music Festival",
+  "place": "Bridgehampton, New York",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2023-04-23",
+  "end": null,
+  "title": "TICA Festival",
+  "place": "Hong Kong",
+  "program": "World premiere: Andrew Moses",
+  "details": "A new work for cello and percussion, with Haruka Fujii."
+ },
+ {
+  "start": "2023-03-30",
+  "end": null,
+  "title": "Chamber Music Society of Palm Beach",
+  "place": "West Palm Beach, Florida",
+  "program": null,
+  "details": "With Alessio Bax, piano, and Arnaud Sussmann, violin."
+ },
+ {
+  "start": "2023-03-20",
+  "end": null,
+  "title": "Jupiter Chamber Players",
+  "place": "New York",
+  "program": "Haydn · Spohr · Mozart · Farrenc",
+  "details": null
+ },
+ {
+  "start": "2023-03-10",
+  "end": null,
+  "title": "Orquesta Sinfónica Nacional de Colombia",
+  "place": "Bogotá",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2023-02-21",
+  "end": null,
+  "title": "Jupiter Chamber Players",
+  "place": "New York",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2023-02-17",
+  "end": null,
+  "title": "Kravis Center",
+  "place": "West Palm Beach, Florida",
+  "program": "Recital: Saint-Saëns · Fauré · Rachmaninoff",
+  "details": null
+ },
+ {
+  "start": "2023-01-24",
+  "end": null,
+  "title": "Modelroom Musicales",
+  "place": "New York",
+  "program": "Beethoven and Dvořák",
+  "details": "With Mira Wang, Chad Hoopes and others."
+ },
+ {
+  "start": "2023-01-21",
+  "end": null,
+  "title": "Knoxville Symphony",
+  "place": "Knoxville",
+  "program": "Dvořák: Cello Concerto",
+  "details": "Lidiya Yankovskaya, conductor. Tennessee Theatre."
+ },
+ {
+  "start": "2023-01-09",
+  "end": null,
+  "title": "St Barts Music Festival",
+  "place": "St. Barthélemy",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2022-11-13",
+  "end": null,
+  "title": "Illinois Philharmonic",
+  "place": "Park Forest, Illinois",
+  "program": "Haydn: Cello Concerto in C",
+  "details": "Stilian Kirov, conductor."
+ },
+ {
+  "start": "2022-10-16",
+  "end": null,
+  "title": "Amarillo Symphony",
+  "place": "Amarillo, Texas",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2022-09-10",
+  "end": null,
+  "title": "Capital Region Classical",
+  "place": "New Lebanon, New York",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2022-09-03",
+  "end": null,
+  "title": "Beethoven Sonatas on fortepiano",
+  "place": "Cologne",
+  "program": "With Arash Rokni, fortepiano",
+  "details": null
+ },
+ {
+  "start": "2022-08-28",
+  "end": null,
+  "title": "Rheingau Musik Festival",
+  "place": "Mainz",
+  "program": "Schubert · Martinů · Mozart",
+  "details": "With Chad Hoopes, violin, and Matthew Lipman, viola."
+ },
+ {
+  "start": "2022-08-17",
+  "end": null,
+  "title": "Peninsula Music Festival",
+  "place": "Fish Creek, Wisconsin",
+  "program": "Shostakovich: Cello Concerto No. 1",
+  "details": "Yaniv Dinur, conductor."
+ },
+ {
+  "start": "2022-06-27",
+  "end": null,
+  "title": "Marlboro Music",
+  "place": "Marlboro, Vermont",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2022-05-06",
+  "end": null,
+  "title": "Queen Elisabeth Competition",
+  "place": "Brussels",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2022-04-23",
+  "end": null,
+  "title": "Atlantic Classical Orchestra",
+  "place": "Palm Beach, Florida",
+  "program": "Tchaikovsky: Rococo Variations (original version)",
+  "details": "David Amado, conductor."
+ },
+ {
+  "start": "2022-04-13",
+  "end": null,
+  "title": "Guarneri Hall",
+  "place": "Chicago",
+  "program": "The complete Beethoven sonatas",
+  "details": "Two programs with Xiaohui Yang, piano."
+ },
+ {
+  "start": "2022-04-03",
+  "end": null,
+  "title": "Buffalo Philharmonic",
+  "place": "Buffalo",
+  "program": "Schumann: Cello Concerto",
+  "details": "Elizabeth Schulze, conductor. Kleinhans Music Hall."
+ },
+ {
+  "start": "2022-03-26",
+  "end": null,
+  "title": "Lieder Alive",
+  "place": "San Francisco",
+  "program": "Recital: Beethoven and Schumann",
+  "details": "With Peter Grunberg, piano."
+ },
+ {
+  "start": "2022-03-06",
+  "end": null,
+  "title": "Kitchener-Waterloo Symphony",
+  "place": "Kitchener, Canada",
+  "program": "Barber: Cello Concerto",
+  "details": "Edwin Outwater, conductor."
+ },
+ {
+  "start": "2022-02-13",
+  "end": null,
+  "title": "Rhode Island Philharmonic",
+  "place": "Providence",
+  "program": null,
+  "details": null
+ },
+ {
+  "start": "2022-02-08",
+  "end": null,
+  "title": "Jupiter Symphony Chamber Players",
+  "place": "New York",
+  "program": "Bach: Goldberg Variations (arr. Sitkovetsky)",
+  "details": "With Robyn Scott, violin, and Milena Pajaro-van de Stadt, viola."
+ },
+ {
+  "start": "2022-02-03",
+  "end": null,
+  "title": "Philadelphia Chamber Music Society",
+  "place": "Philadelphia",
+  "program": null,
+  "details": null
+ }
+]

@@ -3,23 +3,92 @@ import '@fontsource/dm-serif-display/400.css';
 import '@fontsource-variable/schibsted-grotesk';
 import '../styles/tokens.css';
 import { languages, type Lang } from '../i18n/ui';
+import concerts from '../data/concerts.json';
 
-interface Props { title: string; lang: Lang; description?: string }
-const { title, lang, description = '' } = Astro.props;
+interface Props {
+  title?: string;           // page title; the site name is appended
+  lang: Lang;
+  description?: string;
+  image?: string;           // sharing image, absolute or site-relative
+  events?: boolean;         // add upcoming concerts as structured data (homepage and calendar)
+  noindex?: boolean;
+}
+const SITE_NAME = 'Oliver Herbert, cellist';
+const DEFAULT_DESCRIPTION: Record<Lang, string> = {
+  en: 'Oliver Herbert, cellist. Concerts, recordings and projects, from Haydn to music of today.',
+  de: 'Oliver Herbert, Cellist. Konzerte, Aufnahmen und Projekte, von Haydn bis zur Musik von heute.',
+  es: 'Oliver Herbert, violonchelista. Conciertos, grabaciones y proyectos, de Haydn a la música de hoy.',
+};
+const OG_LOCALE: Record<Lang, string> = { en: 'en_US', de: 'de_DE', es: 'es_ES' };
+
+const { title, lang, description = DEFAULT_DESCRIPTION[lang], image = '/og.jpg', events = false, noindex = false } = Astro.props;
+const fullTitle = title ? `${title} · ${SITE_NAME}` : SITE_NAME;
 const path = Astro.url.pathname.replace(/^\/(de|es)(?=\/|$)/, '') || '/';
 const href = (l: Lang) => (l === 'en' ? path : `/${l}${path === '/' ? '/' : path}`);
+const canonical = new URL(href(lang), Astro.site).toString();
+const imageUrl = new URL(image, Astro.site).toString();
+
+/* Structured data: who Oliver is, and (on concert pages) what's coming up, so search engines can show dates and venues */
+const person = {
+  '@type': 'Person',
+  '@id': new URL('/#oliver', Astro.site).toString(),
+  name: 'Oliver Herbert',
+  jobTitle: 'Cellist',
+  url: Astro.site?.toString(),
+  image: imageUrl,
+  award: ['Avery Fisher Career Grant (2021)', 'Verbier Festival Jean-Nicolas Firmenich Prize'],
+  alumniOf: ['Curtis Institute of Music', 'Colburn School', 'Kronberg Academy'],
+  sameAs: [
+    'https://www.instagram.com/oliverherbert_/',
+    'https://www.facebook.com/oliverherbertcello',
+    'https://www.youtube.com/@OliverHerbertCello',
+  ],
+};
+const today = new Date().toISOString().slice(0, 10);
+const upcoming = events
+  ? concerts.filter((c) => (c.end ?? c.start) >= today).map((c) => ({
+      '@type': 'MusicEvent',
+      name: c.program ? `${c.title}: ${c.program}` : c.title,
+      startDate: c.start,
+      ...(c.end ? { endDate: c.end } : {}),
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      location: { '@type': 'Place', name: c.title, address: c.place },
+      performer: { '@id': person['@id'] },
+      url: new URL('/concerts/', Astro.site).toString(),
+    }))
+  : [];
+const jsonLd = { '@context': 'https://schema.org', '@graph': [person, ...upcoming] };
 ---
 <!doctype html>
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>{title}</title>
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    {description && <meta name="description" content={description} />}
+    <meta name="theme-color" content="#FBFBF9" />
     {Object.keys(languages).map((l) => (
       <link rel="alternate" hreflang={l} href={new URL(href(l as Lang), Astro.site)} />
     ))}
+    <link rel="alternate" hreflang="x-default" href={new URL(href('en'), Astro.site)} />
+
+    <!-- Link previews (WhatsApp, iMessage, LinkedIn, Facebook, X) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={OG_LOCALE[lang]} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <slot />
