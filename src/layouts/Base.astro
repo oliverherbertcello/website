@@ -16,6 +16,7 @@ const href = (l: Lang) => (l === 'en' ? path : `/${l}${path === '/' ? '/' : path
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {description && <meta name="description" content={description} />}
     {Object.keys(languages).map((l) => (
       <link rel="alternate" hreflang={l} href={new URL(href(l as Lang), Astro.site)} />
