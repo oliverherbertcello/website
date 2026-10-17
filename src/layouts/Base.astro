@@ -1,0 +1,27 @@
+---
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource/barlow/400.css';
+import '@fontsource/barlow/500.css';
+import '../styles/tokens.css';
+import { languages, type Lang } from '../i18n/ui';
+
+interface Props { title: string; lang: Lang; description?: string }
+const { title, lang, description = '' } = Astro.props;
+const path = Astro.url.pathname.replace(/^\/(de|es)(?=\/|$)/, '') || '/';
+const href = (l: Lang) => (l === 'en' ? path : `/${l}${path === '/' ? '/' : path}`);
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    {Object.keys(languages).map((l) => (
+      <link rel="alternate" hreflang={l} href={new URL(href(l as Lang), Astro.site)} />
+    ))}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

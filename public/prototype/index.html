@@ -1,0 +1,481 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex"><style>[hidden]{display:none!important}body{margin:0}</style></head><body>
+<title>Oliver Herbert Prototype</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Barlow:wght@400;500&display=swap">
+<style>
+/* Layout: one quiet column of three lists with full-width photographs between them; the motion carries the identity. Single committed look, by choice. */
+:root {
+  --paper: #FBFBF9;
+  --ink: #111314;
+  --orange: #C0362C;            /* International Orange, Golden Gate Bridge */
+  --white: #FFFFFF;
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --accent: var(--orange);
+  --display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  --text: 'Barlow', 'Bahnschrift', 'DIN Alternate', 'Helvetica Neue', Arial, sans-serif;
+  --ease: cubic-bezier(0.45, 0, 0.15, 1);
+  --fast: 320ms;
+  --slow: 850ms;
+  --gutter: 20px;
+  --bar: 56px;
+  --k: 2.3;                     /* how much larger the name is on arrival */
+  --dy: 62px;                   /* how far below its resting place the name starts */
+  --p: 0;                       /* 0 = arrived, 1 = settled; set from scroll */
+  --prog: 0%;
+  color-scheme: light;
+}
+@media (min-width: 900px) { :root { --gutter: 64px; --k: 6; --dy: 84px; } }
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--display); font-size: 17px; line-height: 1.4;
+  transition: background-color var(--slow) var(--ease), color var(--slow) var(--ease);
+  overflow-x: hidden; -webkit-font-smoothing: antialiased;
+}
+body[data-tone="dark"] { --bg: var(--ink); --fg: var(--paper); }
+body[data-tone="orange"] { --bg: var(--orange); --fg: var(--white); --accent: var(--white); }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+img { display: block; }
+.wrap { padding-inline: var(--gutter); }
+.label { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; }
+.muted { opacity: 0.62; }
+.serif { font-family: var(--text); }
+
+/* Bar, name, listen */
+.bar {
+  position: fixed; z-index: 20; top: 0; left: 0; right: 0;
+  height: calc(var(--bar) + env(safe-area-inset-top, 0px)); padding-top: env(safe-area-inset-top, 0px);
+  box-sizing: border-box; background: var(--bg);
+  transition: background-color var(--slow) var(--ease);
+  display: flex; align-items: center; justify-content: flex-end; padding-inline: var(--gutter);
+  view-transition-name: bar;
+}
+.bar::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: var(--prog); background: var(--accent); }
+.name {
+  position: fixed; z-index: 21; left: var(--gutter); top: calc(env(safe-area-inset-top, 0px) + 18px);
+  --w: calc(800 - 100 * var(--p));
+  font-size: 20px; font-weight: 700; letter-spacing: -0.035em; line-height: 1; white-space: nowrap;
+  transform-origin: left top; display: flex;
+  transform: translateY(calc((1 - var(--p)) * var(--dy))) scale(calc(1 + (var(--k) - 1) * (1 - var(--p))));
+  view-transition-name: sitename;
+}
+.listen {
+  display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 16px 0 14px;
+  border: 1px solid currentColor; border-radius: 20px; font-size: 14px; font-weight: 500; max-width: 62vw;
+}
+.listen span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.listen svg { flex-shrink: 0; }
+
+/* The name: letters arrive one after another, thin as the name settles, and breathe while a recording plays */
+.name span { display: inline-block; font-weight: var(--w); font-variation-settings: 'opsz' 96; }
+.name .gap { width: 0.26em; }
+.js .name.go span { animation: arrive 900ms var(--ease) both; animation-delay: calc(var(--i) * 55ms); }
+@keyframes arrive { from { opacity: 0; transform: translateY(0.35em); font-weight: 300; } 60% { font-weight: 800; } to { opacity: 1; transform: none; font-weight: 800; } }
+.js body[data-playing] .name span, body[data-playing] .name span { animation: breathe 2600ms var(--ease) infinite; animation-delay: calc(var(--i) * 90ms); }
+@keyframes breathe { 0%, 100% { font-weight: var(--w); } 50% { font-weight: calc(var(--w) * 0.7); } }
+
+/* Hero */
+.hero-space { height: calc(var(--bar) + var(--dy) + 20px * var(--k) + 18px); }
+.hero-meta { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 14px 32px; padding-bottom: 26px; }
+.jump { display: flex; flex-wrap: wrap; gap: 4px 22px; font-weight: 600; }
+.jump a { padding: 10px 0; border-bottom: 2px solid var(--accent); }
+.frame { overflow: hidden; }
+.frame img { width: 100%; height: auto; }
+.hero-img { aspect-ratio: 4 / 5; }
+.hero-img img { height: 100%; object-fit: cover; object-position: 42% center; }
+@media (min-width: 900px) { .hero-img { aspect-ratio: 2 / 1; } .hero-img img { object-position: center 28%; } }
+.interlude { aspect-ratio: 3 / 2; }
+.interlude img { height: 100%; object-fit: cover; }
+@media (min-width: 900px) { .interlude { aspect-ratio: 9 / 4; } }
+
+/* Sections */
+section.list { padding-block: 72px; }
+@media (min-width: 900px) { section.list { padding-block: 130px; } }
+h2 { margin: 0 0 28px; font-size: clamp(46px, 7vw, 96px); font-weight: 700; letter-spacing: -0.045em; line-height: 0.95; text-wrap: balance; }
+h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
+
+/* Concert rows */
+.row { display: block; width: 100%; padding: 18px 0; border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.row-head { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: baseline; }
+.row-when { grid-column: 1 / -1; }
+.row-title { font-size: clamp(24px, 3vw, 40px); font-weight: 600; letter-spacing: -0.025em; line-height: 1.08; transition: transform var(--fast) var(--ease); }
+.row:hover .row-title { transform: translateX(8px); }
+.plus { position: relative; width: 16px; height: 16px; align-self: center; }
+.plus::before, .plus::after { content: ""; position: absolute; left: 0; top: 7px; width: 16px; height: 1.5px; background: currentColor; transition: transform var(--fast) var(--ease); }
+.plus::after { transform: rotate(90deg); }
+.row[aria-expanded="true"] .plus::after { transform: rotate(0deg); }
+.panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--slow) var(--ease); }
+.row[aria-expanded="true"] + .panel { grid-template-rows: 1fr; }
+.panel > div { overflow: hidden; min-height: 0; }
+.panel p { margin: 0; padding: 2px 0 26px; max-width: 34em; font-family: var(--text); font-size: 19px; line-height: 1.45; opacity: 0; transform: translateY(10px); transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); }
+.row[aria-expanded="true"] + .panel p { opacity: 1; transform: none; }
+@media (min-width: 900px) {
+  .row-head { grid-template-columns: 240px 1fr auto; }
+  .row-when { grid-column: auto; }
+  .panel p { padding-left: 256px; }
+}
+.today { margin-top: 6px; padding-top: 14px; border-top: 3px solid var(--accent); color: var(--accent); font-weight: 700; }
+.more { display: inline-block; margin-top: 14px; padding: 12px 0; border-bottom: 1px solid currentColor; }
+
+/* Projects */
+.grid { column-count: 2; column-gap: 16px; }
+@media (min-width: 700px) { .grid { column-count: 3; column-gap: 24px; } }
+@media (min-width: 1100px) { .grid { column-count: 4; } }
+.card { display: block; width: 100%; break-inside: avoid; margin-bottom: 30px; }
+.card .frame img { transition: transform var(--slow) var(--ease); }
+.card:hover .frame img { transform: scale(1.04); }
+.card-title { display: block; margin-top: 12px; font-size: clamp(17px, 1.7vw, 24px); font-weight: 600; letter-spacing: -0.015em; line-height: 1.15; }
+.card-sub { display: block; margin-top: 4px; font-size: 13px; line-height: 1.35; }
+.blank { aspect-ratio: 4 / 3; background: var(--orange); display: flex; align-items: center; justify-content: center; }
+
+/* Recordings */
+.rec { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.films { margin-top: 36px; border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.film { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); font-weight: 500; }
+.film .dot, .blank .dot { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid currentColor; border-radius: 22px; transition: transform var(--fast) var(--ease); }
+.film:hover .dot { transform: scale(1.12); }
+.blank .dot { color: var(--white); }
+@media (min-width: 900px) { .rec-wrap { display: grid; grid-template-columns: minmax(0, 620px) 1fr; gap: 64px; align-items: start; } .films { margin-top: 0; } .film { font-size: 21px; } }
+
+/* Quote and closing */
+.quote { padding-block: 84px; }
+.quote blockquote { margin: 0 0 22px; font-size: clamp(38px, 8vw, 118px); font-weight: 700; letter-spacing: -0.045em; line-height: 0.96; max-width: 11em; text-wrap: balance; }
+.close { padding-block: 84px 72px; }
+.close .big { display: inline-block; font-size: clamp(46px, 8vw, 118px); font-weight: 700; letter-spacing: -0.045em; line-height: 1; border-bottom: 4px solid var(--orange); }
+.close nav { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 6px 26px; font-weight: 500; }
+.close nav a { padding: 10px 0; border-bottom: 1px solid currentColor; }
+.creds { margin-top: 30px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+@media (min-width: 900px) { .quote { padding-block: 150px; } .close { padding-block: 150px 100px; } }
+
+/* Project page */
+#project { padding-top: calc(var(--bar) + 8px); padding-bottom: 80px; }
+.back { display: inline-flex; align-items: center; gap: 10px; height: 44px; font-weight: 500; }
+.p-head { padding-block: 22px 28px; }
+.p-head h1 { margin: 0 0 10px; font-size: clamp(46px, 8vw, 112px); font-weight: 700; letter-spacing: -0.045em; line-height: 0.94; text-wrap: balance; }
+.p-sub { font-family: var(--text); font-size: 19px; }
+.p-shot img { width: 100%; height: auto; }
+.p-cap { display: block; padding-top: 10px; font-size: 13px; line-height: 1.4; }
+.p-body p { margin: 30px 0 0; max-width: 34em; font-family: var(--text); font-size: clamp(19px, 1.5vw, 22px); line-height: 1.5; }
+.p-extra { margin: 36px 0 0 auto; width: 74%; max-width: 420px; }
+.p-extra img { width: 100%; height: auto; }
+.p-watch { display: inline-flex; align-items: center; gap: 16px; margin-top: 36px; font-weight: 500; }
+.p-next { display: block; margin-top: 64px; padding-top: 18px; border-top: 3px solid var(--orange); }
+.p-next b { display: block; margin-top: 4px; font-size: clamp(28px, 4vw, 56px); letter-spacing: -0.035em; line-height: 1; }
+@media (min-width: 900px) {
+  .p-cols { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 72px; align-items: start; padding-inline: var(--gutter); }
+  .p-cols .wrap { padding-inline: 0; }
+  .p-body p:first-child { margin-top: 0; }
+}
+
+/* Phrase-like arrival */
+.js .rise { opacity: 0; transform: translateY(18px); transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); transition-delay: calc(var(--i, 0) * 75ms); }
+.js .rise.in { opacity: 1; transform: none; }
+.js .open-img img { transform: scale(1.07); transition: transform 1600ms var(--ease); }
+.js .open-img.in img { transform: none; }
+
+/* A photo becomes the page */
+::view-transition-group(shot) { animation-duration: var(--slow); animation-timing-function: var(--ease); }
+::view-transition-old(shot), ::view-transition-new(shot) { height: 100%; object-fit: cover; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 520ms; animation-timing-function: var(--ease); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 1ms !important; transition-delay: 0ms !important; animation-duration: 1ms !important; }
+  .js .rise, .js .open-img img { opacity: 1; transform: none; }
+  .name span { animation: none !important; }
+}
+</style>
+
+<header class="bar">
+  <button class="listen" id="listen" aria-pressed="false">
+    <svg id="listen-icon" width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"></path></svg>
+    <span id="listen-label">Listen</span>
+  </button>
+</header>
+<a class="name" id="top-link" href="#top">Oliver Herbert</a>
+
+<main id="home">
+  <div id="top" class="hero-space"></div>
+  <div class="wrap hero-meta">
+    <span class="label rise">Cello</span>
+    <nav class="jump rise" aria-label="Sections">
+      <a href="#concerts">Concerts</a>
+      <a href="#projects">Projects</a>
+      <a href="#recordings">Recordings</a>
+      <a href="#top">About</a>
+      <a href="#top">Contact</a>
+    </nav>
+  </div>
+  <div class="frame hero-img open-img" data-tone="light"><img src="img/hero.jpg" alt="Oliver Herbert with his cello"></div>
+
+  <section class="list wrap" id="concerts" data-tone="light">
+    <h2 class="rise">Concerts</h2>
+    <h3 class="rise">Upcoming</h3>
+    <div id="upcoming"></div>
+    <div class="today label rise">Today</div>
+    <h3 class="rise">Past</h3>
+    <div id="past"></div>
+    <a class="more rise" href="#concerts">All concerts</a>
+  </section>
+
+  <div class="frame interlude open-img"><img src="img/live.jpg" alt="Oliver Herbert in performance" loading="lazy"></div>
+
+  <section class="list wrap" id="projects" data-tone="dark">
+    <h2 class="rise">Projects</h2>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <div class="frame interlude open-img"><img src="img/dark.jpg" alt="Oliver Herbert in silhouette on a dark stage" loading="lazy"></div>
+
+  <section class="list wrap" id="recordings" data-tone="light">
+    <h2 class="rise">Recordings</h2>
+    <div class="rec-wrap">
+      <div class="rec">
+        <div class="rise"><div class="frame"><img src="img/album.jpg" alt="Album cover of Frame of Mind" loading="lazy"></div><span class="card-title">Frame of Mind</span><span class="card-sub muted">Fauré and Janáček, with Xiaohui Yang, piano</span></div>
+        <div class="rise"><div class="frame"><img src="img/haydn.jpg" alt="Album cover of Haydn Cello Concerto No. 2" loading="lazy"></div><span class="card-title">Haydn: Cello Concerto No. 2</span><span class="card-sub muted">San Francisco Symphony, Michael Tilson Thomas. Warner Classics</span></div>
+      </div>
+      <div class="films" id="films"></div>
+    </div>
+  </section>
+
+  <section class="quote wrap" data-tone="orange">
+    <blockquote class="rise">A knockout. Youthful but magisterial.</blockquote>
+    <span class="label rise">San Francisco Classical Voice</span>
+  </section>
+
+  <section class="close wrap" data-tone="dark">
+    <span class="big rise">Write to me</span>
+    <nav class="rise" aria-label="For presenters">
+      <a href="#top">About</a>
+      <a href="#top">Press photos</a>
+      <a href="#top">Contact</a>
+    </nav>
+    <div class="creds muted rise">
+      <span>Avery Fisher Career Grant</span>
+      <span>Verbier Festival Jean-Nicolas Firmenich Prize</span>
+      <span>Curtis Institute of Music · Colburn School · Kronberg Academy</span>
+    </div>
+  </section>
+</main>
+
+<article id="project" hidden></article>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  (function () {
+    var el = document.getElementById('top-link'), words = el.textContent.trim().split(' '), i = 0, html = '';
+    el.setAttribute('aria-label', el.textContent.trim());
+    words.forEach(function (w, wi) {
+      if (wi) html += '<span class="gap" aria-hidden="true"></span>';
+      w.split('').forEach(function (ch) { html += '<span style="--i:' + (i++) + '" aria-hidden="true">' + ch + '</span>'; });
+    });
+    el.innerHTML = html; el.classList.add('go');
+    var spans = el.querySelectorAll('span:not(.gap)'), lastSpan = spans[spans.length - 1];
+    lastSpan.addEventListener('animationend', function () { el.classList.remove('go'); }, { once: true });
+  })();
+  var TRI = '<svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"></path></svg>';
+  var YT = 'https://www.youtube.com/watch?v=';
+
+  var UPCOMING = [
+    ['21 Nov 2027', 'Beethoven-Haus Bonn', 'Bonn. Program to be announced.'],
+    ['14–16 Nov 2026', 'Santa Rosa Symphony', 'Saint-Saëns: Cello Concerto. Santa Rosa, California.']
+  ];
+  var PAST = [
+    ['4 Oct 2026', 'Kronberg Festival, closing concert', 'C.P.E. Bach: Cello Concerto in B-flat. Reinhard Goebel, conductor. Kronberg.'],
+    ['17 Jun 2026', 'Grant Park Music Festival', 'Shostakovich: Cello Concerto No. 1 in E-flat, Op. 107. Giancarlo Guerrero, conductor. Jay Pritzker Pavilion, Chicago.'],
+    ['19 May 2026', 'Carnegie Hall, Zankel Hall', 'The complete Brahms Piano Quartets with Kirill Gerstein and Kronberg Academy musicians. New York.']
+  ];
+  var FILMS = [
+    ['Schnittke: Cello Sonata No. 2 (live)', '7rHCol4Jv0s'],
+    ['Desenne: Jaguar Songs (live)', 'o55-bh9YSAQ'],
+    ['Beethoven: Sonata Op. 5 No. 2, on fortepiano with Arash Rokni', 'suTU3-AbS0Q'],
+    ['Pressure / Druck: aftermovie', 'W2--KrUIkkc']
+  ];
+  var PROJECTS = [
+    { id: 'schnittke', title: 'Alfred Schnittke', sub: 'Cello Concerto No. 1 · Cello Sonata No. 2', img: 'score', ratio: '4 / 5',
+      cap: 'Cello Concerto No. 1 with Alexander Prior and the Erfurt Philharmonic, my German concerto debut, 2023.', extra: 'schnittke',
+      text: ["Schnittke's cello music has become a focus in recent years, something I revisit very often. A composer who resists easy placement, whose music cuts through artifice and circumstance and draws us intensely into the now.",
+             "The Cello Concerto No. 1 was originally conceived as a three movement work, the fourth movement added after an episode of heart failure: it is said that this is the music he heard when he briefly crossed over to death. Ecstatic, powerful, of extraordinary scope."],
+      watch: ['Cello Sonata No. 2 (live)', '7rHCol4Jv0s'] },
+    { id: 'wiebitte', title: 'Wie Bitte?', sub: 'A concert about re-hearing', img: 'wiebitte', ratio: '16 / 9',
+      text: ["Do you know that moment when you hear something and you're not quite sure you understood it correctly? In German: Wie bitte? Pardon? That was the central question of my last Mittwochskonzert at the Kronberg Academy. A concert about repetition, re-hearing, and how we construct meaning when things return."] },
+    { id: 'desenne', title: 'Paul Desenne', sub: '1959–2023 · Venezuelan composer and cellist', img: 'desenne', ratio: '3 / 2',
+      text: ["Many coincidences and variables in my life, as well as spending lots of time in Colombia, led me to a growing interest in music from Latin America. Paul's work became a gateway, opening up a deeper curiosity and sense of connection with the colorful intensity and universality of that musical language."],
+      watch: ['Jaguar Songs for Solo Cello (live)', 'o55-bh9YSAQ'] },
+    { id: 'pressure', title: 'Pressure / Druck', sub: 'Hindemith · Shostakovich · Schoenberg', img: 'pressure', ratio: '16 / 9',
+      text: ["The starting point for this project was a phenomenon that I find interesting: the moment when someone pursuing power, political or otherwise, crosses a threshold they cannot come back from. The pressure of preserving what has already been built begins to take over, and leads them in directions they themselves could never have conceived of at the beginning."],
+      watch: ['Aftermovie', 'W2--KrUIkkc'] },
+    { id: 'beethoven', title: 'Ludwig van Beethoven', sub: 'The Complete Cello Sonatas', img: 'beethoven', ratio: '16 / 9',
+      text: ["As I keep returning to these sonatas, I thought I'd carve out a little corner to spotlight them. They span Beethoven's entire creative life, from the bold and original Op. 5 pair written at 25, through the optimism, balance, and rustic quality of Op. 69, to the visionary and soulful Op. 102. Returning to them is never the same experience twice."],
+      watch: ['Sonata Op. 5 No. 2 on fortepiano, with Arash Rokni', 'suTU3-AbS0Q'] },
+    { id: 'trio', title: 'Trio Saye', sub: 'Oliver Herbert · Abigél Králik · Arash Rokni', img: 'trio', ratio: '4 / 5',
+      text: ["My piano trio with violinist Abigél Králik and pianist Arash Rokni.",
+             "Our first concert was in 2024 in Brussels, which included the world premiere of Diurne by Helena Winkelman, written as a sibling piece to Schubert's Notturno, as well as Beethoven's Piano Trio Op. 70 No. 2."] },
+    { id: 'williams', title: 'John Williams', sub: 'Cello Concerto (1994)', img: 'williams', ratio: '3 / 2',
+      text: ["Recently I had the pleasure of playing John Williams' Cello Concerto for the first time."] },
+    { id: 'tica', title: 'TICA Festival', sub: 'Kwai Tsing Theatre, Hong Kong · with Haruka Fujii, percussion', img: 'tica', ratio: '1 / 1',
+      text: ["A concert curated for Toolbox Percussion's TICA Festival in Hong Kong, with percussionist Haruka Fujii. The program ran from Bach to the world premiere of Andrew Moses' Ecstatic Immanence."] },
+    { id: 'raderberg', title: 'Raderbergkonzerte', sub: 'Deutschlandfunk, Cologne', img: 'raderberg', ratio: '4 / 5',
+      text: ["A program for Deutschlandfunk's Raderbergkonzerte in Cologne: Desenne, Ruth Crawford Seeger, Villa-Lobos, and Fauré. There has been such a rich history of exchange between the Americas and Europe, where those musical worlds blur into each other."] },
+    { id: 'sf', title: 'San Francisco', sub: 'Where it began', img: 'sf', ratio: '4 / 3',
+      text: ["I grew up in a family of musicians, my mom a violinist (my first music teacher on violin), and my dad a timpanist.",
+             "San Francisco is a city where new ideas are embraced and actively explored, a spirit of innovation that gives the place its dynamic energy. At the same time, the transcendental natural beauty always puts that energy in context."] },
+    { id: 'stop', title: 'Stop Motion', sub: 'Short films', img: null, ratio: '4 / 3',
+      text: ["A parallel practice in image-making."] }
+  ];
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function $(id) { return document.getElementById(id); }
+
+  /* Build the lists */
+  function rows(list, prefix) {
+    return list.map(function (c, i) {
+      var pid = prefix + '-panel-' + i;
+      return '<div class="rise"><button class="row" aria-expanded="false" aria-controls="' + pid + '"><span class="row-head">' +
+        '<span class="row-when label muted">' + esc(c[0]) + '</span><span class="row-title">' + esc(c[1]) + '</span><span class="plus" aria-hidden="true"></span>' +
+        '</span></button><div class="panel" id="' + pid + '"><div><p>' + esc(c[2]) + '</p></div></div></div>';
+    }).join('');
+  }
+  $('upcoming').innerHTML = rows(UPCOMING, 'up');
+  $('past').innerHTML = rows(PAST, 'past');
+  $('grid').innerHTML = PROJECTS.map(function (p) {
+    var pic = p.img
+      ? '<span class="frame" style="display:block;aspect-ratio:' + p.ratio + '"><img src="img/' + p.img + '.jpg" alt="' + esc(p.title) + '" loading="lazy" style="width:100%;height:100%;object-fit:cover"></span>'
+      : '<span class="blank"><span class="dot">' + TRI + '</span></span>';
+    return '<button class="card rise" data-id="' + p.id + '">' + pic + '<span class="card-title">' + esc(p.title) + '</span><span class="card-sub muted">' + esc(p.sub) + '</span></button>';
+  }).join('');
+  $('films').innerHTML = FILMS.map(function (f) {
+    return '<a class="film rise" href="' + YT + f[1] + '" target="_blank" rel="noopener"><span class="dot">' + TRI + '</span><span>' + esc(f[0]) + '</span></a>';
+  }).join('');
+
+  /* Concert rows open in place */
+  document.addEventListener('click', function (e) {
+    var row = e.target.closest('.row');
+    if (row) row.setAttribute('aria-expanded', row.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+  });
+
+  /* Text arrives like a phrase; photos settle as they come into view */
+  function stagger(scope) {
+    var groups = new Map();
+    scope.querySelectorAll('.rise').forEach(function (el) {
+      var n = groups.get(el.parentNode) || 0;
+      el.style.setProperty('--i', Math.min(n, 7));
+      groups.set(el.parentNode, n + 1);
+    });
+  }
+  var seen = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); seen.unobserve(en.target); } });
+  }, { rootMargin: '0px 0px -8% 0px' }) : null;
+  function watch(scope) {
+    stagger(scope);
+    scope.querySelectorAll('.rise, .open-img').forEach(function (el) { if (seen) seen.observe(el); else el.classList.add('in'); });
+  }
+  watch(document);
+
+  /* Color changes like weather: the ground follows the section at mid-screen */
+  var home = $('home'), project = $('project');
+  if ('IntersectionObserver' in window) {
+    var tone = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting && !home.hidden) document.body.dataset.tone = en.target.dataset.tone; });
+    }, { rootMargin: '-48% 0px -48% 0px' });
+    document.querySelectorAll('[data-tone]').forEach(function (el) { tone.observe(el); });
+  }
+
+  /* The name settles into the corner */
+  var ticking = false;
+  function settle() {
+    ticking = false;
+    var p = home.hidden ? 1 : Math.max(0, Math.min(1, window.scrollY / 240));
+    root.style.setProperty('--p', p.toFixed(4));
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(settle); } }, { passive: true });
+  settle();
+
+  /* A photo becomes the page */
+  var lastScroll = 0, lastCard = null;
+  function change(fn) {
+    if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) return document.startViewTransition(fn);
+    fn(); return null;
+  }
+  function renderProject(p) {
+    var idx = PROJECTS.indexOf(p), next = PROJECTS[(idx + 1) % PROJECTS.length];
+    var shot = p.img ? '<div class="p-shot"><img id="p-img" src="img/' + p.img + '.jpg" alt="' + esc(p.title) + '" style="aspect-ratio:' + p.ratio + ';object-fit:cover">' +
+      '</div>' : '<div></div>';
+    project.innerHTML =
+      '<div class="wrap"><button class="back" id="back"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Projects</span></button>' +
+      '<div class="p-head"><h1 class="rise">' + esc(p.title) + '</h1><div class="p-sub rise">' + esc(p.sub) + '</div></div></div>' +
+      '<div class="p-cols">' + shot + '<div class="wrap p-body">' +
+      p.text.map(function (t) { return '<p class="rise">' + esc(t) + '</p>'; }).join('') +
+      (p.extra ? '<div class="p-extra rise"><img src="img/' + p.extra + '.jpg" alt="' + esc(p.title) + '">' + (p.cap ? '<span class="p-cap muted">' + esc(p.cap) + '</span>' : '') + '</div>' : '') +
+      (p.watch ? '<a class="p-watch film rise" href="' + YT + p.watch[1] + '" target="_blank" rel="noopener"><span class="dot">' + TRI + '</span><span>' + esc(p.watch[0]) + '</span></a>' : '') +
+      '<button class="p-next rise" data-id="' + next.id + '" style="width:100%"><span class="label muted">Next project</span><b>' + esc(next.title) + '</b></button>' +
+      '</div></div>';
+    watch(project);
+  }
+  function openProject(id, card) {
+    var p = PROJECTS.filter(function (x) { return x.id === id; })[0];
+    if (!p) return;
+    var from = card ? card.querySelector('img') : null;
+    if (card) { lastScroll = window.scrollY; lastCard = card; }
+    if (from) from.style.viewTransitionName = 'shot';
+    change(function () {
+      if (from) from.style.viewTransitionName = '';
+      renderProject(p);
+      home.hidden = true; project.hidden = false;
+      document.body.dataset.tone = 'light';
+      var to = $('p-img'); if (to && from) to.style.viewTransitionName = 'shot';
+      root.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); root.style.scrollBehavior = '';
+      settle();
+    });
+  }
+  function closeProject() {
+    var from = $('p-img'), to = lastCard ? lastCard.querySelector('img') : null;
+    var same = lastCard && from && to && from.getAttribute('src') === to.getAttribute('src');
+    if (!same && from) from.style.viewTransitionName = '';
+    var t = change(function () {
+      project.hidden = true; home.hidden = false; project.innerHTML = '';
+      document.body.dataset.tone = 'dark';
+      if (same) to.style.viewTransitionName = 'shot';
+      root.style.scrollBehavior = 'auto'; window.scrollTo(0, lastScroll); root.style.scrollBehavior = '';
+      settle();
+    });
+    var clear = function () { if (to) to.style.viewTransitionName = ''; };
+    if (t && t.finished) t.finished.then(clear, clear); else clear();
+  }
+  document.addEventListener('click', function (e) {
+    var card = e.target.closest('.card');
+    if (card) { openProject(card.dataset.id, card); return; }
+    var next = e.target.closest('.p-next');
+    if (next) { openProject(next.dataset.id, null); return; }
+    if (e.target.closest('#back')) { closeProject(); return; }
+    if (e.target.closest('#top-link') && home.hidden) { e.preventDefault(); closeProject(); }
+  });
+
+  /* Listen: becomes a line of progress across the top. Silent until a recording is attached. */
+  var AUDIO_SRC = '';              /* path to the Janáček recording goes here */
+  var LENGTH = 240;                /* seconds, used only while there is no audio file */
+  var btn = $('listen'), label = $('listen-label'), icon = $('listen-icon');
+  var audio = AUDIO_SRC ? new Audio(AUDIO_SRC) : null, playing = false, elapsed = 0, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    if (audio && audio.duration) { root.style.setProperty('--prog', (audio.currentTime / audio.duration * 100).toFixed(2) + '%'); }
+    else { elapsed = (elapsed + (now - last) / 1000) % LENGTH; last = now; root.style.setProperty('--prog', (elapsed / LENGTH * 100).toFixed(2) + '%'); }
+    requestAnimationFrame(frame);
+  }
+  btn.addEventListener('click', function () {
+    playing = !playing;
+    btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    if (playing) document.body.dataset.playing = ''; else delete document.body.dataset.playing;
+    label.textContent = playing ? 'Janáček: Pohádka, III' : 'Listen';
+    icon.innerHTML = playing ? '<path d="M2 1 V13 M10 1 V13" stroke="currentColor" stroke-width="2.5" fill="none"></path>' : '<path d="M1 1 L11 7 L1 13 Z" fill="currentColor"></path>';
+    if (audio) { if (playing) audio.play().catch(function () {}); else audio.pause(); }
+    if (playing) { last = performance.now(); requestAnimationFrame(frame); }
+  });
+})();
+</script>
+</body></html>

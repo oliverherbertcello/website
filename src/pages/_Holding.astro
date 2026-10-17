@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import { ui, languages, type Lang } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+const letters = 'Oliver Herbert'.split('');
+---
+<Base title="Oliver Herbert, cello" lang={lang} description="Oliver Herbert, cellist.">
+  <main class="hold">
+    <h1 class="name" aria-label="Oliver Herbert">
+      {letters.map((ch, i) => ch === ' '
+        ? <span class="gap" aria-hidden="true"></span>
+        : <span style={`--i:${i}`} aria-hidden="true">{ch}</span>)}
+    </h1>
+    <p class="label">{t.cello}</p>
+    <p class="soon">{t.soon}</p>
+    <nav class="langs" aria-label="Language">
+      {Object.entries(languages).map(([l, label]) => (
+        <a href={l === 'en' ? '/' : `/${l}/`} aria-current={l === lang ? 'page' : undefined}>{label}</a>
+      ))}
+    </nav>
+  </main>
+</Base>
+
+<style>
+  .hold { min-height: 100svh; box-sizing: border-box; padding: 18vh var(--gutter) 48px; display: flex; flex-direction: column; gap: 18px; }
+  .name { margin: 0; display: flex; flex-wrap: wrap; font-size: clamp(56px, 13vw, 168px); line-height: 0.9; letter-spacing: -0.045em; font-weight: 800; }
+  .name span { display: inline-block; animation: arrive 900ms var(--ease) both; animation-delay: calc(var(--i) * 55ms); }
+  .name .gap { width: 0.26em; animation: none; }
+  @keyframes arrive { from { opacity: 0; transform: translateY(0.35em); font-weight: 300; } 60% { font-weight: 800; } to { opacity: 1; transform: none; font-weight: 800; } }
+  .label { margin: 0; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .soon { margin: 24px 0 0; max-width: 34em; font-family: var(--text); font-size: 19px; }
+  .langs { margin-top: auto; display: flex; gap: 22px; font-weight: 600; }
+  .langs a { padding: 10px 0; border-bottom: 2px solid transparent; }
+  .langs a[aria-current='page'] { border-bottom-color: var(--accent); }
+</style>
