@@ -422,6 +422,30 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .ab-photos img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: opacity var(--fast) var(--ease); }
 .ab-photos a:hover img { opacity: 0.85; }
 
+/* Biography: short version, full text on request */
+.fullbio { margin-top: 8px; }
+.fullbio summary { display: inline-flex; align-items: center; gap: 10px; height: var(--btn); padding: 0 24px; border: 1px solid currentColor; border-radius: calc(var(--btn) / 2); font-size: 16px; font-weight: 600; cursor: pointer; list-style: none; transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease); }
+.fullbio summary::-webkit-details-marker { display: none; }
+.fullbio summary::after { content: "+"; font-weight: 400; }
+.fullbio[open] summary::after { content: "–"; }
+.fullbio summary:hover { background: var(--fg); color: var(--bg); }
+.fullbio-text { margin-top: var(--block); opacity: 0.85; }
+
+/* Chronology: year by year, on the same grid as the concert rows */
+.chrono { border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.ch-year { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 0 16px; padding: var(--row) 0; border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.ch-y { font-family: var(--serif); font-size: var(--fs-title); line-height: 1.1; }
+.ch-y.word { font-family: var(--display); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding-top: 0.35em; }
+@media (max-width: 899px) { .ch-y.word { grid-column: 1 / -1; padding: 0 0 8px; } .ch-y.word + .ch-items { grid-column: 1 / -1; } }
+.ch-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.ch-items li { font-size: var(--fs-body); line-height: 1.45; }
+.ch-items .k { display: block; font-size: var(--fs-label); letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.55; margin-bottom: 2px; }
+.ch-items a { border-bottom: 1px solid var(--orange); }
+.ch-photo { grid-column: 2; margin: 12px 0 4px; }
+.ch-photo img { display: block; width: min(100%, 520px); aspect-ratio: 3 / 2; object-fit: cover; }
+.ch-photo figcaption { margin-top: 8px; }
+@media (min-width: 900px) { .ch-year { grid-template-columns: 120px minmax(0, 1fr); gap: 0 var(--rail-gap); } }
+
 /* Project page */
 #project { padding-top: calc(var(--bar) + 8px); padding-bottom: 80px; }
 .back { display: inline-flex; align-items: center; gap: 10px; height: 44px; font-weight: 500; }
@@ -606,15 +630,22 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   <div class="railed">
     <span class="label lab rise">Biography</span>
     <div class="bio">
-      <p class="lead rise">Oliver Herbert is a concert cellist known for performances that combine intensity, clarity, and a strong sense of musical direction.</p>
-      <p class="rise">The recipient of a 2021 Avery Fisher Career Grant, his work spans solo performance, chamber music, and curatorial projects.</p>
-      <p class="rise">As a concerto soloist he has appeared across the Americas and Europe, collaborating with conductors such as Michael Tilson Thomas, Giancarlo Guerrero, Juanjo Mena, Teddy Abrams, and Alexander Shelley. Of his subscription debut with the San Francisco Symphony under MTT, San Francisco Classical Voice wrote: “His technical command, full-throated but never indulgent tone, crisp yet expressive phrasing, and tactful use of vibrato flowed together… youthful but magisterial.”</p>
-      <p class="rise">Oliver approaches his projects with a wide-ranging curiosity, exploring lesser-known repertoire, music of today, and connections that reveal new perspectives on familiar works. His projects have included concert curations for Deutschlandfunk Raderbergkonzerte and the TICA Festival in Hong Kong, as well as premieres of works by Andrew Moses, Žibuoklė Martinaitytė, and Helena Winkelman.</p>
-      <p class="rise">As a chamber musician, he appears regularly at leading festivals and venues including Marlboro Music, Moritzburg Festival, La Jolla SummerFest, Rheingau Festival, ChamberFest Cleveland, Philadelphia Chamber Music Society, Utrecht Festival, 92nd Street Y, and the Ravinia Festival. A highlight of recent seasons was a North American tour with Mitsuko Uchida and musicians from Marlboro Music, including a performance at Carnegie Hall. He has collaborated with artists such as Janine Jansen, Jonathan Biss, and Tabea Zimmermann.</p>
-      <p class="rise">His recordings include Haydn’s D Major Cello Concerto with the San Francisco Symphony and Michael Tilson Thomas, released by Warner Classics. In June 2020, he released his debut album with pianist Xiaohui Yang, Frame of Mind: Fauré and Janáček.</p>
-      <p class="rise">Oliver is the recipient of the Verbier Festival Jean-Nicolas Firmenich Prize and top prizes at the Lutosławski International Cello Competition, the Klein and Stulberg Competitions. In 2025, he was selected for the Orpheum Foundation’s development program for young soloists.</p>
-      <p class="rise">Born and raised in San Francisco, he is a graduate of the Colburn School, Curtis Institute of Music, and Kronberg Academy. He plays on a Guadagnini cello that once belonged to Antonio Janigro, on generous loan from the Janigro family.</p>
+      <p class="lead rise">Oliver Herbert is a cellist who moves between concertos, chamber music and programs of his own making.</p>
+      <p class="rise">The recipient of a 2021 Avery Fisher Career Grant and the Verbier Festival’s Jean-Nicolas Firmenich Prize, he has appeared with the San Francisco Symphony under Michael Tilson Thomas and with conductors including Giancarlo Guerrero, Juanjo Mena and Alexander Shelley. His chamber music has taken him to Marlboro, Carnegie Hall with Mitsuko Uchida, and festivals across the Americas and Europe.</p>
+      <p class="rise">His projects often begin from a question rather than a repertoire list: what changes when we hear something twice, how power changes the people who hold it, where the music of the Americas and Europe meet. He plays a Guadagnini cello that once belonged to Antonio Janigro, on loan from the Janigro family.</p>
+      <details class="fullbio rise"><summary>Full biography</summary><div class="fullbio-text"><p>Oliver Herbert is a concert cellist known for performances that combine intensity, clarity, and a strong sense of musical direction.</p>
+      <p>The recipient of a 2021 Avery Fisher Career Grant, his work spans solo performance, chamber music, and curatorial projects.</p>
+      <p>As a concerto soloist he has appeared across the Americas and Europe, collaborating with conductors such as Michael Tilson Thomas, Giancarlo Guerrero, Juanjo Mena, Teddy Abrams, and Alexander Shelley. Of his subscription debut with the San Francisco Symphony under MTT, San Francisco Classical Voice wrote: “His technical command, full-throated but never indulgent tone, crisp yet expressive phrasing, and tactful use of vibrato flowed together… youthful but magisterial.”</p>
+      <p>Oliver approaches his projects with a wide-ranging curiosity, exploring lesser-known repertoire, music of today, and connections that reveal new perspectives on familiar works. His projects have included concert curations for Deutschlandfunk Raderbergkonzerte and the TICA Festival in Hong Kong, as well as premieres of works by Andrew Moses, Žibuoklė Martinaitytė, and Helena Winkelman.</p>
+      <p>As a chamber musician, he appears regularly at leading festivals and venues including Marlboro Music, Moritzburg Festival, La Jolla SummerFest, Rheingau Festival, ChamberFest Cleveland, Philadelphia Chamber Music Society, Utrecht Festival, 92nd Street Y, and the Ravinia Festival. A highlight of recent seasons was a North American tour with Mitsuko Uchida and musicians from Marlboro Music, including a performance at Carnegie Hall. He has collaborated with artists such as Janine Jansen, Jonathan Biss, and Tabea Zimmermann.</p>
+      <p>His recordings include Haydn’s D Major Cello Concerto with the San Francisco Symphony and Michael Tilson Thomas, released by Warner Classics. In June 2020, he released his debut album with pianist Xiaohui Yang, Frame of Mind: Fauré and Janáček.</p>
+      <p>Oliver is the recipient of the Verbier Festival Jean-Nicolas Firmenich Prize and top prizes at the Lutosławski International Cello Competition, the Klein and Stulberg Competitions. In 2025, he was selected for the Orpheum Foundation’s development program for young soloists.</p>
+      <p>Born and raised in San Francisco, he is a graduate of the Colburn School, Curtis Institute of Music, and Kronberg Academy. He plays on a Guadagnini cello that once belonged to Antonio Janigro, on generous loan from the Janigro family.</p></div></details>
     </div>
+  </div>
+  <div class="railed">
+    <span class="label lab rise">Chronology</span>
+    <div class="chrono" id="chrono"></div>
   </div>
   <div class="railed">
     <span class="label lab rise">Press</span>
@@ -860,7 +891,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     change(function () {
       if (from) from.style.viewTransitionName = '';
       renderProject(p);
-      home.hidden = true; project.hidden = false;
+      home.hidden = true; if (typeof cal !== 'undefined') cal.hidden = true; if (typeof ab !== 'undefined') ab.hidden = true; project.hidden = false;
       document.body.dataset.tone = 'light';
       var to = $('p-img'); if (to && from) to.style.viewTransitionName = 'shot';
       root.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); root.style.scrollBehavior = '';
@@ -888,6 +919,41 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     if (next) { openProject(next.dataset.id, null); return; }
     if (e.target.closest('#back')) { closeProject(); return; }
     if ((e.target.closest('#top-link') || e.target.closest('#mono')) && home.hidden) { e.preventDefault(); closeProject(); }
+  });
+
+  /* Chronology: milestones only; every concert lives in the calendar. [year, kind, text, project id?] and photos per year. */
+  var CHRONO = [
+    ['Beginnings', [['', 'Grows up in San Francisco in a family of musicians; first lessons on violin with his mother, then the cello.']]],
+    ['2013', [['Orchestra', 'First appearance as concerto soloist, with the Prometheus Symphony.']]],
+    ['2014', [['Study', 'Colburn School Academy, with Clive Greensmith.'], ['Orchestra', 'Soloist with the San Francisco Symphony Youth Orchestra.']]],
+    ['2015', [['Prize', 'First prize and the Pablo Casals Award for Bach at the Irving M. Klein International String Competition; second prize at the Stulberg International String Competition.'], ['Study', 'Curtis Institute of Music, with Carter Brey, Peter Wiley and Pamela Frank.'], ['Broadcast', 'NPR’s From the Top.']]],
+    ['2016', [['Chamber music', 'First summers at ChamberFest Cleveland, Caramoor and Music in the Vineyards.']]],
+    ['2017', [['Prize', 'Verbier Festival Academy: Prix Jean-Nicolas Firmenich.']]],
+    ['2018', [['Prize', 'Fourth prize and a special award for the Sacher Variation at the XI Witold Lutosławski International Cello Competition.'], ['Orchestra', 'San Francisco Symphony; Warsaw Philharmonic.']]],
+    ['2019', [['Orchestra', 'San Francisco Symphony under Michael Tilson Thomas.'], ['Study', 'Graduates from Curtis.']], ['chrono-sfs', 'With Michael Tilson Thomas and the San Francisco Symphony']],
+    ['2020', [['Recording', 'Debut album, Frame of Mind: Fauré and Janáček, with Xiaohui Yang.'], ['Recital', 'Ravinia Festival.']]],
+    ['2021', [['Prize', 'Avery Fisher Career Grant.'], ['Chamber music', 'First summer at Marlboro Music.'], ['Recital', 'The complete Bach suites, Capital Region Classical.']]],
+    ['2022', [['Recital', 'The complete Beethoven sonatas with Xiaohui Yang, Guarneri Hall, Chicago.', 'beethoven']]],
+    ['2023', [['Study', 'Kronberg Academy, with Frans Helmerson.'], ['Orchestra', 'German concerto debut: Schnittke’s Cello Concerto No. 1 with Alexander Prior and the Erfurt Philharmonic.', 'schnittke'], ['Premiere', 'Andrew Moses’ Ecstatic Immanence at the TICA Festival, Hong Kong; a solo work by Žibuoklė Martinaitytė at the Kronberg Festival.', 'tica']], ['schnittke', 'With Alexander Prior in Erfurt']],
+    ['2024', [['Chamber music', 'North American tour with Mitsuko Uchida and musicians from Marlboro, including Carnegie Hall.'], ['Project', 'Curates a program for Deutschlandfunk’s Raderbergkonzerte.', 'raderberg'], ['Premiere', 'Trio Saye’s first concert, in Brussels, with Helena Winkelman’s Diurne.', 'trio']], ['chrono-uchida', 'With Mitsuko Uchida']],
+    ['2025', [['Program', 'Selected for the Orpheum Foundation’s development program for young soloists.'], ['Orchestra', 'Tchaikovsky’s Rococo Variations, original version, with Giancarlo Guerrero in Nashville and Sarasota.']]],
+    ['2026', [['Orchestra', 'Shostakovich’s First Concerto with Giancarlo Guerrero at Grant Park; John Williams’ Cello Concerto for the first time.', 'williams'], ['Chamber music', 'The complete Brahms piano quartets with Kirill Gerstein at Carnegie Hall.'], ['Project', 'Wie Bitte?, a concert about re-hearing, at Kronberg Academy.', 'wiebitte']]]
+  ];
+  (function () {
+    var box = $('chrono'); if (!box) return;
+    box.innerHTML = CHRONO.map(function (y) {
+      var items = y[1].map(function (it) {
+        var t = esc(it[1]);
+        if (it[2]) t = '<a href="#" class="ch-link" data-id="' + it[2] + '">' + t + '</a>';
+        return '<li>' + (it[0] ? '<span class="k">' + esc(it[0]) + '</span>' : '') + t + '</li>';
+      }).join('');
+      var ph = y[2] ? '<figure class="ch-photo"><img src="img/' + y[2][0] + '.jpg" alt="' + esc(y[2][1]) + '" loading="lazy"><figcaption class="label muted">' + esc(y[2][1]) + '</figcaption></figure>' : '';
+      return '<div class="ch-year rise"><span class="ch-y' + (/^\d/.test(y[0]) ? '' : ' word') + '">' + esc(y[0]) + '</span><ul class="ch-items">' + items + '</ul>' + ph + '</div>';
+    }).join('');
+  })();
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('.ch-link');
+    if (a) { e.preventDefault(); openProject(a.dataset.id, null); }
   });
 
   /* The About page opens as its own page */
