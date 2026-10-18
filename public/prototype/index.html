@@ -422,6 +422,11 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .ab-photos img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: opacity var(--fast) var(--ease); }
 .ab-photos a:hover img { opacity: 0.85; }
 
+/* The timeline module */
+.tl-shot img { display: block; width: 100%; }
+.tl-body { margin-top: var(--section); }
+@media (min-width: 900px) { .tl-shot, .tl-body, .tl-next { margin-left: calc(var(--rail) + var(--rail-gap)); } .tl-next { width: auto !important; display: block; } }
+
 /* Biography: short version, full text on request */
 .fullbio { margin-top: 8px; }
 .fullbio summary { display: inline-flex; align-items: center; gap: 10px; height: var(--btn); padding: 0 24px; border: 1px solid currentColor; border-radius: calc(var(--btn) / 2); font-size: 16px; font-weight: 600; cursor: pointer; list-style: none; transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease); }
@@ -633,19 +638,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
       <p class="lead rise">Oliver Herbert is a cellist who moves between concertos, chamber music and programs of his own making.</p>
       <p class="rise">The recipient of a 2021 Avery Fisher Career Grant and the Verbier Festival’s Jean-Nicolas Firmenich Prize, he has appeared with the San Francisco Symphony under Michael Tilson Thomas and with conductors including Giancarlo Guerrero, Juanjo Mena and Alexander Shelley. His chamber music has taken him to Marlboro, Carnegie Hall with Mitsuko Uchida, and festivals across the Americas and Europe.</p>
       <p class="rise">His projects often begin from a question rather than a repertoire list: what changes when we hear something twice, how power changes the people who hold it, where the music of the Americas and Europe meet. He plays a Guadagnini cello that once belonged to Antonio Janigro, on loan from the Janigro family.</p>
-      <details class="fullbio rise"><summary>Full biography</summary><div class="fullbio-text"><p>Oliver Herbert is a concert cellist known for performances that combine intensity, clarity, and a strong sense of musical direction.</p>
-      <p>The recipient of a 2021 Avery Fisher Career Grant, his work spans solo performance, chamber music, and curatorial projects.</p>
-      <p>As a concerto soloist he has appeared across the Americas and Europe, collaborating with conductors such as Michael Tilson Thomas, Giancarlo Guerrero, Juanjo Mena, Teddy Abrams, and Alexander Shelley. Of his subscription debut with the San Francisco Symphony under MTT, San Francisco Classical Voice wrote: “His technical command, full-throated but never indulgent tone, crisp yet expressive phrasing, and tactful use of vibrato flowed together… youthful but magisterial.”</p>
-      <p>Oliver approaches his projects with a wide-ranging curiosity, exploring lesser-known repertoire, music of today, and connections that reveal new perspectives on familiar works. His projects have included concert curations for Deutschlandfunk Raderbergkonzerte and the TICA Festival in Hong Kong, as well as premieres of works by Andrew Moses, Žibuoklė Martinaitytė, and Helena Winkelman.</p>
-      <p>As a chamber musician, he appears regularly at leading festivals and venues including Marlboro Music, Moritzburg Festival, La Jolla SummerFest, Rheingau Festival, ChamberFest Cleveland, Philadelphia Chamber Music Society, Utrecht Festival, 92nd Street Y, and the Ravinia Festival. A highlight of recent seasons was a North American tour with Mitsuko Uchida and musicians from Marlboro Music, including a performance at Carnegie Hall. He has collaborated with artists such as Janine Jansen, Jonathan Biss, and Tabea Zimmermann.</p>
-      <p>His recordings include Haydn’s D Major Cello Concerto with the San Francisco Symphony and Michael Tilson Thomas, released by Warner Classics. In June 2020, he released his debut album with pianist Xiaohui Yang, Frame of Mind: Fauré and Janáček.</p>
-      <p>Oliver is the recipient of the Verbier Festival Jean-Nicolas Firmenich Prize and top prizes at the Lutosławski International Cello Competition, the Klein and Stulberg Competitions. In 2025, he was selected for the Orpheum Foundation’s development program for young soloists.</p>
-      <p>Born and raised in San Francisco, he is a graduate of the Colburn School, Curtis Institute of Music, and Kronberg Academy. He plays on a Guadagnini cello that once belonged to Antonio Janigro, on generous loan from the Janigro family.</p></div></details>
     </div>
-  </div>
-  <div class="railed">
-    <span class="label lab rise">Chronology</span>
-    <div class="chrono" id="chrono"></div>
   </div>
   <div class="railed">
     <span class="label lab rise">Press</span>
@@ -778,7 +771,8 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
       text: ["I grew up in a family of musicians, my mom a violinist (my first music teacher on violin), and my dad a timpanist.",
              "San Francisco is a city where new ideas are embraced and actively explored, a spirit of innovation that gives the place its dynamic energy. At the same time, the transcendental natural beauty always puts that energy in context."] },
     { id: 'stop', title: 'Stop Motion', sub: 'Short films', img: null, ratio: '4 / 3',
-      text: ["A parallel practice in image-making."] }
+      text: ["A parallel practice in image-making."] },
+    { id: 'timeline', title: 'From the beginning', sub: 'San Francisco to now', img: 'timeline', ratio: '3 / 2', chrono: true, text: [] }
   ];
 
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
@@ -869,6 +863,15 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   }
   function renderProject(p) {
     var idx = PROJECTS.indexOf(p), next = PROJECTS[(idx + 1) % PROJECTS.length];
+    if (p.chrono) {
+      project.innerHTML =
+        '<div class="wrap"><button class="back" id="back"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Explore</span></button>' +
+        '<div class="p-head"><h1 class="rise">' + esc(p.title) + '</h1><div class="p-sub rise">' + esc(p.sub) + '</div></div>' +
+        '<div class="tl-shot"><img id="p-img" src="img/' + p.img + '.jpg" alt="Oliver Herbert in rehearsal" style="aspect-ratio:' + p.ratio + ';object-fit:cover"></div>' +
+        '<div class="tl-body">' + chronoHTML() + '</div>' +
+        '<button class="p-next tl-next rise" data-id="' + next.id + '" style="width:100%"><span class="label muted">Next project</span><b>' + esc(next.title) + '</b></button></div>';
+      watch(project); return;
+    }
     var shot = p.img ? '<div class="p-shot"><img id="p-img" src="img/' + p.img + '.jpg" alt="' + esc(p.title) + '" style="aspect-ratio:' + p.ratio + ';object-fit:cover">' +
       '</div>' : '<div></div>';
     project.innerHTML =
@@ -923,34 +926,32 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 
   /* Chronology: milestones only; every concert lives in the calendar. [year, kind, text, project id?] and photos per year. */
   var CHRONO = [
-    ['Beginnings', [['', 'Grows up in San Francisco in a family of musicians; first lessons on violin with his mother, then the cello.']]],
-    ['2013', [['Orchestra', 'First appearance as concerto soloist, with the Prometheus Symphony.']]],
-    ['2014', [['Study', 'Colburn School Academy, with Clive Greensmith.'], ['Orchestra', 'Soloist with the San Francisco Symphony Youth Orchestra.']]],
-    ['2015', [['Prize', 'First prize and the Pablo Casals Award for Bach at the Irving M. Klein International String Competition; second prize at the Stulberg International String Competition.'], ['Study', 'Curtis Institute of Music, with Carter Brey, Peter Wiley and Pamela Frank.'], ['Broadcast', 'NPR’s From the Top.']]],
-    ['2016', [['Chamber music', 'First summers at ChamberFest Cleveland, Caramoor and Music in the Vineyards.']]],
-    ['2017', [['Prize', 'Verbier Festival Academy: Prix Jean-Nicolas Firmenich.']]],
-    ['2018', [['Prize', 'Fourth prize and a special award for the Sacher Variation at the XI Witold Lutosławski International Cello Competition.'], ['Orchestra', 'San Francisco Symphony; Warsaw Philharmonic.']]],
-    ['2019', [['Orchestra', 'San Francisco Symphony under Michael Tilson Thomas.'], ['Study', 'Graduates from Curtis.']], ['chrono-sfs', 'With Michael Tilson Thomas and the San Francisco Symphony']],
-    ['2020', [['Recording', 'Debut album, Frame of Mind: Fauré and Janáček, with Xiaohui Yang.'], ['Recital', 'Ravinia Festival.']]],
-    ['2021', [['Prize', 'Avery Fisher Career Grant.'], ['Chamber music', 'First summer at Marlboro Music.'], ['Recital', 'The complete Bach suites, Capital Region Classical.']]],
-    ['2022', [['Recital', 'The complete Beethoven sonatas with Xiaohui Yang, Guarneri Hall, Chicago.', 'beethoven']]],
-    ['2023', [['Study', 'Kronberg Academy, with Frans Helmerson.'], ['Orchestra', 'German concerto debut: Schnittke’s Cello Concerto No. 1 with Alexander Prior and the Erfurt Philharmonic.', 'schnittke'], ['Premiere', 'Andrew Moses’ Ecstatic Immanence at the TICA Festival, Hong Kong; a solo work by Žibuoklė Martinaitytė at the Kronberg Festival.', 'tica']], ['schnittke', 'With Alexander Prior in Erfurt']],
-    ['2024', [['Chamber music', 'North American tour with Mitsuko Uchida and musicians from Marlboro, including Carnegie Hall.'], ['Project', 'Curates a program for Deutschlandfunk’s Raderbergkonzerte.', 'raderberg'], ['Premiere', 'Trio Saye’s first concert, in Brussels, with Helena Winkelman’s Diurne.', 'trio']], ['chrono-uchida', 'With Mitsuko Uchida']],
-    ['2025', [['Program', 'Selected for the Orpheum Foundation’s development program for young soloists.'], ['Orchestra', 'Tchaikovsky’s Rococo Variations, original version, with Giancarlo Guerrero in Nashville and Sarasota.']]],
-    ['2026', [['Orchestra', 'Shostakovich’s First Concerto with Giancarlo Guerrero at Grant Park; John Williams’ Cello Concerto for the first time.', 'williams'], ['Chamber music', 'The complete Brahms piano quartets with Kirill Gerstein at Carnegie Hall.'], ['Project', 'Wie Bitte?, a concert about re-hearing, at Kronberg Academy.', 'wiebitte']]]
+    ['Beginnings', [['Grows up in San Francisco in a family of musicians: his mother a violinist and his first teacher, his father a timpanist. Violin first, then the cello.']]],
+    ['2013', [['First appearance as a concerto soloist, with the Prometheus Symphony.']]],
+    ['2014', [['Colburn School, with Clive Greensmith. Soloist with the San Francisco Symphony Youth Orchestra.']]],
+    ['2015', [['Curtis Institute of Music, with Carter Brey, Peter Wiley and Pamela Frank.']]],
+    ['2016', [['First summers of chamber music: ChamberFest Cleveland, Caramoor, Music in the Vineyards.']]],
+    ['2017', [['Verbier Festival Academy.']]],
+    ['2019', [['San Francisco Symphony under Michael Tilson Thomas. Graduates from Curtis.']], ['chrono-sfs', 'With Michael Tilson Thomas and the San Francisco Symphony']],
+    ['2020', [['Debut album, Frame of Mind: Fauré and Janáček, with Xiaohui Yang.']]],
+    ['2021', [['First summer at Marlboro Music. The complete Bach suites in one program.']]],
+    ['2022', [['The complete Beethoven sonatas with Xiaohui Yang, Chicago.', 'beethoven']]],
+    ['2023', [['Kronberg Academy, with Frans Helmerson.'], ['German concerto debut: Schnittke’s First Concerto in Erfurt.', 'schnittke'], ['World premiere of Andrew Moses’ Ecstatic Immanence, Hong Kong.', 'tica']], ['schnittke', 'With Alexander Prior in Erfurt']],
+    ['2024', [['On tour with Mitsuko Uchida and musicians from Marlboro, ending at Carnegie Hall.'], ['A program for Deutschlandfunk on the music of the Americas and Europe.', 'raderberg'], ['Trio Saye’s first concert, in Brussels, with Helena Winkelman’s Diurne.', 'trio']], ['chrono-uchida', 'With Mitsuko Uchida']],
+    ['2025', [['“The Chamber Cello” at the New World Symphony, with music by Paul Desenne.', 'desenne']]],
+    ['2026', [['John Williams’ Cello Concerto for the first time.', 'williams'], ['Wie Bitte?, a concert about hearing again.', 'wiebitte'], ['The complete Brahms piano quartets with Kirill Gerstein, Carnegie Hall.']]]
   ];
-  (function () {
-    var box = $('chrono'); if (!box) return;
-    box.innerHTML = CHRONO.map(function (y) {
+  function chronoHTML() {
+    return '<div class="chrono">' + CHRONO.map(function (y) {
       var items = y[1].map(function (it) {
-        var t = esc(it[1]);
-        if (it[2]) t = '<a href="#" class="ch-link" data-id="' + it[2] + '">' + t + '</a>';
-        return '<li>' + (it[0] ? '<span class="k">' + esc(it[0]) + '</span>' : '') + t + '</li>';
+        var t = esc(it[0]);
+        if (it[1]) t = '<a href="#" class="ch-link" data-id="' + it[1] + '">' + t + '</a>';
+        return '<li>' + t + '</li>';
       }).join('');
       var ph = y[2] ? '<figure class="ch-photo"><img src="img/' + y[2][0] + '.jpg" alt="' + esc(y[2][1]) + '" loading="lazy"><figcaption class="label muted">' + esc(y[2][1]) + '</figcaption></figure>' : '';
       return '<div class="ch-year rise"><span class="ch-y' + (/^\d/.test(y[0]) ? '' : ' word') + '">' + esc(y[0]) + '</span><ul class="ch-items">' + items + '</ul>' + ph + '</div>';
-    }).join('');
-  })();
+    }).join('') + '</div>';
+  }
   document.addEventListener('click', function (e) {
     var a = e.target.closest('.ch-link');
     if (a) { e.preventDefault(); openProject(a.dataset.id, null); }
