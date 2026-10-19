@@ -42,7 +42,7 @@
  {
   "start": "2026-10-04",
   "end": null,
-  "title": "Kronberg Festival, closing concert",
+  "title": "Kronberg Festival: Barock Gala, Cello Stravaganza",
   "place": "Kronberg",
   "program": "C.P.E. Bach: Cello Concerto in B-flat",
   "details": "Reinhard Goebel, conductor. Casals Forum."
@@ -88,20 +88,20 @@
   "details": null
  },
  {
+  "start": "2026-06-22",
+  "end": "2026-06-29",
+  "title": "ChamberFest Cleveland",
+  "place": "Cleveland",
+  "program": "Season 14: Continental Drifts",
+  "details": "Including a concert at the Chautauqua Institution."
+ },
+ {
   "start": "2026-06-17",
   "end": null,
   "title": "Grant Park Music Festival",
   "place": "Chicago",
   "program": "Shostakovich: Cello Concerto No. 1",
   "details": "Giancarlo Guerrero, conductor. Jay Pritzker Pavilion."
- },
- {
-  "start": "2026-06-10",
-  "end": null,
-  "title": "ChamberFest Cleveland",
-  "place": "Cleveland",
-  "program": "Season 14: Continental Drifts",
-  "details": null
  },
  {
   "start": "2026-05-30",
@@ -216,20 +216,20 @@
   "details": "Concerti Brillanti series. Casals Forum."
  },
  {
-  "start": "2025-11-15",
-  "end": "2025-11-24",
-  "title": "Musicians from Marlboro tour",
-  "place": "London (Ontario), Brattleboro, Washington, New York, Greenwich",
-  "program": "Including Carnegie Hall, Weill Recital Hall",
-  "details": "Western University, London, Ontario (15 Nov). Brattleboro Music Center (17 Nov). Freer Gallery, National Museum of Asian Art, Washington (20 Nov). Weill Recital Hall, Carnegie Hall, New York (22 Nov). Friends Performing Arts Series, Greenwich (24 Nov)."
- },
- {
   "start": "2025-11-19",
   "end": null,
   "title": "Philadelphia Chamber Music Society",
   "place": "Philadelphia",
   "program": "Haydn · Schumann · Schubert",
   "details": "Haydn: Piano Trio Hob. XV:22. Schumann: Canonic Etudes. Schubert: Piano Trio in E-flat, D. 929. With Alexi Kenney, violin, and Eric Lu, piano."
+ },
+ {
+  "start": "2025-11-15",
+  "end": "2025-11-24",
+  "title": "Musicians from Marlboro tour",
+  "place": "London (Ontario), Brattleboro, Washington, New York, Greenwich",
+  "program": "Including Carnegie Hall, Weill Recital Hall",
+  "details": "Western University, London, Ontario (15 Nov). Brattleboro Music Center (17 Nov). Freer Gallery, National Museum of Asian Art, Washington (20 Nov). Weill Recital Hall, Carnegie Hall, New York (22 Nov). Friends Performing Arts Series, Greenwich (24 Nov)."
  },
  {
   "start": "2025-10-05",
