@@ -94,8 +94,8 @@ img { display: block; }
 .menu-btn { height: 40px; padding: 0 2px 0 16px; font-size: 15px; font-weight: 600; }
 @media (min-width: 900px) { .topnav { display: flex; } .bar .menu-btn { display: none; } }
 @media (max-width: 899px) { .listen { width: 40px; padding: 0; justify-content: center; } .listen span { display: none; } }
-.menu { position: fixed; inset: 0; z-index: 40; background: var(--paper); color: var(--ink); display: flex; flex-direction: column; padding: calc(env(safe-area-inset-top, 0px) + 8px) var(--gutter) calc(env(safe-area-inset-bottom, 0px) + 28px); overflow-y: auto; clip-path: circle(0px at var(--mx, 100%) var(--my, 0%)); transition: clip-path 560ms cubic-bezier(0.65, 0, 0.25, 1); }
-.menu.open { clip-path: circle(150vmax at var(--mx, 100%) var(--my, 0%)); }
+.menu { position: fixed; inset: 0; z-index: 40; background: var(--paper); color: var(--ink); display: flex; flex-direction: column; padding: calc(env(safe-area-inset-top, 0px) + 8px) var(--gutter) calc(env(safe-area-inset-bottom, 0px) + 28px); overflow-y: auto; opacity: 0; transition: opacity var(--fast) var(--ease); }
+.menu.open { opacity: 1; }
 .menu-head { display: flex; justify-content: flex-end; height: 48px; align-items: center; }
 .menu-links { display: flex; flex-direction: column; margin-top: 7vh; }
 .menu-links a { font-family: var(--serif); font-size: clamp(46px, 12.5vw, 66px); font-weight: 400; letter-spacing: -0.02em; line-height: 1; padding: 10px 0; }
@@ -103,9 +103,8 @@ img { display: block; }
 .menu-langs { display: flex; gap: 22px; margin-top: 22px; font-weight: 600; }
 .menu-langs a { padding: 10px 0; border-bottom: 2px solid transparent; }
 .menu-langs a[aria-current="page"] { border-bottom-color: var(--accent); }
-.menu-links a { display: flex; align-items: center; gap: 20px; }
-.md { flex: none; width: 14px; height: 14px; border-radius: 50%; background: var(--c); opacity: 0; transform: translate(var(--fx, 0px), var(--fy, 0px)) scale(0.4); transition: transform 760ms cubic-bezier(0.2, 0.9, 0.25, 1.12), opacity 240ms var(--ease); transition-delay: calc(180ms + var(--i) * 60ms); }
-.menu.open .md { opacity: 1; transform: none; }
+.menu-links a, .menu-next, .menu-langs { opacity: 0; transform: translateY(16px); transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); transition-delay: calc(var(--i) * 55ms); }
+.menu.open .menu-links a, .menu.open .menu-next, .menu.open .menu-langs { opacity: 1; transform: none; }
 .menu-links .ml, .menu-next, .menu-langs { opacity: 0; transform: translateX(-10px); transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); transition-delay: calc(420ms + var(--i) * 55ms); }
 .menu-next, .menu-langs { transform: translateY(12px); }
 .menu.open .menu-links .ml, .menu.open .menu-next, .menu.open .menu-langs { opacity: 1; transform: none; }
@@ -283,17 +282,7 @@ body { --k: 1; --dy: 0px; --mx: 0px; }
 .landed .hero-next { animation: hn-in 1100ms var(--ease) 1500ms both; }
 @keyframes hn-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 @media (min-width: 900px) { .hero-next { bottom: 56px; } .hero-img::after { height: 30%; } }
-.hero-listen { position: absolute; z-index: 1; right: var(--edge); bottom: 32px; display: grid; gap: 6px; justify-items: end; text-align: right; color: var(--paper); }
-.hero-listen .label { opacity: 0.8; }
-.hl-what { display: inline-flex; align-items: center; gap: 10px; font-size: var(--fs-body); }
-.hl-dot { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--orange); color: #fff; transition: transform var(--fast) var(--ease); }
-.hl-dot svg { width: 9px; height: 11px; margin-left: 2px; }
-.hero-listen:hover .hl-dot { transform: scale(1.12); }
-.js .hero-listen { opacity: 0; transform: translateY(12px); }
-.landed .hero-listen { animation: hn-in 1100ms var(--ease) 1650ms both; }
-@media (min-width: 900px) { .hero-listen { bottom: 56px; } }
-@media (max-width: 899px) { .hero-listen .hl-name { display: none; } }
-@media (prefers-reduced-motion: reduce) { .js .hero-listen { opacity: 1; transform: none; } }
+
 @media (prefers-reduced-motion: reduce) { .js .hero-next { opacity: 1; transform: none; } }
 
 /* About, on the homepage */
@@ -363,7 +352,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .xs { display: block; margin-top: 6px; font-size: var(--fs-label); line-height: 1.35; opacity: 0.66; }
 .xpeek { display: none; }
 @media (min-width: 900px) {
-  .xlist { margin-left: calc(var(--rail) + var(--rail-gap)); padding: 8px 0; }
+  .xlist { padding: 8px 0; }
   .xrow { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 24px; padding: 7px 0 7px var(--off, 0%); }
   .xthumb { display: none; }
   .xt { font-size: var(--fs-list); line-height: 1.04; }
@@ -373,7 +362,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   .js .xlist.peeking .xrow.in.on { opacity: 1; }
   .xrow.on .xt { color: var(--c); }
   .xrow.on { z-index: 3; }
-  .xpeek { display: block; position: absolute; z-index: 2; left: 0; top: 0; width: min(26vw, 360px); pointer-events: none; opacity: 0; transition: opacity 480ms var(--ease); will-change: transform; }
+  .xpeek { display: block; position: absolute; z-index: 2; left: 0; top: 0; width: min(32vw, 460px); pointer-events: none; opacity: 0; transition: opacity 480ms var(--ease); will-change: transform; }
   .xpeek.on { opacity: 1; }
   .xpeek img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .xpeek .blank { aspect-ratio: auto; height: 100%; }
@@ -611,11 +600,11 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 <div class="menu" id="menu" hidden>
   <div class="menu-head"><button class="menu-btn menu-close" id="menu-close">Close</button></div>
   <nav class="menu-links" aria-label="Main">
-    <a href="#about" style="--i:0"><span class="md" style="--c:#343426" aria-hidden="true"></span><span class="ml">About</span></a>
-    <a href="#concerts" style="--i:1"><span class="md" style="--c:#C0362C" aria-hidden="true"></span><span class="ml">Concerts</span></a>
-    <a href="#projects" style="--i:2"><span class="md" style="--c:#111314" aria-hidden="true"></span><span class="ml">Explore</span></a>
-    <a href="#recordings" style="--i:3"><span class="md" style="--c:#343426" aria-hidden="true"></span><span class="ml">Recordings</span></a>
-    <a href="#contact" style="--i:4"><span class="md" style="--c:#C0362C" aria-hidden="true"></span><span class="ml">Contact</span></a>
+    <a href="#about" style="--i:0">About</a>
+    <a href="#concerts" style="--i:1">Concerts</a>
+    <a href="#projects" style="--i:2">Explore</a>
+    <a href="#recordings" style="--i:3">Recordings</a>
+    <a href="#contact" style="--i:4">Contact</a>
   </nav>
   <a class="menu-next" href="#concerts" style="--i:5"><span class="label">Next</span><span>1 Nov · Noe Music, San Francisco</span></a>
   <div class="menu-langs" style="--i:6"><a href="#top" aria-current="page">EN</a><a href="#top">DE</a><a href="#top">ES</a><span class="social menu-social"><a href="https://www.instagram.com/oliverherbert_/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg></a><a href="https://www.facebook.com/oliverherbertcello" target="_blank" rel="noopener" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.6 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.5-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.9v3h2.6V21z" fill="currentColor"/></svg></a><a href="https://www.youtube.com/@OliverHerbertCello" target="_blank" rel="noopener" aria-label="YouTube"><svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22.5 7.2c-.2-1-1-1.8-2-2C18.7 4.7 12 4.7 12 4.7s-6.7 0-8.5.5c-1 .2-1.8 1-2 2C1 9 1 12 1 12s0 3 .5 4.8c.2 1 1 1.8 2 2 1.8.5 8.5.5 8.5.5s6.7 0 8.5-.5c1-.2 1.8-1 2-2 .5-1.8.5-4.8.5-4.8s0-3-.5-4.8zM9.8 15.2V8.8l5.6 3.2z" fill="currentColor"/></svg></a></span></div>
@@ -629,7 +618,6 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   <div id="top" class="hero-space"></div>
   <div class="frame hero-img curtain" data-tone="portrait"><img src="../img/hero.jpg" alt="Oliver Herbert with his cello">
     <a class="hero-next" href="#concerts"><span class="label">Next concert</span><span class="hn-what">1 Nov · Noe Music</span><span class="hn-where">San Francisco<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></span></a>
-    <button class="hero-listen" id="hero-listen" type="button" aria-label="Listen: Janáček, Pohádka"><span class="label">Listen</span><span class="hl-what"><span class="hl-name">Janáček, Pohádka</span><span class="hl-dot"><svg viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"></path></svg></span></span></button>
   </div>
   <div class="sheet">
   <section class="about wrap" id="about" data-tone="light">
@@ -923,7 +911,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   else { $('today').remove(); $('past-h').remove(); $('past').remove(); }
   /* Explore: titles in a loose stagger; each takes the colour of its photo */
   var XC = { schnittke: '#E8867C', wiebitte: '#CDB297', desenne: '#E49680', pressure: '#97C3CD', beethoven: '#D4B090', trio: '#CDAF97', williams: '#CDAD97', tica: '#CDC297', raderberg: '#CDA197', sf: '#DD9D87', stop: '#E8867C', timeline: '#D9D6CC' };
-  var XOFF = ['0%', '14%', '5%', '20%', '9%', '2%', '17%', '7%', '21%', '3%', '12%', '18%'];
+  var XOFF = ['0%', '9%', '3%', '13%', '6%', '1%', '11%', '4%', '14%', '2%', '8%', '12%'];
   $('grid').innerHTML = PROJECTS.map(function (p, n) {
     var th = p.img ? '<img src="../img/' + p.img + '.jpg" alt="" loading="lazy">' : '';
     return '<button class="xrow rise" data-id="' + p.id + '" style="--c:' + (XC[p.id] || '#E8867C') + ';--off:' + XOFF[n % XOFF.length] + '">' +
@@ -939,7 +927,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     }
     function aim(row, mx) {
       var lb = list.getBoundingClientRect(), rb = row.getBoundingClientRect(), w = peek.offsetWidth, h = peek.offsetHeight;
-      tx = lb.width - w + ((mx - lb.left) / lb.width - 0.5) * 40;
+      tx = lb.width * 0.74 - w / 2 + ((mx - lb.left) / lb.width - 0.5) * 30;
       ty = Math.max(-40, Math.min(lb.height - h + 40, rb.top - lb.top + rb.height / 2 - h / 2));
       if (!raf) raf = requestAnimationFrame(frame);
     }
@@ -1055,17 +1043,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     if (e && e.detail !== 0 && (e.clientX || e.clientY)) return [e.clientX, e.clientY];
     var b = el.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2];
   }
-  /* which colour grows from what: the colour of where you are going */
-  document.addEventListener('click', function (e) {
-    var t = e.target, el, c = null;
-    if ((el = t.closest('#all-concerts'))) c = '#C0362C';
-    else if ((el = t.closest('#full-bio'))) c = '#343426';
-    else if ((el = t.closest('.p-next, .ch-link, #back, #ab-back, #cal-back, .legal-back, a[href="#impressum"], a[href="#privacy"]'))) c = '#111314';
-    else if ((el = t.closest('#top-link, #mono')) && home.hidden) c = '#111314';
-    if (!c) return;
-    var p = pointOf(e, el); pendingDot = { x: p[0], y: p[1], c: c };
-    setTimeout(function () { pendingDot = null; }, 0);
-  }, true);
+
   function change(fn) {
     if (wiping === 'swap') { fn(); return null; }
     if (pendingDot) { var d = pendingDot; pendingDot = null; dot(d.x, d.y, d.c, fn); return null; }
@@ -1255,44 +1233,22 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   /* Menu */
   var menu = $('menu'), openBtn = $('menu-open');
   function setMenu(open) {
-    var b = openBtn.getBoundingClientRect();
-    menu.style.setProperty('--mx', (b.left + b.width / 2).toFixed(0) + 'px'); menu.style.setProperty('--my', (b.top + b.height / 2).toFixed(0) + 'px');
-    if (open) {
-      menu.hidden = false;
-      var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
-      menu.querySelectorAll('.md').forEach(function (d) {
-        d.style.transition = 'none'; d.style.transform = 'none';
-        var r = d.getBoundingClientRect();
-        d.style.setProperty('--fx', (cx - r.left - r.width / 2).toFixed(0) + 'px'); d.style.setProperty('--fy', (cy - r.top - r.height / 2).toFixed(0) + 'px');
-        d.style.transform = ''; void d.offsetWidth; d.style.transition = '';
-      });
-      requestAnimationFrame(function () { requestAnimationFrame(function () { menu.classList.add('open'); }); }); document.body.style.overflow = 'hidden';
-    }
-    else { menu.classList.remove('open'); document.body.style.overflow = ''; setTimeout(function () { if (!menu.classList.contains('open')) menu.hidden = true; }, 580); }
+    if (open) { menu.hidden = false; requestAnimationFrame(function () { requestAnimationFrame(function () { menu.classList.add('open'); }); }); document.body.style.overflow = 'hidden'; }
+    else { menu.classList.remove('open'); document.body.style.overflow = ''; setTimeout(function () { if (!menu.classList.contains('open')) menu.hidden = true; }, 320); }
     openBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
   }
   openBtn.addEventListener('click', function () { setMenu(true); });
   $('menu-close').addEventListener('click', function () { setMenu(false); openBtn.focus(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) setMenu(false); });
-  var NAVC = { about: '#343426', concerts: '#C0362C', projects: '#111314', recordings: '#343426', contact: '#C0362C' };
   document.addEventListener('click', function (e) {
-    var a = e.target.closest('.menu-links a, .menu-next, .topnav > a');
-    if (!a) { if (e.target.closest('.menu-langs a') && !menu.hidden) setMenu(false); return; }
+    var a = e.target.closest('.menu a, .topnav a');
+    if (!a) return;
     var href = a.getAttribute('href');
-    if (href.charAt(0) !== '#') return;
-    e.preventDefault();
-    var md = a.querySelector('.md'), p = md ? pointOf(null, md) : pointOf(e, a);
-    dot(p[0], p[1], NAVC[href.slice(1)] || '#111314', function () {
-      if (!menu.hidden) { menu.classList.remove('open'); menu.hidden = true; document.body.style.overflow = ''; openBtn.setAttribute('aria-expanded', 'false'); }
-      if (home.hidden) closeProject();
-      var t = document.querySelector(href);
-      if (t) {
-        root.style.scrollBehavior = 'auto'; t.scrollIntoView({ block: 'start', behavior: 'instant' }); root.style.scrollBehavior = '';
-        if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
-        t.focus({ preventScroll: true });
-      }
-      settle();
-    });
+    if (!menu.hidden) setMenu(false);
+    if (home.hidden && href.charAt(0) === '#') {
+      e.preventDefault(); closeProject();
+      setTimeout(function () { var t = document.querySelector(href); if (t) t.scrollIntoView({ behavior: 'smooth' }); }, 650);
+    }
   });
 
   /* Listen: a printed program drops down; music plays across the page, with a line of progress along the top.
@@ -1366,7 +1322,6 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     setTimeout(function () { if (!player.classList.contains('open')) player.hidden = true; }, 600);
   }
   btn.addEventListener('click', function () { if (player.hidden || !player.classList.contains('open')) openPlayer(); else closePlayer(); });
-  $('hero-listen').addEventListener('click', function (e) { e.stopPropagation(); if (player.hidden || !player.classList.contains('open')) openPlayer(); if (!playing) setPlaying(true); });
   $('pl-close').addEventListener('click', function () { closePlayer(); btn.focus(); });
   playBtn.addEventListener('click', function () { setPlaying(!playing); });
   $('pl-prev').addEventListener('click', function () { if (pos > 3) { pos = 0; if (TRACKS[cur].src) audio.currentTime = 0; paint(); } else load(cur - 1, playing); });
