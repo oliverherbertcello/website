@@ -184,13 +184,13 @@ html.has-cur input, html.has-cur textarea, html.has-cur iframe { cursor: text !i
 html.has-cur iframe { cursor: auto !important; }
 .cur { position: fixed; z-index: 70; left: 0; top: 0; width: 0; height: 0; pointer-events: none; opacity: 0; transition: opacity 240ms var(--ease); }
 .cur.on { opacity: 1; }
-.cur-dot { position: absolute; left: 0; top: 0; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--fg); color: var(--bg);
-  display: flex; align-items: center; justify-content: center; transform: scale(var(--s, 1)); transition: width 420ms var(--ease), height 420ms var(--ease), margin 420ms var(--ease), background-color var(--slow) var(--ease), border-color 300ms var(--ease); border: 1px solid transparent; box-sizing: border-box; }
-.cur-label { font-family: var(--display); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; opacity: 0; transition: opacity 200ms var(--ease); }
-.cur.word .cur-dot { width: 76px; height: 76px; margin: -38px 0 0 -38px; }
-.cur.word .cur-label { opacity: 1; transition-delay: 120ms; }
-.cur.ring .cur-dot { width: 64px; height: 64px; margin: -32px 0 0 -32px; background: transparent; border-color: var(--paper); box-shadow: 0 0 0 1px rgba(17, 19, 20, 0.28), inset 0 0 0 1px rgba(17, 19, 20, 0.28); }
-.cur.link .cur-dot { width: 22px; height: 22px; margin: -11px 0 0 -11px; }
+.cur-dot { position: absolute; left: 0; top: 0; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--fg); border: 1px solid var(--fg); box-sizing: border-box;
+  transform: scale(var(--s, 1)); transition: width 380ms var(--ease), height 380ms var(--ease), margin 380ms var(--ease), background-color 300ms var(--ease), border-color var(--slow) var(--ease); }
+.cur-label { display: none; }
+/* over anything you can click: a thin ring, a little larger than the text beside it */
+.cur.link .cur-dot { width: 30px; height: 30px; margin: -15px 0 0 -15px; background: transparent; }
+/* over photos: a slightly wider ring in paper, like a viewfinder */
+.cur.ring .cur-dot { width: 40px; height: 40px; margin: -20px 0 0 -20px; background: transparent; border-color: var(--paper); box-shadow: 0 0 0 1px rgba(17, 19, 20, 0.22); }
 .cur.text, .cur.away { opacity: 0; }
 .cur.down .cur-dot { transform: scale(calc(var(--s, 1) * 0.86)); }
 /* Explore: the photo drifts toward the cursor, as if you were leaning in */
@@ -1275,16 +1275,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
       if (!t || !t.closest) return set('', '');
       if (t.closest('input, textarea, select')) return set('text', '');
       if (t.closest('.vmodal')) return set(t.closest('#vclose') ? 'link' : 'away', '');
-      var el;
-      if ((el = t.closest('.card'))) return set('word', 'Open');
-      if ((el = t.closest('.vrow, .p-watch, a[href*="youtube.com/watch"]'))) return set('word', el.closest('.kit-rows') ? 'Get' : 'Play');
-      if ((el = t.closest('.pl-item'))) return set('word', el.classList.contains('on') && playing ? 'Pause' : 'Listen');
-      if ((el = t.closest('#listen'))) return set('word', playing ? 'Pause' : 'Listen');
-      if ((el = t.closest('button.row'))) return set('word', el.getAttribute('aria-expanded') === 'true' ? 'Less' : 'More');
-      if ((el = t.closest('.p-next'))) return set('word', 'Next');
-      if ((el = t.closest('.ch-link'))) return set('word', 'Open');
-      if ((el = t.closest('#back, .back, .legal-back, #cal-back, #ab-back'))) return set('word', 'Back');
-      if ((el = t.closest('.hero-next'))) return set('word', 'Dates');
+      if (t.closest('.card, .vrow, .row:not(.still), .pl-item, .p-next, .ch-link, .hero-next')) return set('link', '');
       if (t.closest('a, button, summary, label')) return set('link', '');
       if (t.closest('.hero-img, .interlude, .ab-portrait, .ab-photos, .p-shot, .p-extra, .tl-shot, .ch-photo')) return set('ring', '');
       set('', '');
@@ -1322,7 +1313,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
       x += (tx - x) * 0.2; y += (ty - y) * 0.2;
       cur.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
       var target = level(now || 0); lv += (target - lv) * 0.15;
-      dot.style.setProperty('--s', (1 + lv * (state === 'word' ? 0.12 : 0.55)).toFixed(3));
+      dot.style.setProperty('--s', (1 + lv * (state ? 0.14 : 0.5)).toFixed(3));
       requestAnimationFrame(loop);
     })();
   })();
