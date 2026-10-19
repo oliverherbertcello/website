@@ -176,6 +176,30 @@ main, .listen, .name, .menu-btn, .topnav { transition: opacity 600ms var(--ease)
 .pl-seek:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
 .pl-note { margin: 12px 0 0; font-size: 12px; opacity: 0.55; }
 
+
+/* The cursor: a small ink circle that follows a little behind, says what a click will do, and breathes with the music.
+   Desktop with a mouse only; phones get a ripple on tap; reduced motion keeps the normal cursor. */
+html.has-cur, html.has-cur * { cursor: none !important; }
+html.has-cur input, html.has-cur textarea, html.has-cur iframe { cursor: text !important; }
+html.has-cur iframe { cursor: auto !important; }
+.cur { position: fixed; z-index: 70; left: 0; top: 0; width: 0; height: 0; pointer-events: none; opacity: 0; transition: opacity 240ms var(--ease); }
+.cur.on { opacity: 1; }
+.cur-dot { position: absolute; left: 0; top: 0; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--fg); color: var(--bg);
+  display: flex; align-items: center; justify-content: center; transform: scale(var(--s, 1)); transition: width 420ms var(--ease), height 420ms var(--ease), margin 420ms var(--ease), background-color var(--slow) var(--ease), border-color 300ms var(--ease); border: 1px solid transparent; box-sizing: border-box; }
+.cur-label { font-family: var(--display); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; opacity: 0; transition: opacity 200ms var(--ease); }
+.cur.word .cur-dot { width: 76px; height: 76px; margin: -38px 0 0 -38px; }
+.cur.word .cur-label { opacity: 1; transition-delay: 120ms; }
+.cur.ring .cur-dot { width: 64px; height: 64px; margin: -32px 0 0 -32px; background: transparent; border-color: var(--paper); box-shadow: 0 0 0 1px rgba(17, 19, 20, 0.28), inset 0 0 0 1px rgba(17, 19, 20, 0.28); }
+.cur.link .cur-dot { width: 22px; height: 22px; margin: -11px 0 0 -11px; }
+.cur.text, .cur.away { opacity: 0; }
+.cur.down .cur-dot { transform: scale(calc(var(--s, 1) * 0.86)); }
+/* Explore: the photo drifts toward the cursor, as if you were leaning in */
+.card .frame img { transition: transform 900ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+html.has-cur .card:hover .frame img { transform: scale(1.06) translate(var(--dx, 0px), var(--dy2, 0px)); }
+/* Phones: a soft ripple where you tap */
+.ripple { position: fixed; z-index: 70; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--fg); opacity: 0.18; pointer-events: none; animation: ripple 620ms var(--ease) forwards; }
+@keyframes ripple { to { transform: scale(9); opacity: 0; } }
+
 /* The name: letters arrive one after another, and rise and fall gently while a recording plays */
 .name span { display: inline-block; }
 .name .gap { width: 0.26em; }
@@ -717,6 +741,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   <div class="btn-row on-line rise"><a class="btn fill" href="#contact" id="ab-contact">Contact<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
 </article>
 </main>
+<div class="cur" id="cur" aria-hidden="true"><div class="cur-dot"><span class="cur-label" id="cur-label"></span></div></div>
 <div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-labelledby="vtitle" hidden>
   <button class="vclose" id="vclose" type="button">Close</button>
   <div class="vframe" id="vframe"></div>
@@ -1117,6 +1142,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   var btn = $('listen'), label = $('listen-label'), icon = $('listen-icon');
   var player = $('player'), list = $('pl-list'), seek = $('pl-seek'), time = $('pl-time'), playBtn = $('pl-play'), plIcon = $('pl-icon');
   var cur = 0, playing = false, pos = 0, last = 0, started = false, dragging = false;
+  function cur_i() { return cur; }
   var audio = new Audio(); audio.preload = 'none';
   var PLAY = '<path d="M2 1 L13 8 L2 15 Z" fill="currentColor"></path>', PAUSE = '<path d="M3 1 V15 M11 1 V15" stroke="currentColor" stroke-width="2.6" fill="none"></path>';
   function mmss(t) { t = Math.max(0, Math.round(t)); return Math.floor(t / 60) + ':' + ('0' + t % 60).slice(-2); }
@@ -1219,6 +1245,87 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     if (!vmodal.hidden && (e.target === vmodal || e.target.closest('#vclose'))) closeVideo();
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !vmodal.hidden) closeVideo(); });
+
+
+  /* The cursor */
+  (function () {
+    var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (still) return;
+    if (!fine) {
+      /* phones and tablets: a ripple where you tap */
+      document.addEventListener('pointerdown', function (e) {
+        if (e.pointerType === 'mouse') return;
+        if (!e.target.closest('a, button, .card, .row, .vrow')) return;
+        var r = document.createElement('span'); r.className = 'ripple';
+        r.style.left = e.clientX + 'px'; r.style.top = e.clientY + 'px';
+        document.body.appendChild(r); setTimeout(function () { r.remove(); }, 700);
+      }, { passive: true });
+      return;
+    }
+    root.classList.add('has-cur');
+    var cur = $('cur'), dot = cur.querySelector('.cur-dot'), lab = $('cur-label');
+    var tx = -100, ty = -100, x = -100, y = -100, state = '', word = '';
+    function set(st, w) {
+      if (st === state && w === word) return;
+      if (state) cur.classList.remove(state); if (st) cur.classList.add(st); state = st;
+      if (w !== word) { lab.textContent = w || ''; word = w; }
+    }
+    function read(t) {
+      if (!t || !t.closest) return set('', '');
+      if (t.closest('input, textarea, select')) return set('text', '');
+      if (t.closest('.vmodal')) return set(t.closest('#vclose') ? 'link' : 'away', '');
+      var el;
+      if ((el = t.closest('.card'))) return set('word', 'Open');
+      if ((el = t.closest('.vrow, .p-watch, a[href*="youtube.com/watch"]'))) return set('word', el.closest('.kit-rows') ? 'Get' : 'Play');
+      if ((el = t.closest('.pl-item'))) return set('word', el.classList.contains('on') && playing ? 'Pause' : 'Listen');
+      if ((el = t.closest('#listen'))) return set('word', playing ? 'Pause' : 'Listen');
+      if ((el = t.closest('button.row'))) return set('word', el.getAttribute('aria-expanded') === 'true' ? 'Less' : 'More');
+      if ((el = t.closest('.p-next'))) return set('word', 'Next');
+      if ((el = t.closest('.ch-link'))) return set('word', 'Open');
+      if ((el = t.closest('#back, .back, .legal-back, #cal-back, #ab-back'))) return set('word', 'Back');
+      if ((el = t.closest('.hero-next'))) return set('word', 'Dates');
+      if (t.closest('a, button, summary, label')) return set('link', '');
+      if (t.closest('.hero-img, .interlude, .ab-portrait, .ab-photos, .p-shot, .p-extra, .tl-shot, .ch-photo')) return set('ring', '');
+      set('', '');
+    }
+    document.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      tx = e.clientX; ty = e.clientY; cur.classList.add('on'); read(e.target);
+      var card = e.target.closest && e.target.closest('.card');
+      if (card) {
+        var b = card.getBoundingClientRect();
+        card.style.setProperty('--dx', ((tx - b.left) / b.width - 0.5) * -12 + 'px');
+        card.style.setProperty('--dy2', ((ty - b.top) / b.height - 0.5) * -12 + 'px');
+      }
+    }, { passive: true });
+    document.addEventListener('pointerdown', function () { cur.classList.add('down'); });
+    document.addEventListener('pointerup', function () { cur.classList.remove('down'); setTimeout(function () { var el = document.elementFromPoint(tx, ty); read(el); }, 30); });
+    document.documentElement.addEventListener('mouseleave', function () { cur.classList.remove('on'); });
+    window.addEventListener('blur', function () { cur.classList.remove('on'); });
+
+    /* breathing: follows the real loudness of the recording when there is one */
+    var ctx = null, an = null, buf = null;
+    function level(now) {
+      if (!playing) return 0;
+      if (TRACKS[cur_i()].src && audio.src) {
+        try {
+          if (!ctx) { ctx = new (window.AudioContext || window.webkitAudioContext)(); var srcN = ctx.createMediaElementSource(audio); an = ctx.createAnalyser(); an.fftSize = 512; buf = new Uint8Array(an.fftSize); srcN.connect(an); an.connect(ctx.destination); }
+          an.getByteTimeDomainData(buf); var sum = 0; for (var i = 0; i < buf.length; i++) { var v = (buf[i] - 128) / 128; sum += v * v; }
+          return Math.min(1, Math.sqrt(sum / buf.length) * 3.2);
+        } catch (err) { /* fall through to the gentle stand-in */ }
+      }
+      var t = now / 1000; return 0.35 + 0.22 * Math.sin(t * 1.9) + 0.12 * Math.sin(t * 4.7 + 1.3);
+    }
+    var lv = 0;
+    (function loop(now) {
+      x += (tx - x) * 0.2; y += (ty - y) * 0.2;
+      cur.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+      var target = level(now || 0); lv += (target - lv) * 0.15;
+      dot.style.setProperty('--s', (1 + lv * (state === 'word' ? 0.12 : 0.55)).toFixed(3));
+      requestAnimationFrame(loop);
+    })();
+  })();
 
   /* Contact form (in the built site this posts to Netlify Forms) */
   $('cform').addEventListener('submit', function (e) {
