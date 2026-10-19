@@ -449,9 +449,15 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 #calendar h2 { margin: var(--block) 0 16px; font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.62; }
 #calendar h1 + h2 { margin-top: 0; }
 #calendar .rows { border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
-.cal-years { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 var(--block); font-size: var(--fs-body); font-variant-numeric: tabular-nums; }
+.cal-years { position: sticky; z-index: 5; top: calc(var(--bar) + env(safe-area-inset-top, 0px)); background: var(--bg); padding: 4px 0; border-bottom: 1px solid color-mix(in srgb, currentColor 14%, transparent); display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 var(--block); font-size: var(--fs-body); font-variant-numeric: tabular-nums; }
 .cal-years a { padding: 10px 0; border-bottom: 1px solid transparent; opacity: 0.62; transition: opacity var(--fast) var(--ease), border-color var(--fast) var(--ease); }
 .cal-years a:hover { opacity: 1; border-bottom-color: var(--accent); }
+.cal-years .cy-home { display: inline-flex; align-items: center; gap: 8px; opacity: 1; font-weight: 600; padding-right: 8px; }
+@media (max-width: 899px) { .cal-years { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); } .cal-years::-webkit-scrollbar { display: none; } .cal-years a { flex: none; } }
+.page-end { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-top: var(--section); padding-top: 18px; border-top: 1px solid currentColor; }
+.page-end .loop-next { margin: 0; padding: 0; border: 0; text-align: right; }
+.page-end .nx { justify-content: flex-end; }
+.pe-home { display: inline-flex; align-items: center; gap: 10px; padding: 12px 0; font-weight: 600; }
 .row.still { cursor: default; }
 .row.still:hover .row-title, .row.still:hover .row-work { transform: none; }
 
@@ -786,6 +792,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     </div>
   </div>
   <div class="btn-row on-line rise"><a class="btn fill" href="#contact" id="ab-contact">Contact<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
+<div class="page-end rise"><button class="pe-home" type="button"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Home</span></button><button class="loop-next pe-next" type="button" id="ab-next"><span class="label muted">Next</span><span class="nx"><b>Concerts</b><svg width="28" height="16" viewBox="0 0 28 16" aria-hidden="true"><path d="M19 1 L26 8 L19 15 M26 8 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></span></button></div>
 </article>
 </main>
 <div class="cur" id="cur" aria-hidden="true"><div class="cur-dot"><span class="cur-label" id="cur-label"></span></div></div>
@@ -926,7 +933,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
         : '<div class="row still">' + head + '</div>') + '</div>';
     }).join('');
   }
-  $('upcoming').innerHTML = rows(UPCOMING, 'up', true);
+  $('upcoming').innerHTML = rows(UPCOMING.slice(0, 4), 'up', true);
   /* The homepage looks forward: past concerts appear only when fewer than three are coming up; the full calendar holds the rest */
   if (UPCOMING.length < 3) $('past').innerHTML = rows(PAST.slice(0, 2), 'past', true);
   else { $('today').remove(); $('past-h').remove(); $('past').remove(); }
@@ -1201,9 +1208,10 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     PAST.forEach(function (c) { var y = c[0].slice(0, 4); if (!byYear[y]) { byYear[y] = []; years.push(y); } byYear[y].push(c); });
     cal.innerHTML = '<button class="back" id="cal-back"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Home</span></button>' +
       '<h1 class="rise">Concerts</h1>' +
-      '<nav class="cal-years rise" aria-label="Jump to a year"><a href="#cal-upcoming">Upcoming</a>' + years.map(function (y) { return '<a href="#cal-' + y + '">' + y + '</a>'; }).join('') + '</nav>' +
+      '<nav class="cal-years" aria-label="Jump to a year"><a href="#top" class="cy-home"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Home</span></a><a href="#cal-upcoming">Upcoming</a>' + years.map(function (y) { return '<a href="#cal-' + y + '">' + y + '</a>'; }).join('') + '</nav>' +
       '<h2 id="cal-upcoming" class="rise">Upcoming</h2><div class="rows">' + rows(UPCOMING, 'cal-up', true) + '</div>' +
-      years.map(function (y) { return '<h2 id="cal-' + y + '" class="rise">' + y + '</h2><div class="rows">' + rows(byYear[y], 'cal-' + y, false) + '</div>'; }).join('');
+      years.map(function (y) { return '<h2 id="cal-' + y + '" class="rise">' + y + '</h2><div class="rows">' + rows(byYear[y], 'cal-' + y, false) + '</div>'; }).join('') +
+      '<div class="page-end rise"><button class="pe-home" type="button"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Home</span></button><button class="loop-next pe-next" type="button" id="cal-next"><span class="label muted">Next</span><span class="nx"><b>Explore</b><svg width="28" height="16" viewBox="0 0 28 16" aria-hidden="true"><path d="M19 1 L26 8 L19 15 M26 8 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></span></button></div>';
     watch(cal);
   }
   function openCalendar() {
@@ -1218,9 +1226,11 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   }
   document.addEventListener('click', function (e) {
     if (e.target.closest('#all-concerts')) { e.preventDefault(); openCalendar(); return; }
-    if (e.target.closest('#cal-back')) { closeProject(); return; }
+    if (e.target.closest('#cal-back, .cy-home, .pe-home')) { e.preventDefault(); closeProject(); return; }
+    if (e.target.closest('#ab-next')) { openCalendar(); return; }
+    if (e.target.closest('#cal-next')) { closeProject(); setTimeout(function () { var t = $('projects'); if (t) t.scrollIntoView({ behavior: 'smooth' }); }, 650); return; }
     var y = e.target.closest('.cal-years a');
-    if (y) { e.preventDefault(); var t = document.querySelector(y.getAttribute('href')); if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' }); }
+    if (y) { e.preventDefault(); var t = document.querySelector(y.getAttribute('href')); if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 140, behavior: 'smooth' }); }
   });
 
   /* Press quotes */
