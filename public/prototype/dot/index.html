@@ -539,7 +539,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .p-next { display: block; margin-top: 64px; padding-top: 18px; border-top: 3px solid var(--orange); }
 .loop-next { margin-top: var(--section); text-align: left; border-top-width: 1px; border-top-color: currentColor; }
 .loop-next .label { display: block; }
-@media (min-width: 900px) { .loop-next { text-align: right; } .loop-next .nx { justify-content: flex-end; } }
+@media (min-width: 900px) { .loop-next { text-align: right; } .loop-next .nx { justify-content: flex-end; } .tl-next.loop-next { margin-left: 0; width: 100% !important; } }
 .nx { display: inline-flex; align-items: baseline; gap: 18px; margin-top: 10px; }
 .nx b { font-family: var(--serif); font-weight: 400; font-size: var(--fs-lead); letter-spacing: -0.02em; line-height: 1.05; background: linear-gradient(var(--orange), var(--orange)) 0 100% / 0 2px no-repeat; transition: background-size var(--slow) var(--ease); padding-bottom: 4px; }
 .nx svg { flex: none; align-self: center; color: var(--orange); animation: lean 3.2s var(--ease) infinite; }
@@ -1078,7 +1078,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
         '<div class="p-head"><h1 class="rise">' + esc(p.title) + '</h1><div class="p-sub rise">' + esc(p.sub) + '</div></div>' +
         '<div class="tl-shot"><img id="p-img" src="../img/' + p.img + '.jpg" alt="Oliver Herbert in rehearsal" style="aspect-ratio:' + p.ratio + ';object-fit:cover"></div>' +
         '<div class="tl-body">' + chronoHTML() + '</div>' +
-        '<button class="p-next loop-next tl-next rise" data-id="' + next.id + '" style="width:100%"><span class="label muted">Next project</span>' + loopLine(next.title) + '</button></div>';
+        '<div class="page-end rise"><button class="pe-home pe-explore" type="button"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Explore</span></button><button class="p-next loop-next" data-id="' + next.id + '"><span class="label muted">Next</span>' + loopLine(next.title) + '</button></div></div>';
       watch(project); return;
     }
     var shot = p.img ? '<div class="p-shot"><img id="p-img" src="../img/' + p.img + '.jpg" alt="' + esc(p.title) + '" style="aspect-ratio:' + p.ratio + ';object-fit:cover">' +
@@ -1090,7 +1090,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
       p.text.map(function (t) { return '<p class="rise">' + esc(t) + '</p>'; }).join('') +
       (p.extra ? '<div class="p-extra rise"><img src="../img/' + p.extra + '.jpg" alt="' + esc(p.title) + '">' + (p.cap ? '<span class="p-cap muted">' + esc(p.cap) + '</span>' : '') + '</div>' : '') +
       (p.watch ? '<a class="p-watch film rise" href="' + YT + p.watch[1] + '" target="_blank" rel="noopener"><span class="dot">' + TRI + '</span><span>' + esc(p.watch[0]) + '</span></a>' : '') +
-      '</div></div><div class="wrap">' + '<button class="p-next loop-next rise" data-id="' + next.id + '" style="width:100%"><span class="label muted">Next project</span>' + loopLine(next.title) + '</button></div>';
+      '</div></div><div class="wrap">' + '<div class="page-end rise"><button class="pe-home pe-explore" type="button"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Explore</span></button><button class="p-next loop-next" data-id="' + next.id + '"><span class="label muted">Next</span>' + loopLine(next.title) + '</button></div></div>';
     watch(project);
   }
   function openProject(id, card, fromImg) {
@@ -1129,7 +1129,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     if (card) { openProject(card.dataset.id, card, window.xPeekFrom(card)); return; }
     var next = e.target.closest('.p-next');
     if (next) { openProject(next.dataset.id, null); return; }
-    if (e.target.closest('#back')) { closeProject(); return; }
+    if (e.target.closest('#back, .pe-explore')) { closeProject(); return; }
     if ((e.target.closest('#top-link') || e.target.closest('#mono')) && home.hidden) { e.preventDefault(); closeProject(); }
   });
 
@@ -1226,7 +1226,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   }
   document.addEventListener('click', function (e) {
     if (e.target.closest('#all-concerts')) { e.preventDefault(); openCalendar(); return; }
-    if (e.target.closest('#cal-back, .cy-home, .pe-home')) { e.preventDefault(); closeProject(); return; }
+    if (e.target.closest('#cal-back, .cy-home, .pe-home:not(.pe-explore)')) { e.preventDefault(); closeProject(); return; }
     if (e.target.closest('#ab-next')) { openCalendar(); return; }
     if (e.target.closest('#cal-next')) { closeProject(); setTimeout(function () { var t = $('projects'); if (t) t.scrollIntoView({ behavior: 'smooth' }); }, 650); return; }
     var y = e.target.closest('.cal-years a');
