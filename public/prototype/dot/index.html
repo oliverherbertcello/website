@@ -427,6 +427,11 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   .qcards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; overflow: visible; margin: var(--row) 0; padding: 0; width: calc(100vw - 2 * var(--edge) - var(--rail) - var(--rail-gap)); max-width: calc(var(--maxw) - var(--rail) - var(--rail-gap)); }
   .qcard { width: auto; min-height: 250px; }
 }
+.p-films { list-style: none; margin: 36px 0 0; padding: 0; }
+.p-films li + li { margin-top: 18px; }
+.p-film { display: flex; align-items: center; gap: 16px; }
+.p-film b { display: block; font-weight: 500; font-size: var(--fs-body); }
+.p-film .muted { display: block; margin-top: 2px; font-size: var(--fs-label); }
 .p-aside { margin: 36px 0 0; padding: 20px 0 0; border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
 .p-aside p { margin: 10px 0 0; font-size: var(--fs-label); line-height: 1.6; opacity: 0.85; }
 .p-press { margin-top: 48px; }
@@ -454,6 +459,15 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   .railed.ab-sec > .ab-side { grid-column: 3; grid-row: 1 / span 3; align-self: start; position: sticky; top: calc(var(--bar) + 32px); margin: 0 0 0 var(--block); max-width: 420px; }
   .railed.ab-sec > .ab-side .ab-fig img, .railed.ab-sec > .ab-side .ph-img { aspect-ratio: 4 / 3; }
 }
+.ab-lead { max-width: 24em; text-wrap: pretty; }
+.ab-lead + .ab-lead2 { margin-top: 0.6em; }
+.ab-lead2 { color: color-mix(in srgb, var(--fg) 62%, var(--bg)); margin-bottom: 1.2em; }
+.ab-mid { margin: 20px 0 var(--row); font-size: var(--fs-body); line-height: 1.6; max-width: 34em; }
+.ab-qs { margin: 0 0 var(--head); }
+.ab-q { margin: 0; padding: 14px 0; border-top: 1px solid color-mix(in srgb, currentColor 16%, transparent); font-family: var(--serif); font-size: var(--fs-title); line-height: 1.2; letter-spacing: -0.01em; }
+.ab-q:last-child { border-bottom: 1px solid color-mix(in srgb, currentColor 16%, transparent); }
+.ab-q::first-letter { color: inherit; }
+@media (min-width: 900px) { .ab-q:nth-child(2) { padding-left: 12%; } }
 .ab-quote { margin: var(--head) 0 0; padding-left: 20px; border-left: 2px solid var(--accent); }
 .ab-quote p { margin: 0; font-family: var(--serif); font-size: var(--fs-title); line-height: 1.25; letter-spacing: -0.01em; }
 .ab-quote cite { display: block; margin-top: 10px; font-style: normal; font-size: var(--fs-label); opacity: 0.7; }
@@ -704,7 +718,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 <div id="home">
   <h1 class="sr-only">Oliver Herbert, cellist</h1>
   <div id="top" class="hero-space"></div>
-  <div class="frame hero-img curtain" data-tone="portrait"><img src="../img/hero.jpg" alt="Oliver Herbert with his cello">
+  <div class="frame hero-img curtain" data-tone="portrait"><img src="../img/hero.jpg" srcset="../img/hero-1600.jpg 1600w, ../img/hero.jpg 3000w" sizes="100vw" alt="Oliver Herbert with his cello">
     <a class="hero-next" href="#concerts"><span class="label">Next concert</span><span class="hn-what">1 Nov · Noe Music</span><span class="hn-where">San Francisco<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></span></a>
   </div>
   <div class="sheet">
@@ -712,9 +726,10 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     <div class="railed">
     <span class="label rise lab">About</span>
     <div>
-    <p class="lead rise">Oliver Herbert is a cellist who moves between orchestras, chamber music and projects of his own. Alongside the cello classics, he performs the lesser-known and the new. His music-making often starts from a question: What is at the core of hearing and re-hearing? Where do musical worlds meet?</p>
+    <p class="lead rise ab-lead">Oliver Herbert is a cellist who moves between orchestras, chamber music and projects of his own.</p>
+    <p class="lead rise ab-lead ab-lead2">Alongside the cello classics, he performs the lesser-known and the new. His music-making often starts from a question: What is at the core of hearing and re-hearing? Where do musical worlds meet?</p>
     <p class="more-text rise">He appears as a soloist with conductors including Michael Tilson Thomas, Giancarlo Guerrero, Juanjo Mena and Reinhard Goebel, and in chamber music with artists such as Mitsuko Uchida, Janine Jansen and Tabea Zimmermann. His projects have brought composers such as Schnittke, Desenne and Crawford Seeger into focus, and he has premiered works by Helena Winkelman, Andrew Moses and others. He received a 2021 Avery Fisher Career Grant.</p>
-    <blockquote class="ab-quote rise"><p>&ldquo;Full-throated but never indulgent tone, crisp yet expressive phrasing.&rdquo;</p><cite>San Francisco Classical Voice</cite></blockquote>
+    <blockquote class="ab-quote rise"><p>&ldquo;The cello seems an extension of himself.&rdquo;</p><cite>Third Coast Review</cite></blockquote>
     <div class="btn-row rise"><button class="btn" type="button" id="ab-listen"><svg width="11" height="13" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"></path></svg>Listen</button><a class="btn" href="#biography" id="full-bio">Full biography<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
     </div>
     </div>
@@ -837,7 +852,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   <div class="railed ab-sec ">
     <span class="lab" aria-hidden="true"></span>
     <div class="bio">
-      <p class="lead rise">Oliver Herbert was born in 1997 in San Francisco. He grew up in a house full of music: a violinist mother, a timpanist father, grandparents at the piano. Much of what he does still comes from there: playing with and for other people, and following the music wherever it leads.</p>
+      <p class="lead rise ab-lead">Oliver Herbert was born in 1997 in San Francisco. He grew up in a house full of music: a violinist mother, a timpanist father, grandparents at the piano. Much of what he does still comes from there: playing with and for other people, and following the music wherever it leads.</p>
     </div>
   </div>
   <div class="railed ab-sec ">
@@ -845,9 +860,9 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     <div class="bio">
       <p class="rise">He started playing music on the violin and piano, then switched to the cello at seven. It took him a while to convince his parents to allow the switch, as they worried about the eventual cost of an extra seat on the airplane (perhaps there was some truth to that!). But he persisted, finding teachers Iris Pingel and later Peter Wyrick in San Francisco. He went on to study with Clive Greensmith at the Colburn School, with Carter Brey, Peter Wiley and Pamela Frank at the Curtis Institute of Music, and with Frans Helmerson at Kronberg Academy, graduating in 2026.</p>
     </div>
-    <aside class="ab-side">
+    <div class="ab-side">
       <figure class="ab-fig rise"><img src="../img/sf.jpg" alt="San Francisco" loading="lazy"><figcaption class="label muted">San Francisco</figcaption></figure>
-    </aside>
+    </div>
   </div>
   <div class="railed ab-sec ">
     <span class="label lab rise">With orchestras</span>
@@ -860,9 +875,9 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
       <p class="rise">The repertoire runs from C.P.E. Bach and Haydn through Tchaikovsky to Schnittke, Lutos&lstrok;awski, Barber and John Williams.</p>
       <blockquote class="ab-quote rise"><p>&ldquo;Full-throated but never indulgent tone, crisp yet expressive phrasing.&rdquo;</p><cite>San Francisco Classical Voice</cite></blockquote>
     </div>
-    <aside class="ab-side">
+    <div class="ab-side">
       <figure class="ab-fig rise"><img src="../img/chrono-sfs.jpg" alt="With Michael Tilson Thomas and the San Francisco Symphony, 2019" loading="lazy"><figcaption class="label muted">With Michael Tilson Thomas and the San Francisco Symphony, 2019</figcaption></figure>
-    </aside>
+    </div>
   </div>
   <div class="railed ab-sec ">
     <span class="label lab rise">Among musicians</span>
@@ -873,9 +888,9 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
       <div class="names rise"><span class="label muted">With</span><ul><li>Mitsuko Uchida</li><li>Janine Jansen</li><li>Jonathan Biss</li><li>Tabea Zimmermann</li></ul></div>
       </div>
     </div>
-    <aside class="ab-side">
+    <div class="ab-side">
       <figure class="ab-fig rise"><img src="../img/chrono-uchida.jpg" alt="With Mitsuko Uchida" loading="lazy"><figcaption class="label muted">With Mitsuko Uchida</figcaption></figure>
-    </aside>
+    </div>
   </div>
   <div class="railed ab-sec ">
     <span class="label lab rise">Alone with the cello</span>
@@ -883,9 +898,9 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
       <p class="rise">Some of the most intense concerts have the fewest people on stage: the six Bach suites in a single program, the complete Beethoven sonatas across one series in Chicago, Beethoven on a fortepiano with Arash Rokni. At the Lutos&lstrok;awski Competition he received a special award for his Sacher Variation, and at the Klein Competition the prize for the best Bach. Solo cello works by Dawn Avery, Xenakis, Dutilleux, Hindemith, and many more find a spotlight in his solo repertoire, in addition to several world premiere performances.</p>
       <blockquote class="ab-quote rise"><p>&ldquo;Deeply moving vocal inflections in extreme ranges.&rdquo;</p><cite>Philadelphia Inquirer</cite></blockquote>
     </div>
-    <aside class="ab-side">
+    <div class="ab-side">
       <figure class="ab-fig rise"><div class="ph-img" aria-hidden="true"><span class="label">Photo to come</span></div><figcaption class="label muted">[A recital photo]</figcaption></figure>
-    </aside>
+    </div>
   </div>
   <div class="railed ab-sec">
     <span class="label lab rise">Projects of his own</span>
@@ -908,18 +923,18 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     <div class="bio">
       <p class="rise">He has learned a great deal from musicians such as Reinhard Goebel, Andreas Staier, and Marcel Ponseele and Il Gardellino. Growing up, his formative teacher Peter Wyrick introduced him to figures like Anner Bylsma from an early age, which made a deep impression. For him, period instruments have never been about being &ldquo;correct&rdquo;. They are a way in: to the core of a piece&rsquo;s sound, and to the deeper layers of meaning within it.</p>
     </div>
-    <aside class="ab-side">
+    <div class="ab-side">
       <figure class="ab-fig rise"><div class="ph-img" aria-hidden="true"><span class="label">Photo to come</span></div><figcaption class="label muted">[With Il Gardellino, or on period instruments]</figcaption></figure>
-    </aside>
+    </div>
   </div>
   <div class="railed ab-sec ">
     <span class="label lab rise">Across disciplines</span>
     <div class="bio">
       <p class="rise">Across disciplines, he has collaborated with Kyle Marshall Choreography on the music of Julius Eastman at the New World Symphony, and on multimedia work with filmmaker Mimi Pfahler. He has also been diving into stop motion animation of his own, at the intersection of visual art and music. For the 2026 Kronberg Festival he created a program centered on courage with actor Michael Rotschopf.</p>
     </div>
-    <aside class="ab-side">
+    <div class="ab-side">
       <figure class="ab-fig rise"><div class="ph-img" aria-hidden="true"><span class="label">Photo to come</span></div><figcaption class="label muted">[With Kyle Marshall Choreography, or a stop motion still]</figcaption></figure>
-    </aside>
+    </div>
   </div>
   <div class="railed ab-sec top">
     <span class="label lab rise">On record</span>
@@ -933,18 +948,18 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
       <p class="rise">He plays primarily on a Guadagnini cello that once belonged to the legendary cellist Antonio Janigro, on loan from the Janigro family.</p>
       <dl class="spec rise"><dt>Cello</dt><dd>G. B. Guadagnini, ex-Janigro</dd><dt>Bows</dt><dd>Jean Dominique Adam, Michel Groppe</dd><dt>Baroque piccolo cello</dt><dd>Chappuy, 1776</dd></dl>
     </div>
-    <aside class="ab-side">
+    <div class="ab-side">
       <figure class="ab-fig rise"><div class="ph-img" aria-hidden="true"><span class="label">Photo to come</span></div><figcaption class="label muted">[The Guadagnini]</figcaption></figure>
-    </aside>
+    </div>
   </div>
   <div class="railed ab-sec ">
     <span class="label lab rise">Current adventures</span>
     <div class="bio">
       <p class="rise">Oliver lives in Berlin with his boyfriend, though he can frequently be found in the US and other parts of the world for musical projects. Much of his time is spent dreaming up new musical and travel adventures, cooking, or unwinding from intense concert evenings.</p>
     </div>
-    <aside class="ab-side">
+    <div class="ab-side">
       <figure class="ab-fig rise"><div class="ph-img" aria-hidden="true"><span class="label">Photo to come</span></div><figcaption class="label muted">[Berlin, or travels]</figcaption></figure>
-    </aside>
+    </div>
   </div>
   <p class="small-print on-line rise">Avery Fisher Career Grant, 2021 &middot; Verbier Festival Jean-Nicolas Firmenich Prize &middot; Orpheum Foundation program for young soloists, 2025 &middot; Featured on PBS, NPR&rsquo;s From the Top, WQXR, WDR, Deutschlandfunk, HR and ARD</p>
   <div class="railed">
@@ -1096,8 +1111,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     {"id": "tica", "title": "TICA Festival", "sub": "Kwai Tsing Theatre, Hong Kong · with Haruka Fujii, percussion", "img": "tica", "ratio": "1 / 1", "q": "What happens when a cello and a thundersheet listen to each other?", "text": ["A concert I curated for Toolbox Percussion's TICA Festival in Hong Kong, with percussionist Haruka Fujii. The program ran from Bach to the world premiere of Andrew Moses' Ecstatic Immanence, a piece I commissioned, written for me.", "Andrew's music puts everyone in the room into direct contact with the present moment. It also involved some very memorable tech elements, including a live feedback loop between the cello and thundersheet: aspects of reflection between human and technology, and the synergy between the two. Needless to say I'm already itching to perform it again."]},
     {"id": "raderberg", "title": "Raderbergkonzerte", "sub": "Deutschlandfunk, Cologne", "img": "raderberg", "ratio": "4 / 5", "q": "Where do the musical worlds of the Americas and Europe meet?", "text": ["A program for Deutschlandfunk's Raderbergkonzerte in Cologne: Desenne, Ruth Crawford Seeger, Villa-Lobos, and Fauré. There has been such a rich history of exchange between the Americas and Europe, where those musical worlds blur into each other. The program was created in the spirit of celebrating some of those threads. It was an intensive, fun week with a really great group."]},
     {"id": "sf", "title": "San Francisco", "sub": "Where it began", "img": "sf", "ratio": "4 / 3", "text": ["A little note about the place I grew up in: San Francisco! New ideas are embraced and actively explored there, a spirit of innovation that gives the place its dynamic energy. At the same time, the transcendental natural beauty of the city always puts that energy in context. When people visit, I enjoy explaining that one really doesn't need to spend money to have a magical time there: catching a sunset, spending time in the parks or by the ocean, or exploring the views across the hills. The microclimates allow for a pretty diverse journey in a single day. I grew up in the fog, but the other side of the city gets much more sun. Each neighborhood has its own feeling.", "I grew up in a family of musicians, my mom a violinist (my first music teacher on violin), and my dad a timpanist. My grandparents are pianists, and I took piano lessons throughout my childhood with my grandma, who at the time lived in Marin across the Golden Gate Bridge. I consider myself lucky to have had so much music growing up, though it was never really forced on me. It was more a way of life, as making music was just such a norm in my family's culture.", "I discovered the cello when I was about 6 years old, and was totally fixated on the deep sound and also somehow the way it looked. When I begged my parents to switch from violin, their only hesitation was a funny musician parent's sense of practicality: they knew that if I became a cellist I'd have to buy two seats on the airplane! So essentially I had to convince them I was serious enough, and eventually succeeded.", "My deeper love for music itself bloomed a bit later. In my early teenage years, with the help of the internet, I started taking deep dives into cello recordings and research about composers and got hooked on the feeling of making musical discoveries. The further I dug, the more passionate I became about underappreciated or unknown works, hidden gems. Why is this great piece never played? That excitement led to my first solo appearance with an orchestra, Bloch's Schelomo at 15, and around the same time my obsession with Britten's Third Cello Suite led me to perform it on the composer's 100th birthday at the Castro Theatre.", "My philosophy is that great art is conjured from a creative place beyond ourselves and beyond time; a place we all have access to now. Sometimes a seed planted years ago will finally sprout and a new project arrives instantaneously. Though I'm now living on the other side of the world, San Francisco is a place that always remains at the center."]},
-    { id: 'stop', title: 'Stop Motion', sub: 'Short films', img: null, ratio: '4 / 3',
-      text: ["A parallel practice in image-making."] },
+    {"id": "stop", "title": "Stop Motion", "sub": "Short films", "img": null, "ratio": "4 / 3", "text": ["A parallel practice in image-making. Most of these began during lockdown in 2020: arranging, recording and animating each one myself."], "films": [["The Snow is Dancing", "Debussy, Children’s Corner · animated with cornflour and water · 2020", "JtMpzerI1Hs"], ["Felt, unfinished…", "Fauré, Cello Sonata No. 1, II · 2025", "jim8aH13tD8"], ["This is what happens when I leave my house for groceries", "2020", "h0xWYDtLZEM"], ["30 Seconds of Couperin", "Les Barricades Mystérieuses · 2020", "jXX-IXwiUp0"]]},
     { id: 'timeline', title: 'From the beginning', sub: 'San Francisco to now', img: 'timeline', ratio: '3 / 2', chrono: true, text: [] }
   ];
 
@@ -1283,6 +1297,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
       p.text.map(function (t) { return '<p class="rise">' + esc(t) + '</p>'; }).join('') +
       (p.extra ? '<div class="p-extra rise"><img src="../img/' + p.extra + '.jpg" alt="' + esc(p.title) + '">' + (p.cap ? '<span class="p-cap muted">' + esc(p.cap) + '</span>' : '') + '</div>' : '') +
       (p.watch ? '<a class="p-watch film rise" href="' + YT + p.watch[1] + '" target="_blank" rel="noopener"><span class="dot">' + TRI + '</span><span>' + esc(p.watch[0]) + '</span></a>' : '') +
+      (p.films ? '<ol class="p-films">' + p.films.map(function (f) { return '<li class="rise"><a class="p-film film" href="' + YT + f[2] + '" target="_blank" rel="noopener" data-title="' + esc(f[0]) + '"><span class="dot">' + TRI + '</span><span><b>' + esc(f[0]) + '</b><span class="muted">' + esc(f[1]) + '</span></span></a></li>'; }).join('') + '</ol>' : '') +
       (p.aside ? '<blockquote class="p-aside rise"><span class="label muted">' + esc(p.aside[0]) + '</span><p>' + esc(p.aside[1]) + '</p></blockquote>' : '') +
       (p.press ? '<div class="p-press">' + p.press.map(function (q) { return '<figure class="rise"><blockquote>&ldquo;' + esc(q[0]) + '&rdquo;</blockquote><figcaption class="label muted">' + esc(q[1]) + '</figcaption></figure>'; }).join('') + '</div>' : '') +
       '</div></div><div class="wrap">' + '<div class="page-end rise"><button class="pe-home pe-explore" type="button"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Explore</span></button><button class="p-next loop-next" data-id="' + next.id + '"><span class="label muted">Next</span>' + loopLine(next.title) + '</button></div></div>';
