@@ -233,9 +233,9 @@ html.has-cur .card:hover .frame img { transform: scale(1.06) translate(var(--dx,
 .next:hover span:last-child { border-bottom-color: var(--accent); }
 .curtain { clip-path: inset(0 0 0 0); }
 .js .curtain { opacity: 0; }
-.landed .curtain { animation: curtain 1250ms cubic-bezier(0.65, 0, 0.2, 1) 320ms both; }
-.landed .curtain img { animation: curtain-img 2000ms var(--ease) 320ms both; }
-@keyframes curtain { from { opacity: 1; clip-path: circle(0% at 50% 50%); } to { opacity: 1; clip-path: circle(72% at 50% 50%); } }
+.landed .curtain { animation: curtain 1100ms var(--ease) 500ms both; }
+.landed .curtain img { animation: curtain-img 1800ms var(--ease) 500ms both; }
+@keyframes curtain { from { opacity: 0; } to { opacity: 1; } }
 @keyframes curtain-img { from { transform: scale(1.04); } to { transform: none; } }
 .sig { display: block; width: 46px; height: auto; color: var(--orange); }
 .foot { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 40px; margin-top: var(--section); }
@@ -352,8 +352,9 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .xs { display: block; margin-top: 6px; font-size: var(--fs-label); line-height: 1.35; opacity: 0.66; }
 .xpeek { display: none; }
 @media (min-width: 900px) {
-  .xlist { padding: 8px 0; }
-  .xrow { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 24px; padding: 7px 0 7px var(--off, 0%); }
+  .xlist { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--block); align-items: start; }
+  .xrows { grid-column: 1; padding: 4px 0; }
+  .xrow { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 24px; padding: 8px 0 8px var(--off, 0%); }
   .xthumb { display: none; }
   .xt { font-size: var(--fs-list); line-height: 1.04; }
   .xs { margin: 0; }
@@ -361,10 +362,10 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   .js .xlist.peeking .xrow.in { opacity: 0.26; }
   .js .xlist.peeking .xrow.in.on { opacity: 1; }
   .xrow.on .xt { color: var(--c); }
-  .xrow.on { z-index: 3; }
-  .xpeek { display: block; position: absolute; z-index: 2; left: 0; top: 0; width: min(32vw, 460px); pointer-events: none; opacity: 0; transition: opacity 480ms var(--ease); will-change: transform; }
-  .xpeek.on { opacity: 1; }
-  .xpeek img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .xpeek { display: flex; grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--bar) + var(--head)); height: min(72vh, 620px); align-items: center; justify-content: center; pointer-events: none; }
+  .xpeek .xp { width: 100%; height: 100%; opacity: 0; transition: opacity 520ms var(--ease); }
+  .xpeek.on .xp { opacity: 1; }
+  .xpeek img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: left center; }
   .xpeek .blank { aspect-ratio: auto; height: 100%; }
 }
 .blank { aspect-ratio: 4 / 3; background: var(--orange); display: flex; align-items: center; justify-content: center; }
@@ -526,15 +527,14 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .p-extra img { width: 100%; height: auto; }
 .p-watch { display: inline-flex; align-items: center; gap: 16px; margin-top: 36px; font-weight: 500; }
 .p-next { display: block; margin-top: 64px; padding-top: 18px; border-top: 3px solid var(--orange); }
-.loop { display: block; overflow: hidden; white-space: nowrap; margin-top: 10px; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
-.loop-track { display: inline-flex; align-items: baseline; animation: loop 26s linear infinite; }
-.loop-track > span { padding-right: 36px; }
-.lp-t { font-family: var(--serif); font-size: var(--fs-display); letter-spacing: -0.02em; line-height: 1.1; }
-.lp-l { font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; }
-.loop-next:hover .lp-t { color: var(--orange); }
-.lp-t { transition: color var(--fast) var(--ease); }
-@keyframes loop { to { transform: translateX(-50%); } }
-@media (prefers-reduced-motion: reduce) { .loop-track { animation: none !important; } }
+.loop-next { margin-top: var(--section); text-align: left; border-top-width: 1px; border-top-color: currentColor; }
+.loop-next .label { display: block; }
+.nx { display: inline-flex; align-items: baseline; gap: 18px; margin-top: 10px; }
+.nx b { font-family: var(--serif); font-weight: 400; font-size: var(--fs-lead); letter-spacing: -0.02em; line-height: 1.05; background: linear-gradient(var(--orange), var(--orange)) 0 100% / 0 2px no-repeat; transition: background-size var(--slow) var(--ease); padding-bottom: 4px; }
+.nx svg { flex: none; align-self: center; color: var(--orange); animation: lean 3.2s var(--ease) infinite; }
+.loop-next:hover .nx b { background-size: 100% 2px; }
+@keyframes lean { 0%, 55%, 100% { transform: none; } 72% { transform: translateX(6px); } }
+@media (prefers-reduced-motion: reduce) { .nx svg { animation: none !important; } }
 .p-next b { display: block; margin-top: 8px; font-size: var(--fs-lead); letter-spacing: -0.02em; line-height: 1;  font-family: var(--serif); font-weight: 400; }
 @media (min-width: 900px) {
   .p-cols { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 72px; align-items: start; padding-inline: var(--edge); }
@@ -916,42 +916,29 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     var th = p.img ? '<img src="../img/' + p.img + '.jpg" alt="" loading="lazy">' : '';
     return '<button class="xrow rise" data-id="' + p.id + '" style="--c:' + (XC[p.id] || '#E8867C') + ';--off:' + XOFF[n % XOFF.length] + '">' +
       '<span class="xthumb" aria-hidden="true">' + th + '</span><span><span class="xt">' + esc(p.title) + '</span><span class="xs">' + esc(p.sub) + '</span></span></button>';
-  }).join('') + '<div class="xpeek" id="xpeek" aria-hidden="true"></div>';
+  }).join('');
+  $('grid').innerHTML = '<div class="xrows">' + $('grid').innerHTML + '</div><div class="xpeek" id="xpeek" aria-hidden="true"><div class="xp"></div></div>';
   (function () {
-    var list = $('grid'), peek = $('xpeek'), on = null, px = 0, py = 0, tx = 0, ty = 0, raf = 0;
+    var list = $('grid'), peek = $('xpeek'), box = peek.firstChild, on = null;
     var wide = window.matchMedia('(min-width: 900px) and (hover: hover)');
-    function frame() {
-      px += (tx - px) * 0.14; py += (ty - py) * 0.14;
-      peek.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px)';
-      raf = (Math.abs(tx - px) + Math.abs(ty - py) > 0.3) ? requestAnimationFrame(frame) : 0;
-    }
-    function aim(row, mx) {
-      var lb = list.getBoundingClientRect(), rb = row.getBoundingClientRect(), w = peek.offsetWidth, h = peek.offsetHeight;
-      tx = lb.width * 0.74 - w / 2 + ((mx - lb.left) / lb.width - 0.5) * 30;
-      ty = Math.max(-40, Math.min(lb.height - h + 40, rb.top - lb.top + rb.height / 2 - h / 2));
-      if (!raf) raf = requestAnimationFrame(frame);
-    }
-    function show(row, mx) {
-      if (row !== on) {
-        if (on) on.classList.remove('on');
-        on = row; row.classList.add('on'); list.classList.add('peeking');
-        var p = PROJECTS.filter(function (x) { return x.id === row.dataset.id; })[0];
-        var wasOn = peek.classList.contains('on');
-        peek.style.aspectRatio = p.ratio;
-        peek.innerHTML = p.img ? '<img src="../img/' + p.img + '.jpg" alt="">' : '<span class="blank"><span class="dot">' + TRI + '</span></span>';
-        peek.classList.add('on');
-        if (!wasOn) { aim(row, mx); px = tx; py = ty; frame(); return; }
-      }
-      aim(row, mx);
+    function show(row) {
+      if (row === on) return;
+      if (on) on.classList.remove('on');
+      on = row; row.classList.add('on'); list.classList.add('peeking');
+      var p = PROJECTS.filter(function (x) { return x.id === row.dataset.id; })[0];
+      box.innerHTML = p.img ? '<img src="../img/' + p.img + '.jpg" alt="">' : '<span class="blank"><span class="dot">' + TRI + '</span></span>';
+      var im = box.firstChild;
+      if (peek.classList.contains('on') && im.animate) im.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 360, easing: 'ease-out' });
+      peek.classList.add('on');
     }
     function hide() { if (on) on.classList.remove('on'); on = null; list.classList.remove('peeking'); peek.classList.remove('on'); }
     list.addEventListener('pointermove', function (e) {
       if (!wide.matches || e.pointerType !== 'mouse') return;
       list.classList.add('ready');
-      var row = e.target.closest('.xrow'); if (row) show(row, e.clientX); else hide();
+      var row = e.target.closest('.xrow'); if (row) show(row); else hide();
     });
-    list.addEventListener('pointerleave', hide);
-    list.addEventListener('focusin', function (e) { var row = e.target.closest('.xrow'); if (row && wide.matches) { var b = row.getBoundingClientRect(); show(row, b.left + 200); } });
+    list.querySelector('.xrows').addEventListener('pointerleave', hide);
+    list.addEventListener('focusin', function (e) { var row = e.target.closest('.xrow'); if (row && wide.matches) show(row); });
     list.addEventListener('focusout', hide);
     window.xPeekFrom = function (row) { return (wide.matches && on === row) ? peek.querySelector('img') : row.querySelector('.xthumb img'); };
   })();
@@ -1051,8 +1038,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
     fn(); return null;
   }
   function loopLine(t) {
-    var one = '<span class="lp-t">' + esc(t) + '</span><span class="lp-l">Next</span>', run = one + one + one + one;
-    return '<span class="loop" aria-hidden="true"><span class="loop-track">' + run + run + '</span></span>';
+    return '<span class="nx"><b>' + esc(t) + '</b><svg width="28" height="16" viewBox="0 0 28 16" aria-hidden="true"><path d="M19 1 L26 8 L19 15 M26 8 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></span>';
   }
   function renderProject(p) {
     var idx = PROJECTS.indexOf(p), next = PROJECTS[(idx + 1) % PROJECTS.length];
@@ -1062,7 +1048,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
         '<div class="p-head"><h1 class="rise">' + esc(p.title) + '</h1><div class="p-sub rise">' + esc(p.sub) + '</div></div>' +
         '<div class="tl-shot"><img id="p-img" src="../img/' + p.img + '.jpg" alt="Oliver Herbert in rehearsal" style="aspect-ratio:' + p.ratio + ';object-fit:cover"></div>' +
         '<div class="tl-body">' + chronoHTML() + '</div>' +
-        '<button class="p-next loop-next tl-next rise" data-id="' + next.id + '" style="width:100%" aria-label="Next project: ' + esc(next.title) + '"><span class="label muted">Next project</span>' + loopLine(next.title) + '</button></div>';
+        '<button class="p-next loop-next tl-next rise" data-id="' + next.id + '" style="width:100%"><span class="label muted">Next project</span>' + loopLine(next.title) + '</button></div>';
       watch(project); return;
     }
     var shot = p.img ? '<div class="p-shot"><img id="p-img" src="../img/' + p.img + '.jpg" alt="' + esc(p.title) + '" style="aspect-ratio:' + p.ratio + ';object-fit:cover">' +
@@ -1074,7 +1060,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
       p.text.map(function (t) { return '<p class="rise">' + esc(t) + '</p>'; }).join('') +
       (p.extra ? '<div class="p-extra rise"><img src="../img/' + p.extra + '.jpg" alt="' + esc(p.title) + '">' + (p.cap ? '<span class="p-cap muted">' + esc(p.cap) + '</span>' : '') + '</div>' : '') +
       (p.watch ? '<a class="p-watch film rise" href="' + YT + p.watch[1] + '" target="_blank" rel="noopener"><span class="dot">' + TRI + '</span><span>' + esc(p.watch[0]) + '</span></a>' : '') +
-      '</div></div><div class="wrap">' + '<button class="p-next loop-next rise" data-id="' + next.id + '" style="width:100%" aria-label="Next project: ' + esc(next.title) + '"><span class="label muted">Next project</span>' + loopLine(next.title) + '</button></div>';
+      '</div></div><div class="wrap">' + '<button class="p-next loop-next rise" data-id="' + next.id + '" style="width:100%"><span class="label muted">Next project</span>' + loopLine(next.title) + '</button></div>';
     watch(project);
   }
   function openProject(id, card, fromImg) {
