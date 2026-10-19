@@ -460,6 +460,13 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   .railed.ab-sec > .ab-side .ab-fig img, .railed.ab-sec > .ab-side .ph-img { aspect-ratio: 4 / 3; }
 }
 .ab-lead { max-width: 24em; text-wrap: pretty; }
+.ab-open .ab-lead { max-width: 26em; }
+.ab-open { margin-bottom: var(--head); }
+.ab-open .w { color: color-mix(in srgb, var(--fg) 30%, var(--bg)); transition: color 500ms var(--ease); }
+.ab-open .w.on { color: var(--fg); }
+.ab-open .ab-lead2 .w.on { color: color-mix(in srgb, var(--fg) 62%, var(--bg)); }
+@media (prefers-reduced-motion: reduce) { .ab-open .w { color: inherit !important; transition: none; } }
+
 .ab-lead + .ab-lead2 { margin-top: 0.6em; }
 .ab-lead2 { color: color-mix(in srgb, var(--fg) 62%, var(--bg)); margin-bottom: 1.2em; }
 .ab-mid { margin: 20px 0 var(--row); font-size: var(--fs-body); line-height: 1.6; max-width: 34em; }
@@ -723,11 +730,14 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   </div>
   <div class="sheet">
   <section class="about wrap" id="about" data-tone="light">
-    <div class="railed">
-    <span class="label rise lab">About</span>
+    <h2 class="sr-only">About</h2>
+    <div class="ab-open" id="ab-open">
+    <p class="lead ab-lead">Oliver Herbert is a cellist who moves between orchestras, chamber music and projects of his own.</p>
+    <p class="lead ab-lead ab-lead2">Alongside the cello classics, he performs the lesser-known and the new. His music-making often starts from a question: What is at the core of hearing and re-hearing? Where do musical worlds meet?</p>
+    </div>
+    <div class="railed ab-rest">
+    <span class="lab" aria-hidden="true"></span>
     <div>
-    <p class="lead rise ab-lead">Oliver Herbert is a cellist who moves between orchestras, chamber music and projects of his own.</p>
-    <p class="lead rise ab-lead ab-lead2">Alongside the cello classics, he performs the lesser-known and the new. His music-making often starts from a question: What is at the core of hearing and re-hearing? Where do musical worlds meet?</p>
     <p class="more-text rise">He appears as a soloist with conductors including Michael Tilson Thomas, Giancarlo Guerrero, Juanjo Mena and Reinhard Goebel, and in chamber music with artists such as Mitsuko Uchida, Janine Jansen and Tabea Zimmermann. His projects have brought composers such as Schnittke, Desenne and Crawford Seeger into focus, and he has premiered works by Helena Winkelman, Andrew Moses and others. He received a 2021 Avery Fisher Career Grant.</p>
     <blockquote class="ab-quote rise"><p>&ldquo;The cello seems an extension of himself.&rdquo;</p><cite>Third Coast Review</cite></blockquote>
     <div class="btn-row rise"><button class="btn" type="button" id="ab-listen"><svg width="11" height="13" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"></path></svg>Listen</button><a class="btn" href="#biography" id="full-bio">Full biography<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
@@ -1135,6 +1145,27 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
   /* The homepage looks forward: past concerts appear only when fewer than three are coming up; the full calendar holds the rest */
   if (UPCOMING.length < 3) $('past').innerHTML = rows(PAST.slice(0, 2), 'past', true);
   else { $('today').remove(); $('past-h').remove(); $('past').remove(); }
+  /* Homepage About: the words fill in as you read down */
+  (function () {
+    var box = document.getElementById('ab-open'); if (!box) return;
+    var words = [];
+    box.querySelectorAll('p').forEach(function (p) {
+      p.innerHTML = p.textContent.split(/(\s+)/).map(function (t) { return /\s/.test(t) || !t ? t : '<span class="w">' + t + '</span>'; }).join('');
+      p.querySelectorAll('.w').forEach(function (w) { words.push(w); });
+    });
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { words.forEach(function (w) { w.classList.add('on'); }); return; }
+    var shown = -1, tick = false;
+    function paint() {
+      tick = false;
+      var r = box.getBoundingClientRect(), vh = window.innerHeight;
+      var p = Math.max(0, Math.min(1, (vh * 0.95 - r.top) / (r.height + vh * 0.25)));
+      var n = Math.round(p * words.length);
+      if (n === shown) return; shown = n;
+      for (var i = 0; i < words.length; i++) words[i].classList.toggle('on', i < n);
+    }
+    window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(paint); } }, { passive: true });
+    window.addEventListener('resize', paint); paint();
+  })();
   /* About: each project as the question it starts from; a card opens the project */
   (function () {
     var box = document.getElementById('qcards'); if (!box) return;
