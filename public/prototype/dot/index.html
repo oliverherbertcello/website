@@ -1,0 +1,1495 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex"><meta name="description" content="Oliver Herbert, cellist. Concerts, recordings and projects."><style>[hidden]{display:none!important}body{margin:0}</style></head><body>
+<title>Oliver Herbert Prototype</title>
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Schibsted+Grotesk:wght@400..800&display=swap">
+<style>
+/* Layout: one quiet column of three lists with full-width photographs between them; the motion carries the identity. Single committed look, by choice. */
+:root {
+  --paper: #FBFBF9;
+  --ink: #111314;
+  --orange: #C0362C;            /* International Orange, Golden Gate Bridge */
+  --white: #FFFFFF;
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --accent: var(--orange);
+  --serif: 'DM Serif Display', Georgia, 'Times New Roman', serif;   /* the name, headings, quotes: short and large only */
+  --display: 'Schibsted Grotesk', 'Helvetica Neue', Arial, sans-serif;   /* everything else */
+  --text: var(--display);
+  --ease: cubic-bezier(0.45, 0, 0.15, 1);
+  --fast: 320ms;
+  --slow: 850ms;
+  --gutter: 24px;
+  --maxw: 1312px;               /* text and lists stop here on wide screens; photos stay full-bleed */
+  --edge: max(var(--gutter), calc((100vw - var(--maxw)) / 2));
+  --bar: 56px;
+  --k: 2.3;                     /* how much larger the name is on arrival */
+  --dy: 62px;                   /* how far below its resting place the name starts */
+  --p: 0;                       /* 0 = arrived, 1 = settled; set from scroll */
+  --prog: 0%;
+  --mw: 48px;                   /* room for the monogram in the corner */
+  /* The system: five type sizes, one spacing scale, one rail. Every section is built from these. */
+  --fs-list: clamp(36px, 4.2vw, 60px);   /* the Explore titles, one size between lead and display */
+  --fs-label: 13px;             /* labels, captions, small print */
+  --fs-body: 17px;              /* reading text, dates, form fields */
+  --fs-title: clamp(22px, 2vw, 28px);      /* concert, project and film titles */
+  --fs-lead: clamp(26px, 2.8vw, 38px);     /* the About sentence, the email address */
+  --fs-display: clamp(52px, 7vw, 100px);   /* every section heading and project title */
+  --fs-quote: clamp(44px, 8vw, 120px);     /* the one deliberate exception: press quotes */
+  --section: 80px;              /* space between sections */
+  --head: 32px;                 /* heading to what follows */
+  --block: 48px;                /* between groups inside a section */
+  --row: 20px;                  /* padding inside list rows */
+  --rail: 0px;                  /* the left column for labels and dates (desktop) */
+  --rail-gap: 0px;
+  --btn: 48px;
+  color-scheme: light;
+}
+@media (min-width: 900px) { :root { --gutter: 64px; --k: 6; --dy: 84px; --fs-body: 18px; --section: 128px; --head: 48px; --block: 64px; --row: 24px; --rail: 216px; --rail-gap: 32px; } }
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--display); font-size: var(--fs-body); line-height: 1.45;
+  transition: background-color var(--slow) var(--ease), color var(--slow) var(--ease);
+  overflow-x: hidden; -webkit-font-smoothing: antialiased;
+}
+body[data-tone="dark"] { --bg: var(--ink); --fg: var(--paper); }
+body[data-tone="portrait"] { --bg: #343426; --fg: var(--paper); }  /* the backdrop of the landing portrait */
+body[data-tone="orange"] { --bg: var(--orange); --fg: var(--white); --accent: var(--white); }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+img { display: block; }
+.wrap { padding-inline: var(--edge); }
+.label { font-size: var(--fs-label); letter-spacing: 0.14em; text-transform: uppercase; }
+/* A rail row: label in the left column, content on the shared content line. On phones the label sits above. */
+.railed { display: grid; gap: 12px; }
+.railed + .railed { margin-top: var(--block); }
+.railed > .lab { color: color-mix(in srgb, currentColor 62%, transparent); }
+@media (max-width: 899px) { .lab.wide-only { display: none; } }
+@media (min-width: 900px) { .railed.top { align-items: start; } }
+@media (min-width: 900px) { .railed { grid-template-columns: var(--rail) minmax(0, 1fr); column-gap: var(--rail-gap); align-items: baseline; } .railed > :not(.lab) { grid-column: 2; } .railed > .lab { grid-column: 1; grid-row: 1; } }
+.on-line { display: block; }
+@media (min-width: 900px) { .on-line { margin-left: calc(var(--rail) + var(--rail-gap)); } }
+/* One button: a single height, two styles. Filled for the main action of a section, outlined otherwise. Full width on phones. */
+.btn { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 12px; height: var(--btn); padding: 0 24px; border: 1px solid currentColor; border-radius: calc(var(--btn) / 2); font-size: 16px; font-weight: 600; transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease), border-color var(--fast) var(--ease); }
+.btn svg { flex-shrink: 0; transition: transform var(--fast) var(--ease); }
+.btn:hover svg { transform: translateX(4px); }
+.btn.fill { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.btn.fill:hover { background: var(--orange); border-color: var(--orange); color: var(--white); }
+.btn:not(.fill):hover { background: var(--fg); color: var(--bg); }
+@media (max-width: 899px) { .btn { display: flex; width: 100%; } }
+.btn-row { margin-top: var(--block); }
+.muted { opacity: 0.62; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* Navigation: links in the top bar on wide screens; a full-screen menu on phones */
+.topnav { display: none; margin-right: 28px; gap: 26px; font-size: 15px; font-weight: 500; }
+.topnav a { padding: 10px 0; border-bottom: 1px solid transparent; transition: border-color var(--fast) var(--ease); }
+.topnav a:hover { border-bottom-color: var(--accent); }
+.top-langs { display: flex; gap: 12px; margin-left: 6px; padding-left: 22px; border-left: 1px solid color-mix(in srgb, currentColor 30%, transparent); font-size: 13px; letter-spacing: 0.06em; }
+.top-langs a { opacity: 0.7; transition: opacity var(--fast) var(--ease), border-color var(--fast) var(--ease); }
+.top-langs a:hover, .top-langs a[aria-current="page"] { opacity: 1; }
+.top-langs a[aria-current="page"] { border-bottom-color: currentColor; }
+.menu-btn { height: 40px; padding: 0 2px 0 16px; font-size: 15px; font-weight: 600; }
+@media (min-width: 900px) { .topnav { display: flex; } .bar .menu-btn { display: none; } }
+@media (max-width: 899px) { .listen { width: 40px; padding: 0; justify-content: center; } .listen span { display: none; } }
+.menu { position: fixed; inset: 0; z-index: 40; background: var(--paper); color: var(--ink); display: flex; flex-direction: column; padding: calc(env(safe-area-inset-top, 0px) + 8px) var(--gutter) calc(env(safe-area-inset-bottom, 0px) + 28px); overflow-y: auto; clip-path: circle(0px at var(--mx, 100%) var(--my, 0%)); transition: clip-path 560ms cubic-bezier(0.65, 0, 0.25, 1); }
+.menu.open { clip-path: circle(150vmax at var(--mx, 100%) var(--my, 0%)); }
+.menu-head { display: flex; justify-content: flex-end; height: 48px; align-items: center; }
+.menu-links { display: flex; flex-direction: column; margin-top: 7vh; }
+.menu-links a { font-family: var(--serif); font-size: clamp(46px, 12.5vw, 66px); font-weight: 400; letter-spacing: -0.02em; line-height: 1; padding: 10px 0; }
+.menu-next { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; margin-top: auto; padding-top: 40px; font-family: var(--text); font-size: 17px; }
+.menu-langs { display: flex; gap: 22px; margin-top: 22px; font-weight: 600; }
+.menu-langs a { padding: 10px 0; border-bottom: 2px solid transparent; }
+.menu-langs a[aria-current="page"] { border-bottom-color: var(--accent); }
+.menu-links a { display: flex; align-items: center; gap: 20px; }
+.md { flex: none; width: 14px; height: 14px; border-radius: 50%; background: var(--c); opacity: 0; transform: translate(var(--fx, 0px), var(--fy, 0px)) scale(0.4); transition: transform 760ms cubic-bezier(0.2, 0.9, 0.25, 1.12), opacity 240ms var(--ease); transition-delay: calc(180ms + var(--i) * 60ms); }
+.menu.open .md { opacity: 1; transform: none; }
+.menu-links .ml, .menu-next, .menu-langs { opacity: 0; transform: translateX(-10px); transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); transition-delay: calc(420ms + var(--i) * 55ms); }
+.menu-next, .menu-langs { transform: translateY(12px); }
+.menu.open .menu-links .ml, .menu.open .menu-next, .menu.open .menu-langs { opacity: 1; transform: none; }
+
+/* Bar, name, listen */
+.bar {
+  position: fixed; z-index: 20; top: 0; left: 0; right: 0;
+  height: calc(var(--bar) + env(safe-area-inset-top, 0px)); padding-top: env(safe-area-inset-top, 0px);
+  box-sizing: border-box; background: var(--bg);
+  transition: background-color var(--slow) var(--ease);
+  display: flex; align-items: center; justify-content: flex-end; padding-inline: var(--edge);
+  view-transition-name: bar;
+}
+.bar::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: var(--prog); background: var(--accent); }
+.name {
+  position: fixed; z-index: 21; left: calc(var(--edge) + var(--mw)); top: calc(env(safe-area-inset-top, 0px) + 18px);
+  --w: calc(800 - 100 * var(--p));
+  font-family: var(--serif); font-synthesis: none; font-size: 22px; font-weight: 400; letter-spacing: -0.01em; line-height: 1; white-space: nowrap;
+  transform-origin: left top; display: flex;
+  transform: translate(calc((var(--p) - 1) * var(--mx, var(--mw))), calc((1 - var(--p)) * var(--dy))) scale(calc(1 + (var(--k) - 1) * (1 - var(--p))));
+  view-transition-name: sitename;
+}
+.mono { position: fixed; z-index: 22; left: var(--edge); top: calc(env(safe-area-inset-top, 0px) + 13px); width: 36px; display: block; color: var(--fg); transition: color var(--slow) var(--ease); view-transition-name: mono; }
+.mono svg { display: block; width: 100%; height: auto; }
+.mono path { fill: currentColor; }
+.overture main, .overture .listen, .overture .name, .overture .menu-btn, .overture .topnav { opacity: 0; }
+main, .listen, .name, .menu-btn, .topnav { transition: opacity 600ms var(--ease); }
+.listen {
+  display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 16px 0 14px;
+  border: 1px solid currentColor; border-radius: 20px; font-size: 14px; font-weight: 500; max-width: 62vw;
+}
+.listen span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.listen svg { flex-shrink: 0; }
+
+
+/* The player: a printed concert program that drops down from Listen */
+.listen[aria-expanded="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.player { position: fixed; z-index: 30; top: calc(var(--bar) + env(safe-area-inset-top, 0px) + 6px); right: var(--edge); width: min(440px, calc(100vw - 2 * var(--gutter))); }
+@media (max-width: 899px) { .player { left: 8px; right: 8px; width: auto; } }
+.pl-card { --paper2: #F4F1E9; background: var(--paper2); color: var(--ink); padding: 22px 24px 18px; box-shadow: 0 30px 70px -20px rgba(17, 19, 20, 0.45), 0 2px 0 rgba(17, 19, 20, 0.04); clip-path: inset(0 0 100% 0); transition: clip-path var(--slow) var(--ease); max-height: calc(100svh - var(--bar) - 28px); overflow-y: auto; box-sizing: border-box; }
+.player.open .pl-card { clip-path: inset(0 -90px -110px -90px); }
+.pl-card > * { opacity: 0; transform: translateY(-8px); transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); transition-delay: calc(var(--i, 0) * 60ms + 120ms); }
+.player.open .pl-card > * { opacity: 1; transform: none; }
+.pl-head { display: grid; grid-template-columns: 30px 1fr auto; gap: 14px; align-items: center; padding-bottom: 14px; border-bottom: 3px double currentColor; }
+.pl-head svg { width: 30px; height: auto; color: var(--orange); }
+.pl-head svg path { fill: currentColor; }
+.pl-head .label { display: block; font-size: 11px; opacity: 0.6; }
+.pl-who { display: block; margin-top: 2px; font-family: var(--serif); font-size: 21px; line-height: 1.1; }
+.pl-close { height: 40px; padding: 0 0 0 12px; font-size: 14px; font-weight: 600; }
+.pl-list { list-style: none; margin: 0; padding: 0; }
+.pl-item { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 14px; width: 100%; padding: 14px 0; border-bottom: 1px solid rgba(17, 19, 20, 0.14); align-items: baseline; }
+.pl-num { font-family: var(--serif); font-size: 17px; opacity: 0.45; transition: color var(--fast) var(--ease), opacity var(--fast) var(--ease); }
+.pl-comp { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+.pl-work { display: block; margin-top: 3px; font-family: var(--serif); font-size: 21px; line-height: 1.12; }
+.pl-mvt { display: block; margin-top: 2px; font-size: 15px; font-weight: 500; }
+.pl-item.on .pl-mvt { color: var(--orange); }
+.pl-with { display: block; margin-top: 4px; font-size: 13px; line-height: 1.35; opacity: 0.62; }
+.pl-dur { font-size: 13px; font-variant-numeric: tabular-nums; opacity: 0.62; }
+.pl-item:hover .pl-num { opacity: 1; }
+.pl-item.on .pl-num { color: var(--orange); opacity: 1; }
+.pl-item.on .pl-work { color: var(--orange); }
+.pl-ctrl { display: grid; grid-template-columns: 1fr auto auto auto; gap: 6px; align-items: center; padding-top: 14px; }
+.pl-time { font-size: 13px; font-variant-numeric: tabular-nums; opacity: 0.7; }
+.pl-ctrl button { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 22px; transition: background-color var(--fast) var(--ease); }
+.pl-ctrl button:hover { background: rgba(17, 19, 20, 0.07); }
+.pl-ctrl .pl-play { width: 54px; height: 54px; border-radius: 27px; background: var(--ink); color: var(--paper2); }
+.pl-ctrl .pl-play:hover { background: var(--orange); }
+.pl-seek { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 24px; margin: 14px 0 0; background: transparent; cursor: pointer; --pos: 0%; }
+.pl-seek::-webkit-slider-runnable-track { height: 2px; background: linear-gradient(90deg, var(--orange) var(--pos), rgba(17, 19, 20, 0.18) var(--pos)); }
+.pl-seek::-moz-range-track { height: 2px; background: linear-gradient(90deg, var(--orange) var(--pos), rgba(17, 19, 20, 0.18) var(--pos)); }
+.pl-seek::-webkit-slider-thumb { -webkit-appearance: none; width: 13px; height: 13px; margin-top: -5.5px; border-radius: 50%; background: var(--ink); border: 0; }
+.pl-seek::-moz-range-thumb { width: 13px; height: 13px; border-radius: 50%; background: var(--ink); border: 0; }
+.pl-seek:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.pl-note { margin: 12px 0 0; font-size: 12px; opacity: 0.55; }
+
+
+/* The cursor: a small ink circle that follows a little behind, says what a click will do, and breathes with the music.
+   Desktop with a mouse only; phones get a ripple on tap; reduced motion keeps the normal cursor. */
+html.has-cur, html.has-cur * { cursor: none !important; }
+html.has-cur input, html.has-cur textarea, html.has-cur iframe { cursor: text !important; }
+html.has-cur iframe { cursor: auto !important; }
+.cur { position: fixed; z-index: 70; left: 0; top: 0; width: 0; height: 0; pointer-events: none; opacity: 0; transition: opacity 240ms var(--ease); }
+.cur.on { opacity: 1; }
+.cur-dot { position: absolute; left: 0; top: 0; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: var(--accent);
+  transform: scale(var(--s, 1)); transition: width 360ms var(--ease), height 360ms var(--ease), margin 360ms var(--ease), background-color var(--slow) var(--ease); }
+.cur-label { display: none; }
+/* over anything you can click, the dot swells a little; photos leave it as it is */
+.cur.link .cur-dot { width: 12px; height: 12px; margin: -6px 0 0 -6px; }
+.cur.text, .cur.away { opacity: 0; }
+.cur.down .cur-dot { transform: scale(calc(var(--s, 1) * 0.86)); }
+/* Explore: the photo drifts toward the cursor, as if you were leaning in */
+.card .frame img { transition: transform 900ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+html.has-cur .card:hover .frame img { transform: scale(1.06) translate(var(--dx, 0px), var(--dy2, 0px)); }
+/* Phones: a soft ripple where you tap */
+.ripple { position: fixed; z-index: 70; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--fg); opacity: 0.18; pointer-events: none; animation: ripple 620ms var(--ease) forwards; }
+@keyframes ripple { to { transform: scale(9); opacity: 0; } }
+
+/* The name: letters arrive one after another, and rise and fall gently while a recording plays */
+.name span { display: inline-block; }
+.name .gap { width: 0.26em; }
+.js .name.go span { animation: arrive 900ms var(--ease) both; animation-delay: calc(var(--i) * 55ms); }
+@keyframes arrive { from { opacity: 0; transform: translateY(0.35em); } to { opacity: 1; transform: none; } }
+.js body[data-playing] .name span, body[data-playing] .name span { animation: breathe 2600ms var(--ease) infinite; animation-delay: calc(var(--i) * 90ms); }
+@keyframes breathe { 0%, 100% { transform: none; } 50% { transform: translateY(-0.09em); } }
+
+/* Hero */
+.hero-space { height: calc(var(--bar) + var(--dy) + 20px * var(--k) + 18px); }
+.hero-meta { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 14px 32px; padding-bottom: 26px; }
+.jump { display: flex; flex-wrap: wrap; gap: 4px 22px; font-weight: 600; }
+.jump a { padding: 10px 0; border-bottom: 2px solid var(--accent); }
+.frame { overflow: hidden; }
+.frame img { width: 100%; height: auto; }
+.hero-img { aspect-ratio: 4 / 5; }
+.hero-img img { height: 100%; object-fit: cover; object-position: 45% center; }
+@media (min-width: 900px) { .hero-img { aspect-ratio: 2 / 1; } .hero-img img { object-position: center 28%; } }
+.interlude { aspect-ratio: 3 / 2; }
+.interlude img { height: 100%; object-fit: cover; }
+@media (min-width: 900px) { .interlude { aspect-ratio: 9 / 4; } }
+
+/* Landing: the next concert, the portrait rising like a curtain, the monogram as signature */
+.intro { display: flex; flex-direction: column; gap: 10px; }
+.next { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; font-size: var(--fs-body); }
+@media (min-width: 900px) { .next { display: grid; grid-template-columns: var(--rail) auto; column-gap: var(--rail-gap); justify-content: start; } }
+.next .label { font-family: var(--display); }
+.next span:last-child { border-bottom: 1px solid color-mix(in srgb, currentColor 35%, transparent); transition: border-color var(--fast) var(--ease); }
+.next:hover span:last-child { border-bottom-color: var(--accent); }
+.curtain { clip-path: inset(0 0 0 0); }
+.js .curtain { opacity: 0; }
+.landed .curtain { animation: curtain 1250ms cubic-bezier(0.65, 0, 0.2, 1) 320ms both; }
+.landed .curtain img { animation: curtain-img 2000ms var(--ease) 320ms both; }
+@keyframes curtain { from { opacity: 1; clip-path: circle(0% at 50% 50%); } to { opacity: 1; clip-path: circle(72% at 50% 50%); } }
+@keyframes curtain-img { from { transform: scale(1.04); } to { transform: none; } }
+.sig { display: block; width: 46px; height: auto; color: var(--orange); }
+.foot { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 40px; margin-top: var(--section); }
+.foot-links { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 24px; font-size: var(--fs-label); }
+.foot-links a { padding: 10px 0; }
+.social { display: flex; gap: 2px; margin: 0 14px 0 -12px; }
+.social a { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0 !important; border: 0 !important; transition: color var(--fast) var(--ease); }
+.social a:hover { color: var(--orange); }
+.pro-social { margin: -12px 0 -12px -12px; }
+.pro-social a { width: 48px; height: 48px; }
+.menu-social { margin: 0 -12px 0 auto; }
+.menu-langs { align-items: center; }
+.foot-links .langs { display: flex; gap: 16px; margin-right: 10px; font-weight: 600; }
+.foot-links .langs a { border-bottom: 2px solid transparent; }
+.foot-links .langs a[aria-current="page"] { border-bottom-color: var(--orange); }
+.sig path { fill: currentColor; }
+
+/* The landing: the portrait fills the first screen, then the page slides up over it */
+body { --k: 1; --dy: 0px; --mx: 0px; }
+.hero-space { height: var(--bar); }
+.hero-img { aspect-ratio: auto; height: calc(100svh - var(--bar)); }
+.hero-img img { height: 100%; }
+.hero-meta { padding-top: 24px; padding-bottom: 0; }
+/* Wide screens: never crop the portrait; when the screen is wider than the photo, the whole picture stands centred and its edges dissolve into a backdrop matched to the studio wall */
+@media (min-width: 900px) {
+  .hero-img { container-type: size; display: flex; justify-content: center; background: radial-gradient(ellipse 70% 90% at 50% 40%, #33322a 0%, #2a291f 55%, #22211a 100%); }
+  .hero-img img { flex: none; width: auto; min-width: 100%; height: 100%; object-position: 42% 12%; }
+}
+@container (min-aspect-ratio: 3 / 2) {
+  .hero-img img { min-width: 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+}
+
+/* The next concert, announced on the portrait */
+.hero-img { position: relative; }
+.hero-img::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 42%; background: linear-gradient(to top, rgba(20, 20, 14, 0.62), rgba(20, 20, 14, 0)); pointer-events: none; }
+.hero-next { position: absolute; z-index: 1; left: var(--edge); bottom: 32px; display: grid; gap: 6px; color: var(--paper); }
+.hero-next .label { opacity: 0.8; }
+.hn-what { font-family: var(--serif); font-size: var(--fs-lead); line-height: 1.05; }
+.hn-where { display: inline-flex; align-items: center; gap: 12px; font-size: var(--fs-body); }
+.hn-where svg { transition: transform var(--fast) var(--ease); }
+.hero-next:hover .hn-where svg { transform: translateX(5px); }
+.hero-next:hover .hn-what { color: #fff; }
+.js .hero-next { opacity: 0; transform: translateY(12px); }
+.landed .hero-next { animation: hn-in 1100ms var(--ease) 1500ms both; }
+@keyframes hn-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@media (min-width: 900px) { .hero-next { bottom: 56px; } .hero-img::after { height: 30%; } }
+.hero-listen { position: absolute; z-index: 1; right: var(--edge); bottom: 32px; display: grid; gap: 6px; justify-items: end; text-align: right; color: var(--paper); }
+.hero-listen .label { opacity: 0.8; }
+.hl-what { display: inline-flex; align-items: center; gap: 10px; font-size: var(--fs-body); }
+.hl-dot { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--orange); color: #fff; transition: transform var(--fast) var(--ease); }
+.hl-dot svg { width: 9px; height: 11px; margin-left: 2px; }
+.hero-listen:hover .hl-dot { transform: scale(1.12); }
+.js .hero-listen { opacity: 0; transform: translateY(12px); }
+.landed .hero-listen { animation: hn-in 1100ms var(--ease) 1650ms both; }
+@media (min-width: 900px) { .hero-listen { bottom: 56px; } }
+@media (max-width: 899px) { .hero-listen .hl-name { display: none; } }
+@media (prefers-reduced-motion: reduce) { .js .hero-listen { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .js .hero-next { opacity: 1; transform: none; } }
+
+/* About, on the homepage */
+.about { padding-block: var(--section) 0; }
+.about .lead { margin: 0; max-width: 21em; font-weight: 400; font-size: var(--fs-lead); line-height: 1.2; letter-spacing: -0.02em; text-wrap: pretty; }
+.about .more-text { margin: 24px 0 0; max-width: 36em; font-size: var(--fs-body); line-height: 1.55; }
+
+/* Sections */
+section.list { padding-block: var(--section); }
+h2 { margin: 0 0 var(--head); font-family: var(--serif); font-size: var(--fs-display); font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; text-wrap: balance; }
+h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
+
+/* Concert rows: when, what, where at a glance; the details open in place */
+.row { display: block; width: 100%; padding: var(--row) 0; border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.row-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 16px; align-items: start; }
+.row-meta { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0 10px; margin-bottom: 6px; font-size: var(--fs-label); letter-spacing: 0.04em; }
+.row-when { font-weight: 600; font-variant-numeric: tabular-nums; }
+.row-where { opacity: 0.62; }
+.row-where::before { content: "·"; margin-right: 10px; }
+.row-main { display: block; min-width: 0; }
+.row-title { display: block; font-size: var(--fs-title); font-weight: 600; letter-spacing: -0.015em; line-height: 1.12; text-wrap: balance; transition: transform var(--fast) var(--ease); }
+.row-work { display: block; margin-top: 6px; font-size: var(--fs-body); line-height: 1.35; opacity: 0.68; transition: transform var(--fast) var(--ease); }
+.row:hover .row-title, .row:hover .row-work { transform: translateX(8px); }
+.plus { position: relative; width: 16px; height: 16px; margin-top: 0.55em; }
+.plus::before, .plus::after { content: ""; position: absolute; left: 0; top: 7px; width: 16px; height: 1.5px; background: currentColor; transition: transform var(--fast) var(--ease); }
+.plus::after { transform: rotate(90deg); }
+.row[aria-expanded="true"] .plus::after { transform: rotate(0deg); }
+.panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--slow) var(--ease); }
+.row[aria-expanded="true"] + .panel { grid-template-rows: 1fr; }
+.panel > div { overflow: hidden; min-height: 0; }
+.panel p { margin: 0; padding: 0 0 var(--row); max-width: 36em; font-size: var(--fs-body); line-height: 1.5; opacity: 0; transform: translateY(10px); transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); }
+.row[aria-expanded="true"] + .panel p { opacity: 1; transform: none; }
+@media (min-width: 900px) {
+  .row-head { grid-template-columns: var(--rail) minmax(0, 1fr) minmax(0, 240px) 44px; gap: 0 var(--rail-gap); align-items: baseline; }
+  .row-meta { display: contents; }
+  .row-when { grid-column: 1; grid-row: 1; font-size: var(--fs-body); letter-spacing: 0; }
+  .row-main { grid-column: 2; grid-row: 1; }
+  .row-where { grid-column: 3; grid-row: 1; font-size: var(--fs-body); letter-spacing: 0; }
+  .row-where::before { content: none; }
+  .plus { grid-column: 4; grid-row: 1; align-self: center; justify-self: end; margin-top: 0; }
+  .vplay { grid-column: 4; grid-row: 1; align-self: center; justify-self: end; }
+  .panel p { margin-left: calc(var(--rail) + var(--rail-gap)); }
+}
+.list h3 { margin: var(--block) 0 16px; font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.62; }
+.list h2 + h3 { margin-top: 0; }
+#upcoming, #past, .rows { border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.today { margin-top: 6px; padding-top: 14px; border-top: 3px solid var(--accent); color: var(--accent); font-weight: 700; }
+
+/* Projects */
+.grid { column-count: 2; column-gap: 16px; margin-bottom: -32px; }
+@media (min-width: 900px) { .grid { column-gap: var(--rail-gap); } }
+@media (min-width: 700px) { .grid { column-count: 3; } }
+@media (min-width: 1100px) { .grid { column-count: 4; } }
+.card { display: block; width: 100%; break-inside: avoid; margin-bottom: 32px; }
+@media (min-width: 900px) { .card { margin-bottom: var(--block); } .grid { margin-bottom: calc(-1 * var(--block)); } }
+.card .frame img { transition: transform var(--slow) var(--ease); }
+.card:hover .frame img { transform: scale(1.04); }
+.card-title { display: block; text-wrap: balance; overflow-wrap: break-word; hyphens: auto; margin-top: 14px; font-size: var(--fs-body); font-weight: 600; letter-spacing: -0.015em; line-height: 1.15; }
+@media (min-width: 900px) { .card-title { font-size: var(--fs-title); } }
+.card-sub { display: block; margin-top: 6px; font-size: var(--fs-label); line-height: 1.35; }
+/* Explore list */
+.xlist { position: relative; }
+.xrow { position: relative; z-index: 1; display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 18px; align-items: center; width: 100%; text-align: left; padding: 10px 0; transition: opacity 420ms var(--ease); }
+.xthumb { display: block; width: 72px; aspect-ratio: 1; overflow: hidden; background: var(--orange); }
+.xthumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.xt { display: block; font-family: var(--serif); font-size: var(--fs-lead); font-weight: 400; letter-spacing: -0.02em; line-height: 1.02; overflow-wrap: break-word; transition: color 420ms var(--ease); }
+.xs { display: block; margin-top: 6px; font-size: var(--fs-label); line-height: 1.35; opacity: 0.66; }
+.xpeek { display: none; }
+@media (min-width: 900px) {
+  .xlist { margin-left: calc(var(--rail) + var(--rail-gap)); padding: 8px 0; }
+  .xrow { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 24px; padding: 7px 0 7px var(--off, 0%); }
+  .xthumb { display: none; }
+  .xt { font-size: var(--fs-list); line-height: 1.04; }
+  .xs { margin: 0; }
+  .js .xlist.ready .xrow.in { transition-delay: 0ms; }
+  .js .xlist.peeking .xrow.in { opacity: 0.26; }
+  .js .xlist.peeking .xrow.in.on { opacity: 1; }
+  .xrow.on .xt { color: var(--c); }
+  .xrow.on { z-index: 3; }
+  .xpeek { display: block; position: absolute; z-index: 2; left: 0; top: 0; width: min(26vw, 360px); pointer-events: none; opacity: 0; transition: opacity 480ms var(--ease); will-change: transform; }
+  .xpeek.on { opacity: 1; }
+  .xpeek img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .xpeek .blank { aspect-ratio: auto; height: 100%; }
+}
+.blank { aspect-ratio: 4 / 3; background: var(--orange); display: flex; align-items: center; justify-content: center; }
+
+/* Recordings: albums and videos are rows on the same grid as the concerts */
+.vrow { display: block; padding: var(--row) 0; border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.vrow .row-head { grid-template-columns: minmax(0, 1fr) 44px; }
+.vplay { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid currentColor; border-radius: 22px; transition: transform var(--fast) var(--ease), background-color var(--fast) var(--ease), color var(--fast) var(--ease); }
+.vrow:hover .vplay { background: var(--fg); color: var(--bg); }
+.vrow:hover .row-title, .vrow:hover .row-work { transform: translateX(8px); }
+.vrow .vplay { grid-row: 2; grid-column: 2; align-self: center; }
+.arow { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 0 16px; align-items: start; padding: var(--row) 0; border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.arow .cover { aspect-ratio: 1; overflow: hidden; grid-row: span 2; }
+.arow { grid-template-rows: auto 1fr; }
+.arow .cover img { width: 100%; height: 100%; object-fit: cover; }
+.arow .row-where { display: block; grid-column: 2; margin-top: 6px; font-size: var(--fs-label); }
+.arow .row-where::before { content: none; }
+@media (min-width: 900px) {
+  .vrow .row-head { grid-template-columns: var(--rail) minmax(0, 1fr) minmax(0, 240px) 44px; }
+  .vrow .vplay { grid-row: 1; grid-column: 4; }
+  .arow { grid-template-columns: var(--rail) minmax(0, 1fr) minmax(0, 240px) 44px; gap: 0 var(--rail-gap); }
+  .arow .cover { grid-row: 1; }
+  .arow { grid-template-rows: auto; }
+  .arow .row-main { grid-column: 2; }
+  .arow .row-where { grid-column: 3; grid-row: 1; margin-top: 0; font-size: var(--fs-body); padding-top: 0.3em; }
+  .arow .row-main { padding-top: 0.1em; }
+}
+.rec { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 720px; }
+@media (min-width: 900px) { .rec { gap: var(--rail-gap); } }
+.films { border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.film { display: flex; align-items: center; gap: 16px; padding: var(--row) 0; border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); font-size: var(--fs-body); font-weight: 600; line-height: 1.25; }
+@media (min-width: 900px) { .film { font-size: var(--fs-title); letter-spacing: -0.015em; } }
+.film .dot, .blank .dot { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid currentColor; border-radius: 22px; transition: transform var(--fast) var(--ease); }
+.film:hover .dot { transform: scale(1.12); }
+.blank .dot { color: var(--white); }
+
+/* Quote and closing */
+.quote { padding-block: var(--section); }
+/* Press quotes take turns: one at a time, crossfading; tap to move on */
+.quotes { display: grid; width: 100%; cursor: pointer; }
+.quotes .q { grid-area: 1 / 1; margin: 0; opacity: 0; transform: translateY(14px); transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); }
+.quotes .q.on { opacity: 1; transform: none; }
+.qdots { display: flex; gap: 2px; margin-top: 16px; margin-left: -6px; }
+.qdots button { width: 40px; height: 44px; display: flex; align-items: center; justify-content: center; }
+.qdots button span { display: block; width: 28px; height: 2px; background: currentColor; opacity: 0.35; transition: opacity var(--fast) var(--ease), height var(--fast) var(--ease); }
+.qdots button:hover span { opacity: 0.7; }
+.qdots button.on span { opacity: 1; height: 3px; }
+.quote .btn.fill { background: var(--white); color: var(--orange); border-color: var(--white); }
+.quote .btn.fill:hover { background: transparent; color: var(--white); border-color: var(--white); }
+.quote blockquote { margin: 0 0 24px; font-family: var(--serif); font-size: var(--fs-quote); font-weight: 400; letter-spacing: -0.02em; line-height: 0.98; max-width: 11em; text-wrap: balance; }
+.close { padding-block: var(--section) 48px; }
+.cform { max-width: 640px; }
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+.field:first-child label { margin-top: 0; }
+.field label { font-size: var(--fs-label); letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; }
+.field input, .field textarea { font-family: var(--text); font-size: var(--fs-body); color: inherit; background: transparent; border: 0; border-bottom: 1px solid color-mix(in srgb, currentColor 40%, transparent); border-radius: 0; padding: 10px 0; outline: none; transition: border-color var(--fast) var(--ease); }
+.field textarea { resize: vertical; min-height: 96px; }
+.field input:focus, .field textarea:focus { border-bottom-color: var(--orange); }
+.cform .btn { margin-top: 16px; }
+.sent { margin: 16px 0 0; font-size: var(--fs-body); }
+
+.addr { justify-self: start; font-size: min(var(--fs-lead), 5.4vw); font-weight: 400; letter-spacing: -0.02em; line-height: 1.2; overflow-wrap: anywhere; padding-bottom: 4px; border-bottom: 1px solid var(--orange); }
+
+/* Videos play here, in a window over the page */
+.vmodal { position: fixed; inset: 0; z-index: 50; background: rgba(17, 19, 20, 0.97); color: var(--white); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 64px var(--gutter) 32px; opacity: 0; transition: opacity var(--fast) var(--ease); }
+.vmodal.open { opacity: 1; }
+.vframe { width: min(100%, 1100px, calc((100svh - 160px) * 16 / 9)); aspect-ratio: 16 / 9; background: #000; transform: scale(0.97); transition: transform var(--slow) var(--ease); }
+.vmodal.open .vframe { transform: none; }
+.vframe iframe { width: 100%; height: 100%; border: 0; display: block; }
+.vtitle { margin: 0; width: min(100%, 1100px); font-size: 15px; font-weight: 500; }
+.vclose { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 12px); right: var(--gutter); height: 40px; padding: 0 2px 0 16px; font-size: 15px; font-weight: 600; color: var(--white); }
+.creds { display: flex; flex-direction: column; gap: 6px; font-size: var(--fs-label); line-height: 1.5; }
+
+/* The full calendar: every concert, upcoming first, then year by year */
+#calendar { padding-top: calc(var(--bar) + 8px); padding-bottom: var(--section); }
+#calendar h1 { margin: 22px 0 var(--head); font-family: var(--serif); font-size: var(--fs-display); font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; }
+#calendar h2 { margin: var(--block) 0 16px; font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.62; }
+#calendar h1 + h2 { margin-top: 0; }
+#calendar .rows { border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.cal-years { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 var(--block); font-size: var(--fs-body); font-variant-numeric: tabular-nums; }
+.cal-years a { padding: 10px 0; border-bottom: 1px solid transparent; opacity: 0.62; transition: opacity var(--fast) var(--ease), border-color var(--fast) var(--ease); }
+.cal-years a:hover { opacity: 1; border-bottom-color: var(--accent); }
+.row.still { cursor: default; }
+.row.still:hover .row-title, .row.still:hover .row-work { transform: none; }
+
+/* The About page: biography, press, press kit */
+#aboutpage { padding-top: calc(var(--bar) + 8px); padding-bottom: var(--section); }
+#aboutpage h1 { margin: 22px 0 var(--head); font-family: var(--serif); font-size: var(--fs-display); font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; }
+#aboutpage .railed + .railed { margin-top: var(--section); }
+.ab-portrait { margin: 0 0 var(--section); }
+.ab-portrait img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center 30%; }
+.ab-portrait figcaption { display: block; margin-top: 12px; }
+@media (min-width: 900px) { .ab-portrait { margin-left: calc(var(--rail) + var(--rail-gap)); } }
+.bio { max-width: 36em; }
+.bio p { margin: 0 0 1.1em; font-size: var(--fs-body); line-height: 1.6; }
+.bio .lead { font-size: var(--fs-lead); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 0.9em; }
+.press { display: grid; gap: var(--block); }
+.press figure { margin: 0; }
+.press blockquote { margin: 0 0 12px; font-family: var(--serif); font-size: var(--fs-lead); line-height: 1.1; letter-spacing: -0.01em; }
+.kit-rows .vrow .row-head { grid-template-columns: minmax(0, 1fr) 44px; }
+.kit-rows .vrow .vplay { grid-row: 1; grid-column: 2; }
+.kit-rows .row-main { grid-column: 1; grid-row: 1; }
+.ab-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (min-width: 900px) { .ab-photos { gap: var(--rail-gap); } }
+.ab-photos a { display: grid; gap: 10px; }
+.ab-photos img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: opacity var(--fast) var(--ease); }
+.ab-photos a:hover img { opacity: 0.85; }
+
+/* Legal pages */
+.legal { padding-top: calc(var(--bar) + 8px); padding-bottom: var(--section); }
+.legal h1 { margin: 22px 0 var(--head); font-family: var(--serif); font-size: var(--fs-display); font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; }
+.legal-text { max-width: 36em; }
+@media (min-width: 900px) { .legal-text { margin-left: calc(var(--rail) + var(--rail-gap)); } }
+.legal-text p { margin: 0 0 1.1em; font-size: var(--fs-body); line-height: 1.6; }
+.legal-text p.label { margin: 2em 0 0.4em; }
+.legal-text h2 { margin: 2em 0 0.4em; font-family: var(--display); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; }
+.legal-text a { border-bottom: 1px solid var(--orange); }
+.todo { background: color-mix(in srgb, var(--orange) 14%, transparent); padding: 0 4px; }
+
+/* The timeline module */
+.tl-shot img { display: block; width: 100%; }
+.tl-body { margin-top: var(--section); }
+@media (min-width: 900px) { .tl-shot, .tl-body, .tl-next { margin-left: calc(var(--rail) + var(--rail-gap)); } .tl-next { width: auto !important; display: block; } }
+
+/* Biography: short version, full text on request */
+.fullbio { margin-top: 8px; }
+.fullbio summary { display: inline-flex; align-items: center; gap: 10px; height: var(--btn); padding: 0 24px; border: 1px solid currentColor; border-radius: calc(var(--btn) / 2); font-size: 16px; font-weight: 600; cursor: pointer; list-style: none; transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease); }
+.fullbio summary::-webkit-details-marker { display: none; }
+.fullbio summary::after { content: "+"; font-weight: 400; }
+.fullbio[open] summary::after { content: "–"; }
+.fullbio summary:hover { background: var(--fg); color: var(--bg); }
+.fullbio-text { margin-top: var(--block); opacity: 0.85; }
+
+/* Chronology: year by year, on the same grid as the concert rows */
+.chrono { border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.ch-year { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 0 16px; padding: var(--row) 0; border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.ch-y { font-family: var(--serif); font-size: var(--fs-title); line-height: 1.1; }
+.ch-y.word { font-family: var(--display); font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding-top: 0.35em; }
+@media (max-width: 899px) { .ch-y.word { grid-column: 1 / -1; padding: 0 0 8px; } .ch-y.word + .ch-items { grid-column: 1 / -1; } }
+.ch-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.ch-items li { font-size: var(--fs-body); line-height: 1.45; }
+.ch-items .k { display: block; font-size: var(--fs-label); letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; margin-bottom: 2px; }
+.ch-items a { border-bottom: 1px solid var(--orange); }
+.ch-photo { grid-column: 2; margin: 12px 0 4px; }
+.ch-photo img { display: block; width: min(100%, 520px); aspect-ratio: 3 / 2; object-fit: cover; }
+.ch-photo figcaption { margin-top: 8px; }
+@media (min-width: 900px) { .ch-year { grid-template-columns: 120px minmax(0, 1fr); gap: 0 var(--rail-gap); } }
+
+/* Project page */
+#project { padding-top: calc(var(--bar) + 8px); padding-bottom: 80px; }
+.back { display: inline-flex; align-items: center; gap: 10px; height: 44px; font-weight: 500; }
+.p-head { padding-block: 22px 28px; }
+.p-head h1 { margin: 0 0 16px; font-family: var(--serif); font-size: var(--fs-display); font-weight: 400; letter-spacing: -0.02em; line-height: 0.96; text-wrap: balance; }
+.p-sub { font-size: var(--fs-body); }
+.p-shot img { width: 100%; height: auto; }
+.p-cap { display: block; padding-top: 12px; font-size: var(--fs-label); line-height: 1.4; }
+.p-body p { margin: 24px 0 0; max-width: 36em; font-size: var(--fs-body); line-height: 1.55; }
+.p-extra { margin: 36px 0 0 auto; width: 74%; max-width: 420px; }
+.p-extra img { width: 100%; height: auto; }
+.p-watch { display: inline-flex; align-items: center; gap: 16px; margin-top: 36px; font-weight: 500; }
+.p-next { display: block; margin-top: 64px; padding-top: 18px; border-top: 3px solid var(--orange); }
+.loop { display: block; overflow: hidden; white-space: nowrap; margin-top: 10px; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.loop-track { display: inline-flex; align-items: baseline; animation: loop 26s linear infinite; }
+.loop-track > span { padding-right: 36px; }
+.lp-t { font-family: var(--serif); font-size: var(--fs-display); letter-spacing: -0.02em; line-height: 1.1; }
+.lp-l { font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; }
+.loop-next:hover .lp-t { color: var(--orange); }
+.lp-t { transition: color var(--fast) var(--ease); }
+@keyframes loop { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .loop-track { animation: none !important; } }
+.p-next b { display: block; margin-top: 8px; font-size: var(--fs-lead); letter-spacing: -0.02em; line-height: 1;  font-family: var(--serif); font-weight: 400; }
+@media (min-width: 900px) {
+  .p-cols { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 72px; align-items: start; padding-inline: var(--edge); }
+  .p-cols .wrap { padding-inline: 0; }
+  .p-body p:first-child { margin-top: 0; }
+}
+
+/* Phrase-like arrival */
+.js .rise { opacity: 0; transform: translateY(18px); transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); transition-delay: calc(var(--i, 0) * 75ms); }
+.js .rise.in { opacity: 1; transform: none; }
+.js .open-img img { transform: scale(1.07); transition: transform 1600ms var(--ease); }
+.js .open-img.in img { transform: none; }
+
+/* A photo becomes the page */
+::view-transition-group(shot) { animation-duration: var(--slow); animation-timing-function: var(--ease); }
+::view-transition-old(shot), ::view-transition-new(shot) { height: 100%; object-fit: cover; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 520ms; animation-timing-function: var(--ease); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 1ms !important; transition-delay: 0ms !important; animation-duration: 1ms !important; }
+  .js .rise, .js .open-img img { opacity: 1; transform: none; }
+  .name span { animation: none !important; }
+  .js .curtain, .js .curtain img { animation: none !important; opacity: 1; transform: none; }
+  .overture main, .overture .listen, .overture .name { opacity: 1; }
+}
+/* The dot: every page change is a circle growing from where you clicked, holding the monogram for a breath */
+.wipe { position: fixed; inset: 0; z-index: 65; display: flex; align-items: center; justify-content: center; clip-path: circle(0px at 50% 50%); }
+.wipe[hidden] { display: none; }
+.wipe-mono { width: min(26vw, 112px); opacity: 0; }
+.wipe-mono svg { display: block; width: 100%; height: auto; }
+.wipe-mono path { fill: currentColor; }
+</style>
+
+<header class="bar">
+  <nav class="topnav" aria-label="Main">
+    <a href="#about">About</a>
+    <a href="#concerts">Concerts</a>
+    <a href="#projects">Explore</a>
+    <a href="#recordings">Recordings</a>
+    <a href="#contact">Contact</a>
+    <span class="top-langs" role="group" aria-label="Language"><a href="#top" aria-current="page" lang="en">EN</a><a href="#top" lang="de">DE</a><a href="#top" lang="es">ES</a></span>
+  </nav>
+  <button class="listen" id="listen" aria-expanded="false" aria-controls="player" aria-label="Listen">
+    <svg id="listen-icon" width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"></path></svg>
+    <span id="listen-label">Listen</span>
+  </button>
+  <button class="menu-btn" id="menu-open" aria-expanded="false" aria-controls="menu">Menu</button>
+</header>
+<div class="player" id="player" role="dialog" aria-label="Listen" hidden>
+  <div class="pl-card">
+    <div class="pl-head" style="--i:0"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="54.0 105.2 352.0 280.5"><path fill="currentColor" fill-rule="evenodd" d="M310.88,381.83C305.06,380.58 304.17,380.23 299.58,377.51C298.78,377.04 297.05,375.58 295.73,374.26C292.16,370.70 290.62,367.72 289.72,362.62C288.94,358.20 288.76,345.13 288.93,304.62C289.05,277.76 289.02,270.43 288.77,269.68C288.14,267.78 289.10,267.88 270.76,267.79C259.18,267.74 254.10,267.80 253.43,267.99C252.77,268.19 252.31,268.56 251.87,269.25C251.25,270.24 251.05,271.42 250.24,279.25C249.99,281.64 249.39,285.11 248.47,289.50C248.00,291.74 247.81,292.49 246.87,296.12C246.65,296.95 246.33,298.24 246.16,299.00C245.98,299.76 245.65,300.74 245.42,301.18C245.19,301.62 245.00,302.22 245.00,302.52C245.00,302.82 244.79,303.53 244.54,304.10C244.28,304.66 243.82,305.91 243.51,306.88C242.92,308.70 241.85,311.56 241.49,312.23C241.26,312.68 240.69,313.95 239.38,317.00C238.88,318.17 238.09,319.80 237.63,320.62C237.17,321.45 236.22,323.25 235.50,324.62C234.79,326.00 233.80,327.74 233.31,328.50C228.94,335.23 228.48,335.87 225.33,339.65C222.21,343.39 217.22,348.55 214.01,351.35C209.56,355.22 206.54,357.43 200.75,361.05C199.23,362.00 194.17,364.51 192.62,365.08C192.07,365.28 190.89,365.73 190.00,366.07C186.70,367.35 179.12,369.56 176.12,370.12C175.16,370.30 173.81,370.56 173.12,370.71C170.89,371.19 166.68,371.83 164.38,372.03C156.89,372.70 145.81,372.50 141.50,371.63C140.61,371.45 139.14,371.22 138.25,371.13C137.36,371.04 136.06,370.82 135.38,370.63C134.69,370.45 133.62,370.22 133.00,370.14C129.90,369.70 120.68,366.91 115.62,364.87C110.91,362.97 104.23,359.34 100.45,356.62C99.59,356.00 98.23,355.04 97.44,354.48C93.67,351.86 85.79,344.27 82.36,339.97C79.53,336.44 75.33,330.21 72.95,326.02C71.62,323.68 68.13,316.72 67.74,315.62C67.50,314.94 66.85,313.23 66.30,311.82C64.72,307.79 63.52,302.94 62.76,297.50C62.46,295.34 62.18,293.59 61.49,289.38C61.21,287.73 60.99,285.91 61.00,285.33C61.00,284.76 60.83,283.43 60.63,282.37C60.43,281.32 60.15,278.75 60.01,276.66C59.86,274.58 59.58,271.07 59.38,268.88C58.29,257.16 57.60,231.48 58.22,226.17C58.37,224.91 58.66,221.52 58.88,218.65C59.09,215.77 59.33,213.33 59.39,213.22C59.46,213.11 59.63,212.03 59.76,210.82C60.06,208.14 60.83,204.18 61.48,202.00C62.81,197.55 63.01,196.85 63.00,196.56C63.00,196.39 63.23,195.55 63.50,194.69C64.68,191.03 65.34,189.11 65.50,188.88C65.59,188.74 65.87,188.06 66.11,187.38C67.62,183.20 68.85,180.36 70.89,176.38C74.41,169.46 75.00,168.43 77.84,164.12C80.13,160.67 80.15,160.64 81.98,158.25C84.33,155.17 87.05,151.98 89.62,149.28C92.06,146.73 97.66,141.61 99.53,140.23C100.17,139.76 101.18,138.97 101.78,138.47C103.73,136.87 112.60,131.08 115.38,129.61C116.06,129.25 117.53,128.47 118.62,127.88C121.46,126.36 121.97,126.11 123.38,125.55C125.76,124.61 127.38,123.94 128.50,123.45C129.12,123.17 130.28,122.88 131.08,122.81C132.53,122.68 132.53,122.68 133.96,124.15C135.61,125.85 136.86,127.59 137.08,128.52C137.36,129.67 136.81,130.75 134.82,132.92C133.75,134.09 132.48,135.54 132.00,136.13C127.65,141.49 126.20,143.43 125.22,145.21C124.89,145.81 124.34,146.80 124.00,147.40C123.13,148.94 121.15,152.88 120.51,154.38C120.21,155.06 119.87,155.80 119.76,156.02C119.11,157.25 117.79,161.07 116.74,164.75C116.45,165.78 116.00,167.30 115.75,168.12C115.49,168.95 115.21,170.07 115.11,170.62C115.02,171.18 114.80,172.19 114.61,172.88C114.42,173.56 114.20,174.97 114.10,176.00C114.01,177.03 113.83,178.16 113.70,178.50C113.44,179.19 112.48,186.48 111.75,193.38C110.43,205.85 109.96,237.03 110.69,264.12C110.87,270.59 111.06,278.12 111.13,280.88C111.20,283.62 111.37,286.72 111.51,287.75C111.65,288.78 111.86,290.93 111.99,292.54C112.11,294.14 112.38,296.39 112.59,297.54C112.79,298.68 113.08,300.36 113.23,301.25C113.38,302.14 113.62,303.55 113.77,304.38C114.17,306.62 115.99,314.48 116.38,315.62C116.56,316.18 116.79,317.02 116.88,317.50C117.13,318.85 119.05,324.87 119.64,326.16C119.84,326.60 120.00,327.04 120.00,327.16C120.00,328.07 124.29,337.29 125.53,339.04C125.79,339.40 126.00,339.77 126.00,339.86C126.00,340.07 126.84,341.25 128.21,343.00C129.85,345.08 133.71,349.00 135.65,350.55C137.66,352.15 143.07,355.05 145.03,355.58C151.19,357.24 157.30,357.43 163.12,356.13C166.94,355.28 170.37,353.41 174.90,349.72C177.90,347.28 180.07,344.75 183.06,340.18C183.98,338.78 187.53,331.56 188.35,329.44C188.71,328.51 189.28,327.04 189.62,326.16C191.17,322.18 193.10,315.86 194.02,311.80C194.27,310.66 194.53,309.65 194.59,309.55C194.65,309.45 194.83,308.31 194.99,307.00C195.14,305.69 195.43,303.73 195.62,302.62C196.02,300.38 196.69,295.39 197.01,292.38C197.13,291.27 197.40,289.14 197.61,287.62C197.82,286.11 198.00,283.98 198.00,282.88C198.01,281.77 198.18,279.36 198.39,277.50C198.88,272.98 199.15,252.90 198.79,247.00C198.64,244.59 198.40,240.54 198.26,238.00C198.11,235.46 197.82,231.97 197.61,230.25C197.40,228.53 197.07,225.55 196.88,223.62C196.49,219.70 195.87,214.82 195.48,212.75C195.34,211.99 195.12,210.69 194.99,209.86C194.87,209.03 194.59,207.94 194.38,207.43C194.17,206.93 194.00,206.26 194.00,205.95C194.01,205.63 193.79,204.64 193.53,203.75C193.27,202.86 192.86,201.39 192.64,200.50C191.90,197.60 191.55,196.40 190.88,194.62C190.06,192.43 189.41,190.69 188.88,189.25C187.67,185.97 184.27,179.90 182.03,177.01C181.13,175.85 179.25,173.74 177.86,172.33C174.01,168.43 171.60,167.53 167.89,168.63C166.07,169.16 165.10,169.67 161.75,171.86C155.97,175.63 153.40,178.00 149.82,182.87C148.89,184.14 147.28,187.39 146.58,189.44C145.96,191.24 145.91,191.68 145.91,195.62C145.90,200.15 145.84,199.84 147.40,203.46C147.88,204.56 150.14,206.93 151.25,207.50C153.65,208.72 158.09,208.64 160.62,207.34C162.21,206.52 165.79,204.18 167.25,202.99C169.70,201.00 170.07,200.87 173.25,200.89C175.87,200.91 176.26,200.98 177.62,201.63C179.65,202.59 182.70,205.67 183.33,207.39C185.03,211.97 185.06,212.17 185.07,216.25C185.08,219.50 185.00,220.43 184.54,222.00C183.60,225.27 182.54,227.55 180.99,229.62C179.85,231.16 177.02,233.89 175.50,234.92C173.72,236.12 169.46,238.00 168.50,238.00C168.21,238.00 167.66,238.16 167.27,238.36C166.46,238.78 160.75,239.50 158.29,239.49C155.89,239.49 151.08,238.88 149.49,238.38C145.56,237.16 144.74,236.86 143.25,236.11C134.83,231.89 129.11,223.12 127.96,212.65C127.53,208.76 127.82,200.70 128.50,197.48C129.14,194.46 130.22,191.10 131.27,188.88C131.67,188.03 132.00,187.24 132.00,187.13C132.00,186.87 133.96,183.36 135.26,181.28C137.05,178.43 141.78,172.83 144.37,170.51C144.91,170.03 146.05,169.01 146.89,168.25C149.32,166.07 152.64,163.76 156.62,161.50C158.85,160.23 166.91,156.22 168.88,155.39C171.65,154.22 172.69,153.83 175.25,152.99C179.30,151.66 180.74,151.25 186.75,149.74C191.28,148.60 194.09,148.00 194.89,148.00C195.29,148.00 196.50,147.83 197.56,147.63C198.62,147.43 201.21,147.14 203.31,147.00C205.41,146.85 207.80,146.63 208.62,146.50C209.45,146.37 212.99,146.19 216.50,146.10C222.81,145.94 225.05,146.07 232.50,146.99C238.84,147.78 244.50,150.35 248.16,154.12C250.75,156.79 251.64,158.56 252.21,162.24C252.58,164.61 252.62,169.21 252.62,208.71C252.62,252.54 252.62,252.54 253.34,253.16C254.06,253.78 254.06,253.78 270.34,253.70C288.36,253.62 287.72,253.68 288.56,252.00C288.97,251.18 289.00,249.16 289.02,221.00C289.02,203.42 289.13,190.09 289.27,189.00C289.40,187.97 289.62,185.72 289.76,184.00C290.20,178.51 291.47,170.68 292.55,166.88C294.27,160.79 295.81,156.26 297.24,153.11C297.66,152.19 298.00,151.29 298.00,151.13C298.00,150.74 301.54,143.74 303.00,141.25C305.40,137.14 307.82,134.07 312.65,129.03C317.91,123.54 323.82,119.08 329.88,116.06C334.36,113.81 340.25,111.74 344.93,110.74C350.88,109.48 360.35,109.07 368.38,109.70C377.45,110.43 382.40,111.44 388.00,113.70C389.17,114.18 390.46,114.70 390.88,114.86C391.99,115.30 393.13,115.99 394.82,117.25C395.65,117.87 396.70,118.63 397.15,118.93C398.21,119.65 400.48,122.49 401.40,124.25C402.11,125.61 402.12,125.68 402.11,129.88C402.11,134.12 402.11,134.12 401.15,136.09C400.08,138.27 398.17,140.38 396.44,141.30C395.55,141.77 394.98,141.87 393.00,141.87C390.99,141.87 390.44,141.78 389.40,141.27C387.20,140.19 384.97,137.58 379.88,130.11C375.56,123.77 371.59,120.62 367.14,119.98C365.32,119.71 361.46,119.87 359.52,120.28C358.12,120.58 355.03,122.05 353.25,123.27C350.51,125.13 347.82,128.42 346.03,132.09C345.05,134.10 344.00,136.66 344.00,137.04C344.00,137.20 343.73,138.02 343.40,138.86C342.17,141.97 340.72,149.89 340.10,156.88C339.34,165.40 339.23,174.77 339.00,249.00C338.88,290.87 338.65,331.54 338.51,339.38C338.37,347.21 338.31,354.30 338.38,355.12C338.79,359.67 339.47,361.96 340.79,363.16C341.11,363.45 341.96,363.99 342.68,364.35C343.82,364.92 344.29,365.00 346.43,365.00C349.49,365.00 351.24,364.56 356.12,362.54C358.70,361.48 359.13,361.39 360.01,361.75C360.63,362.01 360.99,362.45 361.56,363.67C363.10,366.96 362.78,368.08 359.82,369.90C358.75,370.55 357.70,371.23 357.49,371.41C357.29,371.58 355.49,372.52 353.49,373.50C351.50,374.48 349.69,375.38 349.46,375.51C349.01,375.75 344.17,377.63 341.50,378.60C338.18,379.81 334.89,380.60 329.47,381.48C326.74,381.93 325.30,382.00 318.85,381.97C314.74,381.96 311.15,381.89 310.88,381.83Z"/></svg><div><span class="label">Program</span><span class="pl-who">Oliver Herbert, cello</span></div><button class="pl-close" id="pl-close" type="button">Close</button></div>
+    <ol class="pl-list" id="pl-list" style="--i:1"></ol>
+    <input class="pl-seek" id="pl-seek" type="range" min="0" max="1000" value="0" aria-label="Position in track" style="--i:2">
+    <div class="pl-ctrl" style="--i:3">
+      <span class="pl-time" id="pl-time">0:00 / 0:00</span>
+      <button type="button" id="pl-prev" aria-label="Previous"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true"><path d="M2 1 V13 M14 1 L4 7 L14 13 Z" stroke="currentColor" stroke-width="1.6" fill="currentColor" stroke-linejoin="round"></path></svg></button>
+      <button type="button" class="pl-play" id="pl-play" aria-label="Play"><svg id="pl-icon" width="14" height="16" viewBox="0 0 14 16" aria-hidden="true"><path d="M2 1 L13 8 L2 15 Z" fill="currentColor"></path></svg></button>
+      <button type="button" id="pl-next" aria-label="Next"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true"><path d="M14 1 V13 M2 1 L12 7 L2 13 Z" stroke="currentColor" stroke-width="1.6" fill="currentColor" stroke-linejoin="round"></path></svg></button>
+    </div>
+  </div>
+</div>
+<div class="menu" id="menu" hidden>
+  <div class="menu-head"><button class="menu-btn menu-close" id="menu-close">Close</button></div>
+  <nav class="menu-links" aria-label="Main">
+    <a href="#about" style="--i:0"><span class="md" style="--c:#343426" aria-hidden="true"></span><span class="ml">About</span></a>
+    <a href="#concerts" style="--i:1"><span class="md" style="--c:#C0362C" aria-hidden="true"></span><span class="ml">Concerts</span></a>
+    <a href="#projects" style="--i:2"><span class="md" style="--c:#111314" aria-hidden="true"></span><span class="ml">Explore</span></a>
+    <a href="#recordings" style="--i:3"><span class="md" style="--c:#343426" aria-hidden="true"></span><span class="ml">Recordings</span></a>
+    <a href="#contact" style="--i:4"><span class="md" style="--c:#C0362C" aria-hidden="true"></span><span class="ml">Contact</span></a>
+  </nav>
+  <a class="menu-next" href="#concerts" style="--i:5"><span class="label">Next</span><span>1 Nov · Noe Music, San Francisco</span></a>
+  <div class="menu-langs" style="--i:6"><a href="#top" aria-current="page">EN</a><a href="#top">DE</a><a href="#top">ES</a><span class="social menu-social"><a href="https://www.instagram.com/oliverherbert_/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg></a><a href="https://www.facebook.com/oliverherbertcello" target="_blank" rel="noopener" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.6 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.5-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.9v3h2.6V21z" fill="currentColor"/></svg></a><a href="https://www.youtube.com/@OliverHerbertCello" target="_blank" rel="noopener" aria-label="YouTube"><svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22.5 7.2c-.2-1-1-1.8-2-2C18.7 4.7 12 4.7 12 4.7s-6.7 0-8.5.5c-1 .2-1.8 1-2 2C1 9 1 12 1 12s0 3 .5 4.8c.2 1 1 1.8 2 2 1.8.5 8.5.5 8.5.5s6.7 0 8.5-.5c1-.2 1.8-1 2-2 .5-1.8.5-4.8.5-4.8s0-3-.5-4.8zM9.8 15.2V8.8l5.6 3.2z" fill="currentColor"/></svg></a></span></div>
+</div>
+<nav class="brand" aria-label="Home"><a class="mono" id="mono" href="#top" aria-label="Oliver Herbert, home"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="54.0 105.2 352.0 280.5"><path fill="currentColor" fill-rule="evenodd" d="M310.88,381.83C305.06,380.58 304.17,380.23 299.58,377.51C298.78,377.04 297.05,375.58 295.73,374.26C292.16,370.70 290.62,367.72 289.72,362.62C288.94,358.20 288.76,345.13 288.93,304.62C289.05,277.76 289.02,270.43 288.77,269.68C288.14,267.78 289.10,267.88 270.76,267.79C259.18,267.74 254.10,267.80 253.43,267.99C252.77,268.19 252.31,268.56 251.87,269.25C251.25,270.24 251.05,271.42 250.24,279.25C249.99,281.64 249.39,285.11 248.47,289.50C248.00,291.74 247.81,292.49 246.87,296.12C246.65,296.95 246.33,298.24 246.16,299.00C245.98,299.76 245.65,300.74 245.42,301.18C245.19,301.62 245.00,302.22 245.00,302.52C245.00,302.82 244.79,303.53 244.54,304.10C244.28,304.66 243.82,305.91 243.51,306.88C242.92,308.70 241.85,311.56 241.49,312.23C241.26,312.68 240.69,313.95 239.38,317.00C238.88,318.17 238.09,319.80 237.63,320.62C237.17,321.45 236.22,323.25 235.50,324.62C234.79,326.00 233.80,327.74 233.31,328.50C228.94,335.23 228.48,335.87 225.33,339.65C222.21,343.39 217.22,348.55 214.01,351.35C209.56,355.22 206.54,357.43 200.75,361.05C199.23,362.00 194.17,364.51 192.62,365.08C192.07,365.28 190.89,365.73 190.00,366.07C186.70,367.35 179.12,369.56 176.12,370.12C175.16,370.30 173.81,370.56 173.12,370.71C170.89,371.19 166.68,371.83 164.38,372.03C156.89,372.70 145.81,372.50 141.50,371.63C140.61,371.45 139.14,371.22 138.25,371.13C137.36,371.04 136.06,370.82 135.38,370.63C134.69,370.45 133.62,370.22 133.00,370.14C129.90,369.70 120.68,366.91 115.62,364.87C110.91,362.97 104.23,359.34 100.45,356.62C99.59,356.00 98.23,355.04 97.44,354.48C93.67,351.86 85.79,344.27 82.36,339.97C79.53,336.44 75.33,330.21 72.95,326.02C71.62,323.68 68.13,316.72 67.74,315.62C67.50,314.94 66.85,313.23 66.30,311.82C64.72,307.79 63.52,302.94 62.76,297.50C62.46,295.34 62.18,293.59 61.49,289.38C61.21,287.73 60.99,285.91 61.00,285.33C61.00,284.76 60.83,283.43 60.63,282.37C60.43,281.32 60.15,278.75 60.01,276.66C59.86,274.58 59.58,271.07 59.38,268.88C58.29,257.16 57.60,231.48 58.22,226.17C58.37,224.91 58.66,221.52 58.88,218.65C59.09,215.77 59.33,213.33 59.39,213.22C59.46,213.11 59.63,212.03 59.76,210.82C60.06,208.14 60.83,204.18 61.48,202.00C62.81,197.55 63.01,196.85 63.00,196.56C63.00,196.39 63.23,195.55 63.50,194.69C64.68,191.03 65.34,189.11 65.50,188.88C65.59,188.74 65.87,188.06 66.11,187.38C67.62,183.20 68.85,180.36 70.89,176.38C74.41,169.46 75.00,168.43 77.84,164.12C80.13,160.67 80.15,160.64 81.98,158.25C84.33,155.17 87.05,151.98 89.62,149.28C92.06,146.73 97.66,141.61 99.53,140.23C100.17,139.76 101.18,138.97 101.78,138.47C103.73,136.87 112.60,131.08 115.38,129.61C116.06,129.25 117.53,128.47 118.62,127.88C121.46,126.36 121.97,126.11 123.38,125.55C125.76,124.61 127.38,123.94 128.50,123.45C129.12,123.17 130.28,122.88 131.08,122.81C132.53,122.68 132.53,122.68 133.96,124.15C135.61,125.85 136.86,127.59 137.08,128.52C137.36,129.67 136.81,130.75 134.82,132.92C133.75,134.09 132.48,135.54 132.00,136.13C127.65,141.49 126.20,143.43 125.22,145.21C124.89,145.81 124.34,146.80 124.00,147.40C123.13,148.94 121.15,152.88 120.51,154.38C120.21,155.06 119.87,155.80 119.76,156.02C119.11,157.25 117.79,161.07 116.74,164.75C116.45,165.78 116.00,167.30 115.75,168.12C115.49,168.95 115.21,170.07 115.11,170.62C115.02,171.18 114.80,172.19 114.61,172.88C114.42,173.56 114.20,174.97 114.10,176.00C114.01,177.03 113.83,178.16 113.70,178.50C113.44,179.19 112.48,186.48 111.75,193.38C110.43,205.85 109.96,237.03 110.69,264.12C110.87,270.59 111.06,278.12 111.13,280.88C111.20,283.62 111.37,286.72 111.51,287.75C111.65,288.78 111.86,290.93 111.99,292.54C112.11,294.14 112.38,296.39 112.59,297.54C112.79,298.68 113.08,300.36 113.23,301.25C113.38,302.14 113.62,303.55 113.77,304.38C114.17,306.62 115.99,314.48 116.38,315.62C116.56,316.18 116.79,317.02 116.88,317.50C117.13,318.85 119.05,324.87 119.64,326.16C119.84,326.60 120.00,327.04 120.00,327.16C120.00,328.07 124.29,337.29 125.53,339.04C125.79,339.40 126.00,339.77 126.00,339.86C126.00,340.07 126.84,341.25 128.21,343.00C129.85,345.08 133.71,349.00 135.65,350.55C137.66,352.15 143.07,355.05 145.03,355.58C151.19,357.24 157.30,357.43 163.12,356.13C166.94,355.28 170.37,353.41 174.90,349.72C177.90,347.28 180.07,344.75 183.06,340.18C183.98,338.78 187.53,331.56 188.35,329.44C188.71,328.51 189.28,327.04 189.62,326.16C191.17,322.18 193.10,315.86 194.02,311.80C194.27,310.66 194.53,309.65 194.59,309.55C194.65,309.45 194.83,308.31 194.99,307.00C195.14,305.69 195.43,303.73 195.62,302.62C196.02,300.38 196.69,295.39 197.01,292.38C197.13,291.27 197.40,289.14 197.61,287.62C197.82,286.11 198.00,283.98 198.00,282.88C198.01,281.77 198.18,279.36 198.39,277.50C198.88,272.98 199.15,252.90 198.79,247.00C198.64,244.59 198.40,240.54 198.26,238.00C198.11,235.46 197.82,231.97 197.61,230.25C197.40,228.53 197.07,225.55 196.88,223.62C196.49,219.70 195.87,214.82 195.48,212.75C195.34,211.99 195.12,210.69 194.99,209.86C194.87,209.03 194.59,207.94 194.38,207.43C194.17,206.93 194.00,206.26 194.00,205.95C194.01,205.63 193.79,204.64 193.53,203.75C193.27,202.86 192.86,201.39 192.64,200.50C191.90,197.60 191.55,196.40 190.88,194.62C190.06,192.43 189.41,190.69 188.88,189.25C187.67,185.97 184.27,179.90 182.03,177.01C181.13,175.85 179.25,173.74 177.86,172.33C174.01,168.43 171.60,167.53 167.89,168.63C166.07,169.16 165.10,169.67 161.75,171.86C155.97,175.63 153.40,178.00 149.82,182.87C148.89,184.14 147.28,187.39 146.58,189.44C145.96,191.24 145.91,191.68 145.91,195.62C145.90,200.15 145.84,199.84 147.40,203.46C147.88,204.56 150.14,206.93 151.25,207.50C153.65,208.72 158.09,208.64 160.62,207.34C162.21,206.52 165.79,204.18 167.25,202.99C169.70,201.00 170.07,200.87 173.25,200.89C175.87,200.91 176.26,200.98 177.62,201.63C179.65,202.59 182.70,205.67 183.33,207.39C185.03,211.97 185.06,212.17 185.07,216.25C185.08,219.50 185.00,220.43 184.54,222.00C183.60,225.27 182.54,227.55 180.99,229.62C179.85,231.16 177.02,233.89 175.50,234.92C173.72,236.12 169.46,238.00 168.50,238.00C168.21,238.00 167.66,238.16 167.27,238.36C166.46,238.78 160.75,239.50 158.29,239.49C155.89,239.49 151.08,238.88 149.49,238.38C145.56,237.16 144.74,236.86 143.25,236.11C134.83,231.89 129.11,223.12 127.96,212.65C127.53,208.76 127.82,200.70 128.50,197.48C129.14,194.46 130.22,191.10 131.27,188.88C131.67,188.03 132.00,187.24 132.00,187.13C132.00,186.87 133.96,183.36 135.26,181.28C137.05,178.43 141.78,172.83 144.37,170.51C144.91,170.03 146.05,169.01 146.89,168.25C149.32,166.07 152.64,163.76 156.62,161.50C158.85,160.23 166.91,156.22 168.88,155.39C171.65,154.22 172.69,153.83 175.25,152.99C179.30,151.66 180.74,151.25 186.75,149.74C191.28,148.60 194.09,148.00 194.89,148.00C195.29,148.00 196.50,147.83 197.56,147.63C198.62,147.43 201.21,147.14 203.31,147.00C205.41,146.85 207.80,146.63 208.62,146.50C209.45,146.37 212.99,146.19 216.50,146.10C222.81,145.94 225.05,146.07 232.50,146.99C238.84,147.78 244.50,150.35 248.16,154.12C250.75,156.79 251.64,158.56 252.21,162.24C252.58,164.61 252.62,169.21 252.62,208.71C252.62,252.54 252.62,252.54 253.34,253.16C254.06,253.78 254.06,253.78 270.34,253.70C288.36,253.62 287.72,253.68 288.56,252.00C288.97,251.18 289.00,249.16 289.02,221.00C289.02,203.42 289.13,190.09 289.27,189.00C289.40,187.97 289.62,185.72 289.76,184.00C290.20,178.51 291.47,170.68 292.55,166.88C294.27,160.79 295.81,156.26 297.24,153.11C297.66,152.19 298.00,151.29 298.00,151.13C298.00,150.74 301.54,143.74 303.00,141.25C305.40,137.14 307.82,134.07 312.65,129.03C317.91,123.54 323.82,119.08 329.88,116.06C334.36,113.81 340.25,111.74 344.93,110.74C350.88,109.48 360.35,109.07 368.38,109.70C377.45,110.43 382.40,111.44 388.00,113.70C389.17,114.18 390.46,114.70 390.88,114.86C391.99,115.30 393.13,115.99 394.82,117.25C395.65,117.87 396.70,118.63 397.15,118.93C398.21,119.65 400.48,122.49 401.40,124.25C402.11,125.61 402.12,125.68 402.11,129.88C402.11,134.12 402.11,134.12 401.15,136.09C400.08,138.27 398.17,140.38 396.44,141.30C395.55,141.77 394.98,141.87 393.00,141.87C390.99,141.87 390.44,141.78 389.40,141.27C387.20,140.19 384.97,137.58 379.88,130.11C375.56,123.77 371.59,120.62 367.14,119.98C365.32,119.71 361.46,119.87 359.52,120.28C358.12,120.58 355.03,122.05 353.25,123.27C350.51,125.13 347.82,128.42 346.03,132.09C345.05,134.10 344.00,136.66 344.00,137.04C344.00,137.20 343.73,138.02 343.40,138.86C342.17,141.97 340.72,149.89 340.10,156.88C339.34,165.40 339.23,174.77 339.00,249.00C338.88,290.87 338.65,331.54 338.51,339.38C338.37,347.21 338.31,354.30 338.38,355.12C338.79,359.67 339.47,361.96 340.79,363.16C341.11,363.45 341.96,363.99 342.68,364.35C343.82,364.92 344.29,365.00 346.43,365.00C349.49,365.00 351.24,364.56 356.12,362.54C358.70,361.48 359.13,361.39 360.01,361.75C360.63,362.01 360.99,362.45 361.56,363.67C363.10,366.96 362.78,368.08 359.82,369.90C358.75,370.55 357.70,371.23 357.49,371.41C357.29,371.58 355.49,372.52 353.49,373.50C351.50,374.48 349.69,375.38 349.46,375.51C349.01,375.75 344.17,377.63 341.50,378.60C338.18,379.81 334.89,380.60 329.47,381.48C326.74,381.93 325.30,382.00 318.85,381.97C314.74,381.96 311.15,381.89 310.88,381.83Z"/></svg></a>
+<a class="name" id="top-link" href="#top">Oliver Herbert</a></nav>
+
+<main>
+<div id="home">
+  <h1 class="sr-only">Oliver Herbert, cellist</h1>
+  <div id="top" class="hero-space"></div>
+  <div class="frame hero-img curtain" data-tone="portrait"><img src="../img/hero.jpg" alt="Oliver Herbert with his cello">
+    <a class="hero-next" href="#concerts"><span class="label">Next concert</span><span class="hn-what">1 Nov · Noe Music</span><span class="hn-where">San Francisco<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></span></a>
+    <button class="hero-listen" id="hero-listen" type="button" aria-label="Listen: Janáček, Pohádka"><span class="label">Listen</span><span class="hl-what"><span class="hl-name">Janáček, Pohádka</span><span class="hl-dot"><svg viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"></path></svg></span></span></button>
+  </div>
+  <div class="sheet">
+  <section class="about wrap" id="about" data-tone="light">
+    <div class="railed">
+    <span class="label rise lab">About</span>
+    <div>
+    <p class="lead rise">Oliver Herbert is a concert cellist known for performances that combine intensity, clarity, and a strong sense of musical direction.</p>
+    <p class="more-text rise">The recipient of a 2021 Avery Fisher Career Grant, his work spans solo performance, chamber music, and curatorial projects. Oliver approaches his projects with a wide-ranging curiosity, exploring lesser-known repertoire, music of today, and connections that reveal new perspectives on familiar works.</p>
+    <div class="btn-row rise"><a class="btn" href="#biography" id="full-bio">Full biography<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
+    </div>
+    </div>
+  </section>
+
+  <section class="list wrap" id="concerts" data-tone="light">
+    <h2 class="rise">Concerts</h2>
+    <h3 class="rise">Upcoming</h3>
+    <div id="upcoming"></div>
+    <div class="today label rise" id="today">Today</div>
+    <h3 class="rise" id="past-h">Past</h3>
+    <div id="past"></div>
+    <div class="btn-row on-line rise"><a class="btn fill" href="#all-concerts" id="all-concerts">All concerts<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
+  </section>
+
+  <div class="frame interlude open-img"><img src="../img/live.jpg" alt="Oliver Herbert in performance" loading="lazy"></div>
+
+  <section class="list wrap" id="projects" data-tone="dark">
+    <h2 class="rise">Explore</h2>
+    <div class="xlist" id="grid"></div>
+  </section>
+
+  <div class="frame interlude open-img"><img src="../img/dark.jpg" alt="Oliver Herbert in silhouette on a dark stage" loading="lazy"></div>
+
+  <section class="list wrap" id="recordings" data-tone="light">
+    <h2 class="rise">Recordings</h2>
+    <h3 class="rise">Albums</h3>
+    <div class="rows" id="albums"></div>
+    <h3 class="rise">Videos</h3>
+    <div class="rows" id="films"></div>
+  </section>
+
+  <section class="quote wrap" data-tone="orange" aria-label="Press">
+    <button class="quotes rise" id="quotes" type="button" aria-label="Next quote">
+      <figure class="q on" aria-hidden="false"><blockquote>A knockout. Youthful but magisterial.</blockquote><figcaption class="label">San Francisco Classical Voice</figcaption></figure>
+      <figure class="q" aria-hidden="true"><blockquote>…he makes his cello sing.</blockquote><figcaption class="label">Santa Cruz Sentinel</figcaption></figure>
+      <figure class="q" aria-hidden="true"><blockquote>The performance was transfixing.</blockquote><figcaption class="label">Cleveland Classical</figcaption></figure>
+      <figure class="q" aria-hidden="true"><blockquote>All the depth of an established soloist.</blockquote><figcaption class="label">Philadelphia Inquirer</figcaption></figure>
+    </button>
+    <div class="qdots rise" role="group" aria-label="Choose a quote"><button type="button" aria-label="Quote 1 of 4" class="on" aria-current="true"><span></span></button><button type="button" aria-label="Quote 2 of 4"><span></span></button><button type="button" aria-label="Quote 3 of 4"><span></span></button><button type="button" aria-label="Quote 4 of 4"><span></span></button></div>
+    <div class="btn-row rise"><a class="btn fill" href="#presskit">Download press kit<svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 1 V11 M1.5 6.5 L6 11 L10.5 6.5 M1 13 H11" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg></a></div>
+  </section>
+
+  <section class="close wrap" id="contact" data-tone="dark">
+    <h2 class="big rise">Contact</h2>
+    <div class="railed rise">
+      <span class="label lab">Professional inquiries</span>
+      <a class="addr" href="mailto:contact@oliverherbertcello.com">contact@oliverherbertcello.com</a>
+    </div>
+    <div class="railed rise">
+      <span class="label lab">Follow</span>
+      <span class="social pro-social"><a href="https://www.instagram.com/oliverherbert_/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="21" height="21" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg></a><a href="https://www.facebook.com/oliverherbertcello" target="_blank" rel="noopener" aria-label="Facebook"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.6 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.5-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.9v3h2.6V21z" fill="currentColor"/></svg></a><a href="https://www.youtube.com/@OliverHerbertCello" target="_blank" rel="noopener" aria-label="YouTube"><svg width="25" height="25" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22.5 7.2c-.2-1-1-1.8-2-2C18.7 4.7 12 4.7 12 4.7s-6.7 0-8.5.5c-1 .2-1.8 1-2 2C1 9 1 12 1 12s0 3 .5 4.8c.2 1 1 1.8 2 2 1.8.5 8.5.5 8.5.5s6.7 0 8.5-.5c1-.2 1.8-1 2-2 .5-1.8.5-4.8.5-4.8s0-3-.5-4.8zM9.8 15.2V8.8l5.6 3.2z" fill="currentColor"/></svg></a></span>
+    </div>
+    <div class="railed">
+      <span class="label lab wide-only rise">Send a message</span>
+      <form class="cform rise" id="cform" name="contact" method="POST" data-netlify="true" novalidate>
+        <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="message" rows="4" required></textarea></div>
+        <button type="submit" class="btn fill">Send message</button>
+        <p class="sent" id="c-sent" role="status" hidden>Thank you. Your message is on its way.</p>
+      </form>
+    </div>
+    <div class="railed rise">
+    <div class="creds muted">
+      <span>Avery Fisher Career Grant</span>
+      <span>Verbier Festival Jean-Nicolas Firmenich Prize</span>
+      <span>Curtis Institute of Music · Colburn School · Kronberg Academy</span>
+    </div>
+    </div>
+    <div class="foot">
+      <svg class="sig" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="54.0 105.2 352.0 280.5"><path fill="currentColor" fill-rule="evenodd" d="M310.88,381.83C305.06,380.58 304.17,380.23 299.58,377.51C298.78,377.04 297.05,375.58 295.73,374.26C292.16,370.70 290.62,367.72 289.72,362.62C288.94,358.20 288.76,345.13 288.93,304.62C289.05,277.76 289.02,270.43 288.77,269.68C288.14,267.78 289.10,267.88 270.76,267.79C259.18,267.74 254.10,267.80 253.43,267.99C252.77,268.19 252.31,268.56 251.87,269.25C251.25,270.24 251.05,271.42 250.24,279.25C249.99,281.64 249.39,285.11 248.47,289.50C248.00,291.74 247.81,292.49 246.87,296.12C246.65,296.95 246.33,298.24 246.16,299.00C245.98,299.76 245.65,300.74 245.42,301.18C245.19,301.62 245.00,302.22 245.00,302.52C245.00,302.82 244.79,303.53 244.54,304.10C244.28,304.66 243.82,305.91 243.51,306.88C242.92,308.70 241.85,311.56 241.49,312.23C241.26,312.68 240.69,313.95 239.38,317.00C238.88,318.17 238.09,319.80 237.63,320.62C237.17,321.45 236.22,323.25 235.50,324.62C234.79,326.00 233.80,327.74 233.31,328.50C228.94,335.23 228.48,335.87 225.33,339.65C222.21,343.39 217.22,348.55 214.01,351.35C209.56,355.22 206.54,357.43 200.75,361.05C199.23,362.00 194.17,364.51 192.62,365.08C192.07,365.28 190.89,365.73 190.00,366.07C186.70,367.35 179.12,369.56 176.12,370.12C175.16,370.30 173.81,370.56 173.12,370.71C170.89,371.19 166.68,371.83 164.38,372.03C156.89,372.70 145.81,372.50 141.50,371.63C140.61,371.45 139.14,371.22 138.25,371.13C137.36,371.04 136.06,370.82 135.38,370.63C134.69,370.45 133.62,370.22 133.00,370.14C129.90,369.70 120.68,366.91 115.62,364.87C110.91,362.97 104.23,359.34 100.45,356.62C99.59,356.00 98.23,355.04 97.44,354.48C93.67,351.86 85.79,344.27 82.36,339.97C79.53,336.44 75.33,330.21 72.95,326.02C71.62,323.68 68.13,316.72 67.74,315.62C67.50,314.94 66.85,313.23 66.30,311.82C64.72,307.79 63.52,302.94 62.76,297.50C62.46,295.34 62.18,293.59 61.49,289.38C61.21,287.73 60.99,285.91 61.00,285.33C61.00,284.76 60.83,283.43 60.63,282.37C60.43,281.32 60.15,278.75 60.01,276.66C59.86,274.58 59.58,271.07 59.38,268.88C58.29,257.16 57.60,231.48 58.22,226.17C58.37,224.91 58.66,221.52 58.88,218.65C59.09,215.77 59.33,213.33 59.39,213.22C59.46,213.11 59.63,212.03 59.76,210.82C60.06,208.14 60.83,204.18 61.48,202.00C62.81,197.55 63.01,196.85 63.00,196.56C63.00,196.39 63.23,195.55 63.50,194.69C64.68,191.03 65.34,189.11 65.50,188.88C65.59,188.74 65.87,188.06 66.11,187.38C67.62,183.20 68.85,180.36 70.89,176.38C74.41,169.46 75.00,168.43 77.84,164.12C80.13,160.67 80.15,160.64 81.98,158.25C84.33,155.17 87.05,151.98 89.62,149.28C92.06,146.73 97.66,141.61 99.53,140.23C100.17,139.76 101.18,138.97 101.78,138.47C103.73,136.87 112.60,131.08 115.38,129.61C116.06,129.25 117.53,128.47 118.62,127.88C121.46,126.36 121.97,126.11 123.38,125.55C125.76,124.61 127.38,123.94 128.50,123.45C129.12,123.17 130.28,122.88 131.08,122.81C132.53,122.68 132.53,122.68 133.96,124.15C135.61,125.85 136.86,127.59 137.08,128.52C137.36,129.67 136.81,130.75 134.82,132.92C133.75,134.09 132.48,135.54 132.00,136.13C127.65,141.49 126.20,143.43 125.22,145.21C124.89,145.81 124.34,146.80 124.00,147.40C123.13,148.94 121.15,152.88 120.51,154.38C120.21,155.06 119.87,155.80 119.76,156.02C119.11,157.25 117.79,161.07 116.74,164.75C116.45,165.78 116.00,167.30 115.75,168.12C115.49,168.95 115.21,170.07 115.11,170.62C115.02,171.18 114.80,172.19 114.61,172.88C114.42,173.56 114.20,174.97 114.10,176.00C114.01,177.03 113.83,178.16 113.70,178.50C113.44,179.19 112.48,186.48 111.75,193.38C110.43,205.85 109.96,237.03 110.69,264.12C110.87,270.59 111.06,278.12 111.13,280.88C111.20,283.62 111.37,286.72 111.51,287.75C111.65,288.78 111.86,290.93 111.99,292.54C112.11,294.14 112.38,296.39 112.59,297.54C112.79,298.68 113.08,300.36 113.23,301.25C113.38,302.14 113.62,303.55 113.77,304.38C114.17,306.62 115.99,314.48 116.38,315.62C116.56,316.18 116.79,317.02 116.88,317.50C117.13,318.85 119.05,324.87 119.64,326.16C119.84,326.60 120.00,327.04 120.00,327.16C120.00,328.07 124.29,337.29 125.53,339.04C125.79,339.40 126.00,339.77 126.00,339.86C126.00,340.07 126.84,341.25 128.21,343.00C129.85,345.08 133.71,349.00 135.65,350.55C137.66,352.15 143.07,355.05 145.03,355.58C151.19,357.24 157.30,357.43 163.12,356.13C166.94,355.28 170.37,353.41 174.90,349.72C177.90,347.28 180.07,344.75 183.06,340.18C183.98,338.78 187.53,331.56 188.35,329.44C188.71,328.51 189.28,327.04 189.62,326.16C191.17,322.18 193.10,315.86 194.02,311.80C194.27,310.66 194.53,309.65 194.59,309.55C194.65,309.45 194.83,308.31 194.99,307.00C195.14,305.69 195.43,303.73 195.62,302.62C196.02,300.38 196.69,295.39 197.01,292.38C197.13,291.27 197.40,289.14 197.61,287.62C197.82,286.11 198.00,283.98 198.00,282.88C198.01,281.77 198.18,279.36 198.39,277.50C198.88,272.98 199.15,252.90 198.79,247.00C198.64,244.59 198.40,240.54 198.26,238.00C198.11,235.46 197.82,231.97 197.61,230.25C197.40,228.53 197.07,225.55 196.88,223.62C196.49,219.70 195.87,214.82 195.48,212.75C195.34,211.99 195.12,210.69 194.99,209.86C194.87,209.03 194.59,207.94 194.38,207.43C194.17,206.93 194.00,206.26 194.00,205.95C194.01,205.63 193.79,204.64 193.53,203.75C193.27,202.86 192.86,201.39 192.64,200.50C191.90,197.60 191.55,196.40 190.88,194.62C190.06,192.43 189.41,190.69 188.88,189.25C187.67,185.97 184.27,179.90 182.03,177.01C181.13,175.85 179.25,173.74 177.86,172.33C174.01,168.43 171.60,167.53 167.89,168.63C166.07,169.16 165.10,169.67 161.75,171.86C155.97,175.63 153.40,178.00 149.82,182.87C148.89,184.14 147.28,187.39 146.58,189.44C145.96,191.24 145.91,191.68 145.91,195.62C145.90,200.15 145.84,199.84 147.40,203.46C147.88,204.56 150.14,206.93 151.25,207.50C153.65,208.72 158.09,208.64 160.62,207.34C162.21,206.52 165.79,204.18 167.25,202.99C169.70,201.00 170.07,200.87 173.25,200.89C175.87,200.91 176.26,200.98 177.62,201.63C179.65,202.59 182.70,205.67 183.33,207.39C185.03,211.97 185.06,212.17 185.07,216.25C185.08,219.50 185.00,220.43 184.54,222.00C183.60,225.27 182.54,227.55 180.99,229.62C179.85,231.16 177.02,233.89 175.50,234.92C173.72,236.12 169.46,238.00 168.50,238.00C168.21,238.00 167.66,238.16 167.27,238.36C166.46,238.78 160.75,239.50 158.29,239.49C155.89,239.49 151.08,238.88 149.49,238.38C145.56,237.16 144.74,236.86 143.25,236.11C134.83,231.89 129.11,223.12 127.96,212.65C127.53,208.76 127.82,200.70 128.50,197.48C129.14,194.46 130.22,191.10 131.27,188.88C131.67,188.03 132.00,187.24 132.00,187.13C132.00,186.87 133.96,183.36 135.26,181.28C137.05,178.43 141.78,172.83 144.37,170.51C144.91,170.03 146.05,169.01 146.89,168.25C149.32,166.07 152.64,163.76 156.62,161.50C158.85,160.23 166.91,156.22 168.88,155.39C171.65,154.22 172.69,153.83 175.25,152.99C179.30,151.66 180.74,151.25 186.75,149.74C191.28,148.60 194.09,148.00 194.89,148.00C195.29,148.00 196.50,147.83 197.56,147.63C198.62,147.43 201.21,147.14 203.31,147.00C205.41,146.85 207.80,146.63 208.62,146.50C209.45,146.37 212.99,146.19 216.50,146.10C222.81,145.94 225.05,146.07 232.50,146.99C238.84,147.78 244.50,150.35 248.16,154.12C250.75,156.79 251.64,158.56 252.21,162.24C252.58,164.61 252.62,169.21 252.62,208.71C252.62,252.54 252.62,252.54 253.34,253.16C254.06,253.78 254.06,253.78 270.34,253.70C288.36,253.62 287.72,253.68 288.56,252.00C288.97,251.18 289.00,249.16 289.02,221.00C289.02,203.42 289.13,190.09 289.27,189.00C289.40,187.97 289.62,185.72 289.76,184.00C290.20,178.51 291.47,170.68 292.55,166.88C294.27,160.79 295.81,156.26 297.24,153.11C297.66,152.19 298.00,151.29 298.00,151.13C298.00,150.74 301.54,143.74 303.00,141.25C305.40,137.14 307.82,134.07 312.65,129.03C317.91,123.54 323.82,119.08 329.88,116.06C334.36,113.81 340.25,111.74 344.93,110.74C350.88,109.48 360.35,109.07 368.38,109.70C377.45,110.43 382.40,111.44 388.00,113.70C389.17,114.18 390.46,114.70 390.88,114.86C391.99,115.30 393.13,115.99 394.82,117.25C395.65,117.87 396.70,118.63 397.15,118.93C398.21,119.65 400.48,122.49 401.40,124.25C402.11,125.61 402.12,125.68 402.11,129.88C402.11,134.12 402.11,134.12 401.15,136.09C400.08,138.27 398.17,140.38 396.44,141.30C395.55,141.77 394.98,141.87 393.00,141.87C390.99,141.87 390.44,141.78 389.40,141.27C387.20,140.19 384.97,137.58 379.88,130.11C375.56,123.77 371.59,120.62 367.14,119.98C365.32,119.71 361.46,119.87 359.52,120.28C358.12,120.58 355.03,122.05 353.25,123.27C350.51,125.13 347.82,128.42 346.03,132.09C345.05,134.10 344.00,136.66 344.00,137.04C344.00,137.20 343.73,138.02 343.40,138.86C342.17,141.97 340.72,149.89 340.10,156.88C339.34,165.40 339.23,174.77 339.00,249.00C338.88,290.87 338.65,331.54 338.51,339.38C338.37,347.21 338.31,354.30 338.38,355.12C338.79,359.67 339.47,361.96 340.79,363.16C341.11,363.45 341.96,363.99 342.68,364.35C343.82,364.92 344.29,365.00 346.43,365.00C349.49,365.00 351.24,364.56 356.12,362.54C358.70,361.48 359.13,361.39 360.01,361.75C360.63,362.01 360.99,362.45 361.56,363.67C363.10,366.96 362.78,368.08 359.82,369.90C358.75,370.55 357.70,371.23 357.49,371.41C357.29,371.58 355.49,372.52 353.49,373.50C351.50,374.48 349.69,375.38 349.46,375.51C349.01,375.75 344.17,377.63 341.50,378.60C338.18,379.81 334.89,380.60 329.47,381.48C326.74,381.93 325.30,382.00 318.85,381.97C314.74,381.96 311.15,381.89 310.88,381.83Z"/></svg>
+      <div class="foot-links"><span class="langs"><a href="#top" aria-current="page">EN</a><a href="#top">DE</a><a href="#top">ES</a></span><a class="muted" href="#impressum">Impressum</a><a class="muted" href="#privacy">Privacy</a><span class="muted">© 2026 Oliver Herbert</span></div>
+    </div>
+  </section>
+  </div>
+</div>
+<article id="project" hidden></article>
+<article id="calendar" class="wrap" hidden></article>
+<article id="impressum" class="wrap legal" hidden>
+  <button class="back legal-back"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Home</span></button>
+  <h1>Impressum</h1>
+  <div class="legal-text">
+    <p class="label muted">Angaben gemäß § 5 DDG</p>
+    <p>Oliver Herbert<br><span class="todo">[Postanschrift folgt]</span><br>Deutschland</p>
+    <p class="label muted">Kontakt</p>
+    <p>E-Mail: <a href="mailto:contact@oliverherbertcello.com">contact@oliverherbertcello.com</a><br>Kontaktformular auf dieser Website</p>
+    <p class="label muted">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</p>
+    <p>Oliver Herbert, Anschrift wie oben</p>
+  </div>
+</article>
+<article id="privacy" class="wrap legal" hidden>
+  <button class="back legal-back"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Home</span></button>
+  <h1>Privacy</h1>
+  <div class="legal-text">
+    <p class="muted">This website collects as little as possible. Here is what happens when you visit.</p>
+    <h2>Who is responsible</h2>
+    <p>Oliver Herbert, <span class="todo">[address as in the Impressum]</span>, contact@oliverherbertcello.com</p>
+    <h2>Hosting</h2>
+    <p>The site is hosted by Netlify, Inc. To deliver pages and protect against misuse, Netlify processes technical data such as your IP address, the time of your visit, the page requested and your browser type. Legal basis: Art. 6(1)(f) GDPR. A data processing agreement is in place.</p>
+    <h2>Contact form and email</h2>
+    <p>If you write through the form or by email, your name, email address and message are used only to answer you, and deleted once the conversation is over. Form messages are delivered through Netlify Forms. Legal basis: Art. 6(1)(b) and (f) GDPR.</p>
+    <h2>Videos</h2>
+    <p>Videos load only when you click one. Only then does your browser connect to YouTube (Google Ireland Limited) in its privacy-enhanced mode, which passes your IP address and browser details to Google. Legal basis: your consent by clicking, Art. 6(1)(a) GDPR.</p>
+    <h2>Fonts</h2>
+    <p>All fonts are served from this website. No connection is made to Google Fonts or any other font service.</p>
+    <h2>Visitor statistics</h2>
+    <p>A simple counter records page visits without cookies and without personal data. <span class="todo">[Service to be named.]</span></p>
+    <h2>Storage in your browser</h2>
+    <p>For the length of your visit, your browser remembers whether the opening animation has played. No cookies are set.</p>
+    <h2>Your rights</h2>
+    <p>You can ask to see, correct or delete your data, restrict or object to its use, take it elsewhere, and withdraw consent at any time (Art. 15 to 21 GDPR). You can also complain to a data protection authority, for example the Berlin Commissioner for Data Protection and Freedom of Information.</p>
+    <p class="muted">Last updated: <span class="todo">[month year]</span></p>
+  </div>
+</article>
+<article id="aboutpage" class="wrap" hidden>
+  <button class="back" id="ab-back"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Home</span></button>
+  <h1 class="rise">About</h1>
+  <figure class="ab-portrait rise"><img src="../img/press-134.jpg" alt="Oliver Herbert seated with his cello" loading="lazy"><figcaption class="label muted">Photo: Todd Rosenberg</figcaption></figure>
+  <div class="railed">
+    <span class="label lab rise">Biography</span>
+    <div class="bio">
+      <p class="lead rise">Oliver Herbert is a cellist who moves between concertos, chamber music and programs of his own making.</p>
+      <p class="rise">The recipient of a 2021 Avery Fisher Career Grant and the Verbier Festival’s Jean-Nicolas Firmenich Prize, he has appeared with the San Francisco Symphony under Michael Tilson Thomas and with conductors including Giancarlo Guerrero, Juanjo Mena and Alexander Shelley. His chamber music has taken him to Marlboro, Carnegie Hall with Mitsuko Uchida, and festivals across the Americas and Europe.</p>
+      <p class="rise">His projects often begin from a question rather than a repertoire list: what changes when we hear something twice, how power changes the people who hold it, where the music of the Americas and Europe meet. He plays a Guadagnini cello that once belonged to Antonio Janigro, on loan from the Janigro family.</p>
+    </div>
+  </div>
+  <div class="railed">
+    <span class="label lab rise">Press</span>
+    <div class="press">
+      <figure class="rise"><blockquote>Youthful but magisterial.</blockquote><figcaption class="label muted">San Francisco Classical Voice</figcaption></figure>
+      <figure class="rise"><blockquote>…he makes his cello sing.</blockquote><figcaption class="label muted">Santa Cruz Sentinel</figcaption></figure>
+      <figure class="rise"><blockquote>The performance was transfixing.</blockquote><figcaption class="label muted">Cleveland Classical</figcaption></figure>
+      <figure class="rise"><blockquote>All the depth of an established soloist.</blockquote><figcaption class="label muted">Philadelphia Inquirer</figcaption></figure>
+    </div>
+  </div>
+  <div class="railed">
+    <span class="label lab rise">Press kit</span>
+    <div class="rows kit-rows">
+      <a class="vrow rise" href="#presskit"><span class="row-head"><span class="row-main"><span class="row-title">Biography, long</span><span class="row-work">About 450 words · PDF</span></span><span class="vplay" aria-hidden="true"><svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 1 V11 M1.5 6.5 L6 11 L10.5 6.5 M1 13 H11" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg></span></span></a>
+      <a class="vrow rise" href="#presskit"><span class="row-head"><span class="row-main"><span class="row-title">Biography, short</span><span class="row-work">About 150 words · PDF</span></span><span class="vplay" aria-hidden="true"><svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 1 V11 M1.5 6.5 L6 11 L10.5 6.5 M1 13 H11" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg></span></span></a>
+      <a class="vrow rise" href="#presskit"><span class="row-head"><span class="row-main"><span class="row-title">Press photos</span><span class="row-work">Six portraits, high resolution · Todd Rosenberg</span></span><span class="vplay" aria-hidden="true"><svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 1 V11 M1.5 6.5 L6 11 L10.5 6.5 M1 13 H11" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg></span></span></a>
+      <a class="vrow rise" href="#presskit"><span class="row-head"><span class="row-main"><span class="row-title">Selected reviews</span><span class="row-work">PDF</span></span><span class="vplay" aria-hidden="true"><svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 1 V11 M1.5 6.5 L6 11 L10.5 6.5 M1 13 H11" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg></span></span></a>
+    </div>
+  </div>
+  <div class="railed top">
+    <span class="label lab rise">Photos</span>
+    <div class="ab-photos">
+      <a class="rise" href="../img/press-040.jpg" download><img src="../img/press-040.jpg" alt="Press photo of Oliver Herbert" loading="lazy"><span class="label muted">Download</span></a>
+      <a class="rise" href="../img/press-113.jpg" download><img src="../img/press-113.jpg" alt="Press photo of Oliver Herbert" loading="lazy"><span class="label muted">Download</span></a>
+      <a class="rise" href="../img/press-190.jpg" download><img src="../img/press-190.jpg" alt="Press photo of Oliver Herbert" loading="lazy"><span class="label muted">Download</span></a>
+      <a class="rise" href="../img/press-304.jpg" download><img src="../img/press-304.jpg" alt="Press photo of Oliver Herbert" loading="lazy"><span class="label muted">Download</span></a>
+    </div>
+  </div>
+  <div class="btn-row on-line rise"><a class="btn fill" href="#contact" id="ab-contact">Contact<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
+</article>
+</main>
+<div class="cur" id="cur" aria-hidden="true"><div class="cur-dot"><span class="cur-label" id="cur-label"></span></div></div>
+<div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-labelledby="vtitle" hidden>
+  <button class="vclose" id="vclose" type="button">Close</button>
+  <div class="vframe" id="vframe"></div>
+  <p class="vtitle" id="vtitle"></p>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  (function () {
+    var el = document.getElementById('top-link'), words = el.textContent.trim().split(' '), i = 0, html = '';
+    el.setAttribute('aria-label', el.textContent.trim());
+    words.forEach(function (w, wi) {
+      if (wi) html += '<span class="gap" aria-hidden="true"></span>';
+      w.split('').forEach(function (ch) { html += '<span style="--i:' + (i++) + '" aria-hidden="true">' + ch + '</span>'; });
+    });
+    el.innerHTML = html;
+    var spans = el.querySelectorAll('span:not(.gap)'), lastSpan = spans[spans.length - 1];
+    lastSpan.addEventListener('animationend', function () { el.classList.remove('go'); }, { once: true });
+  })();
+  /* The overture: on a first visit the monogram opens the page, then settles into the corner */
+  (function () {
+    var mono = document.getElementById('mono'), nameEl = document.getElementById('top-link');
+    function land() { document.body.classList.remove('overture'); document.body.classList.add('landed'); nameEl.classList.add('go'); }
+    var seen = false, force = location.hash === '#intro';
+    try { seen = sessionStorage.getItem('oh-intro') === '1'; sessionStorage.setItem('oh-intro', '1'); } catch (e) {}
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if ((seen && !force) || reduce || !mono.animate) { land(); return; }
+    document.body.classList.add('overture');
+    var r = mono.getBoundingClientRect();
+    var s = Math.min(window.innerWidth * 0.44, 240) / r.width;
+    var dx = window.innerWidth / 2 - (r.left + r.width / 2), dy = window.innerHeight / 2 - (r.top + r.height / 2);
+    var big = 'translate(' + dx + 'px, ' + dy + 'px) scale(' + s + ')';
+    var ease = 'cubic-bezier(0.45, 0, 0.15, 1)';
+    mono.animate([
+      { opacity: 0, transform: big + ' scale(0.94)', easing: ease },
+      { opacity: 1, transform: big, offset: 0.24 },
+      { opacity: 1, transform: big, offset: 0.52, easing: ease },
+      { opacity: 1, transform: 'none' }
+    ], { duration: 2200, fill: 'both' });
+    setTimeout(land, 1250);
+  })();
+  var TRI = '<svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"></path></svg>';
+  var YT = 'https://www.youtube.com/watch?v=';
+
+  /* Every concert, newest first: start, end, title, place, program in one line, details. The homepage and the full calendar both read from this. */
+  var CONCERTS = [["2027-03-18", "", "Chamber Music Society of Palm Beach", "West Palm Beach, Florida", "Beethoven and Dvořák string quintets", "Beethoven: String Quintet in C major, Op. 29. Dvořák: String Quintet No. 3 in E-flat, Op. 97 “American”. With Karen Gomyo, Arnaud Sussmann, Matthew Lipman and Ettore Causa. Kravis Center."], ["2027-03-07", "", "Kulturkreis Springe", "Springe, Germany", "Brücken: recital with Martin Klett, piano", "Beethoven: Sonata in F major, Op. 5 No. 1. Debussy: Sonata in D minor. Bach: Sonata in G minor, BWV 1029. Bridge: Sonata in D minor. Jagdschloss Springe."], ["2027-01-10", "2027-01-17", "Festival de Musique de Saint-Barthélemy", "St. Barthélemy", "Saint-Saëns: Cello Concerto No. 1", "With the Festival Orchestra. Further programs to be announced."], ["2026-11-14", "2026-11-16", "Santa Rosa Symphony", "Rohnert Park, California", "Saint-Saëns: Cello Concerto No. 1", "Francesco Lecce-Chong, conductor. Weill Hall, Green Music Center."], ["2026-11-01", "", "Noe Music", "San Francisco", "Smith · Schnittke · Beethoven", "Gabriella Smith: Carrot Revolution. Schnittke: String Quartet No. 3. Beethoven: String Quartet in B-flat, Op. 130, with the Grosse Fuge. With Alexi Kenney, Owen Dalby and Milena Pajaro-van de Stadt. Noe Valley Ministry."], ["2026-10-04", "", "Kronberg Festival: Barock Gala, Cello Stravaganza", "Kronberg", "C.P.E. Bach: Cello Concerto in B-flat", "Reinhard Goebel, conductor. Casals Forum."], ["2026-09-29", "", "Kronberg Festival: Löwenherz", "Kronberg", "Erzähl mir von Courage", "Solo cello works by Casals, Dawn Avery, Henze and Xenakis, woven into a literary collage with the actor Michael Rotschopf. Casals Forum."], ["2026-09-13", "2026-09-20", "Utah Chamber Music Festival", "Logan, Salt Lake City, Provo, St. George, Park City", "Schubert · Brahms · Schoenberg · Ravel", "Six concerts with Martin Helmchen, William Hagen, Stephen Waarts, Milena Pajaro-van de Stadt and others: Schubert Piano Trio in E-flat, Brahms String Quintet No. 2 and Piano Quintet, Schoenberg Verklärte Nacht, Schumann Fantasiestücke, Ravel Sonata for Violin and Cello."], ["2026-08-14", "2026-08-16", "Tippet Rise Art Center", "Fishtail, Montana", "Schubert Octet · Beethoven Septet · Tabakova", "Tabakova: Moreni. Beethoven: Septet in E-flat, Op. 20, with works by Caroline Shaw and Svante Henryson, at the Domo. Schubert: Octet in F, D. 803. With Yasmina Spiegelberg, Stephen Waarts, Yura Lee, Natalie Loughran and others."], ["2026-07-23", "", "Copenhagen Summer Festival", "Copenhagen", "Bach: Goldberg Variations for string trio", "Cloud String Trio, with Claire Wells, violin, and Nicholas Swensen, viola. Kunsthal Charlottenborg."], ["2026-07-14", "", "ChamberFest West", "Calgary", "Season 5: Continental Drifts", ""], ["2026-06-22", "2026-06-29", "ChamberFest Cleveland", "Cleveland", "Season 14: Continental Drifts", "Including a concert at the Chautauqua Institution."], ["2026-06-17", "", "Grant Park Music Festival", "Chicago", "Shostakovich: Cello Concerto No. 1", "Giancarlo Guerrero, conductor. Jay Pritzker Pavilion."], ["2026-05-30", "2026-05-31", "Marin Symphony", "San Rafael, California", "Shostakovich: Cello Concerto No. 1", "Fawzi Haimor, conductor. Three performances. Marin Veterans’ Memorial Auditorium."], ["2026-05-19", "", "Carnegie Hall, Zankel Hall", "New York", "The complete Brahms piano quartets", "With Kirill Gerstein and Kronberg Academy musicians."], ["2026-05-13", "", "Studio Teatr", "Warsaw", "Chamber music", "With Veriko Tchumburidze, Claire Wells and Piotr Szumiel. Palace of Culture and Science."], ["2026-04-26", "", "FreundschaftsSpiele III: Christian Tetzlaff & Friends", "Kronberg", "Widmann · Bartók · Brahms", "Widmann: String Quartet No. 2 “Choralquartett”. Bartók: from 44 Duos. Brahms: Piano Trio No. 3 in C minor, Op. 101. With Christian Tetzlaff, Hana Chang, Julian Rhee, Charlotte Spruit, Dmytro Udovychenko, Brian Isaacs, Benjamin Kruithof and Kiveli Dörken. Casals Forum."], ["2026-04-17", "", "Capital Region Classical: Spring Benefit", "Schenectady, New York", "Solo recital", ""], ["2026-04-12", "", "Elgin Symphony", "Elgin, Illinois", "Schumann: Cello Concerto", "Chad Goodman, conductor. The Hemmens."], ["2026-03-25", "", "Mittwochskonzerte", "Kronberg", "Wie Bitte?: a curated program", "Casals Forum."], ["2026-03-05", "", "Bach im Fluss: Marcel Ponseele", "Kronberg", "Bach: Suite No. 5 in C minor", "Casals Forum."], ["2026-02-28", "2026-03-01", "Amarillo Symphony", "Amarillo, Texas", "John Williams: Cello Concerto", ""], ["2026-02-06", "", "Macalester College, Mairs Concert Hall", "St. Paul, Minnesota", "Dawn Avery · Passamaquoddy music · Dvořák", "Music by Dawn Avery, Passamaquoddy traditional music, and Dvořák: String Sextet."], ["2026-01-31", "", "Brahms Piano Quartets", "Kronberg", "With Kirill Gerstein and Kronberg Academy musicians", "Casals Forum."], ["2026-01-10", "", "Festival de Musique de Saint-Barthélemy", "St. Barthélemy", "", ""], ["2025-12-13", "2025-12-15", "Martin Helmchen & Friends", "Kronberg", "Dvořák: Piano Quartet in E-flat", "With Martin Helmchen, Antje Weithaas and Brian Isaacs. Casals Forum."], ["2025-11-29", "", "Württembergisches Kammerorchester Heilbronn", "Kronberg", "Lutosławski: Grave", "Concerti Brillanti series. Casals Forum."], ["2025-11-19", "", "Philadelphia Chamber Music Society", "Philadelphia", "Haydn · Schumann · Schubert", "Haydn: Piano Trio Hob. XV:22. Schumann: Canonic Etudes. Schubert: Piano Trio in E-flat, D. 929. With Alexi Kenney, violin, and Eric Lu, piano."], ["2025-11-15", "2025-11-24", "Musicians from Marlboro tour", "London (Ontario), Brattleboro, Washington, New York, Greenwich", "Including Carnegie Hall, Weill Recital Hall", "Western University, London, Ontario (15 Nov). Brattleboro Music Center (17 Nov). Freer Gallery, National Museum of Asian Art, Washington (20 Nov). Weill Recital Hall, Carnegie Hall, New York (22 Nov). Friends Performing Arts Series, Greenwich (24 Nov)."], ["2025-10-05", "", "Sarasota Orchestra", "Sarasota, Florida", "Tchaikovsky: Rococo Variations (original version)", "Giancarlo Guerrero, conductor."], ["2025-09-15", "", "IMS Prussia Cove: Open Chamber Music", "Cornwall", "", ""], ["2025-08-10", "", "Moritzburg Festival", "Moritzburg, Germany", "Three weeks of chamber music", ""], ["2025-07-14", "", "ChamberFest West", "Calgary", "", ""], ["2025-07-07", "", "Festival Janigro", "Montagano, Italy", "Performances and teaching", ""], ["2025-06-16", "", "ChamberFest Cleveland", "Cleveland", "Schubert · Schoenberg · Errollyn Wallen", ""], ["2025-05-17", "", "Tonhalle Zürich", "Zurich", "Schubert: String Quintet and “Trout” Quintet", "With Julia Fischer and others."], ["2025-04-27", "", "Nashville Symphony", "Nashville", "Tchaikovsky: Rococo Variations (original version)", "Giancarlo Guerrero, conductor. Schermerhorn Symphony Center."], ["2025-03-19", "", "Mittwochskonzerte", "Kronberg", "A curated program", ""], ["2025-02-28", "", "Tabea Zimmermann & Friends", "Kronberg", "Chamber music", "With Tabea Zimmermann, Kanneh-Mason, Hoppe and Kronberg Academy students. Casals Forum."], ["2025-02-23", "", "Omaha Symphony", "Omaha", "Dvořák: Cello Concerto", "Alasdair Neale, conductor. Holland Performing Arts Center."], ["2025-01-26", "", "New World Symphony: The Chamber Cello", "Miami Beach", "García · Yi · Desenne · Brahms", "García: Prohibido. Yi: Suite for Cello and Chamber Winds. Desenne: Pizziquitiplas. Brahms: Piano Trio No. 1. New World Center."], ["2025-01-17", "", "St Barts Music Festival", "St. Barthélemy", "", ""], ["2024-12-26", "", "Internationaal Kamermuziekfestival Utrecht", "Utrecht", "Including Gubaidulina: In Croce", "With Janine Jansen and friends."], ["2024-12-08", "", "Mihaela Martin, Frans Helmerson & Friends", "Kronberg", "Chamber music", "Casals Forum."], ["2024-11-24", "", "Hindemith Tage Hanau", "Hanau, Germany", "With Tabea Zimmermann", ""], ["2024-11-19", "", "Deutschlandfunk Raderbergkonzerte", "Cologne", "Desenne · Crawford Seeger · Villa-Lobos · Fauré", "A program curated by Oliver Herbert, with Kronberg Academy scholarship holders."], ["2024-11-13", "", "Carnegie Hall: Chamber Sessions", "New York", "Schumann · Kurtág · Beethoven", "Schumann: Piano Quartet. Kurtág. Beethoven: Piano Trio, Op. 70 No. 2. With Mitsuko Uchida, Stephanie Zyzak and Beth Guterman Chu."], ["2024-11-10", "", "Capital Region Classical", "Albany, New York", "With Mitsuko Uchida and Musicians from Marlboro", "Schumann: Piano Quartet, Op. 47. Kurtág. Beethoven: Piano Trio, Op. 70 No. 2."], ["2024-11-09", "", "Philadelphia Chamber Music Society", "Philadelphia", "", ""], ["2024-10-13", "", "Mannheimer Philharmoniker", "Mannheim", "Beethoven: Triple Concerto", "With Dora Bratchkova, violin, and Olga Zado, piano. Boian Videnoff, conductor. Rosengarten."], ["2024-09-20", "", "Max-Planck-Zentrum für Physik und Medizin", "Erlangen, Germany", "Inauguration concert", ""], ["2024-09-07", "", "ARD International Music Competition", "Munich", "", ""], ["2024-08-22", "", "Sion Festival", "Sion, Switzerland", "Kodály · Dvořák · Arensky", "With Janine Jansen. Théâtre de Valère."], ["2024-07-14", "", "Marlboro Music Festival", "Marlboro, Vermont", "", ""], ["2024-06-23", "", "Caramoor", "Katonah, New York", "Mendelssohn · Brahms", "Mendelssohn: String Quintet No. 2, Op. 87. Brahms: Piano Quartet No. 3, Op. 60."], ["2024-06-13", "2024-06-18", "ChamberFest Cleveland", "Cleveland", "Five programs", "Sacred and Profane. Mystical Reveries. Fantastic Tales. Music on the Path. Cello Dualities."], ["2024-06-05", "", "Curtis on Tour", "Paris", "", ""], ["2024-05-15", "2024-05-17", "SWR Schwetzinger Festspiele", "Schwetzingen, Germany", "Two programs with Tabea Zimmermann", "Lamento: Ligeti, Kurtág, Hindemith, Britten, York Bowen. Debussy, Liebowitz, Beethoven."], ["2024-02-24", "2024-03-12", "Curtis on Tour: String Sextets", "Fort Worth, Philadelphia, Davis, Phoenix, Evanston, Bradenton", "", ""], ["2024-02-14", "", "Kronberg Academy: Wo Licht ist…", "Kronberg", "", ""], ["2024-02-02", "", "Eugene Symphony", "Eugene, Oregon", "Dvořák: Cello Concerto", "Francesco Lecce-Chong, conductor."], ["2024-01-25", "", "Yehudi Menuhin Forum", "Bern", "Recital with Olga Zado, piano", "Lyatoshinsky, Lutosławski, Brahms, Gubaidulina, Schnittke, Shostakovich."], ["2023-12-10", "", "Capital Region Classical", "Schenectady, New York", "", ""], ["2023-12-07", "", "92nd Street Y", "New York", "Rachmaninoff: Sonata", "With Conrad Tao, piano."], ["2023-11-17", "", "Finest Classics", "Mannheim", "Recital with Olga Zado, piano", "Lyatoshinsky, Lutosławski, Brahms, Gubaidulina, Schnittke, Shostakovich."], ["2023-11-10", "", "Theater Erfurt", "Erfurt, Germany", "Schnittke: Cello Concerto No. 1", "Alexander Prior, conductor."], ["2023-09-23", "", "Kronberg Festival", "Kronberg", "World premiere: Žibuoklė Martinaitytė", "A solo cello work in memoriam Pablo Casals. Casals Forum."], ["2023-08-19", "", "Krzyżowa Music", "Krzyżowa, Poland", "", ""], ["2023-08-16", "", "Salt Bay Chamberfest", "Damariscotta, Maine", "", ""], ["2023-08-01", "", "Music in the Vineyards", "Napa Valley", "", ""], ["2023-07-26", "", "La Jolla SummerFest", "La Jolla", "", ""], ["2023-07-17", "", "ChamberFest West", "Calgary", "", ""], ["2023-07-05", "", "Janigro Festival", "Montagano, Italy", "With the Zagreb Soloists", "Couperin, Hindemith, Vivaldi."], ["2023-06-15", "", "Romanischer Sommer", "Cologne", "Bach: Suites No. 2 and No. 3", ""], ["2023-06-06", "", "Piano Salon Christophori", "Berlin", "Recital with Olga Zado, piano", "Lyatoshinsky, Lutosławski, Brahms, Gubaidulina, Schnittke, Shostakovich."], ["2023-05-29", "", "Lieder Alive", "San Francisco", "South American music", "With Carlos Ágrada and Esther Rayo."], ["2023-05-21", "", "Bridgehampton Chamber Music Festival", "Bridgehampton, New York", "", ""], ["2023-04-23", "", "TICA Festival", "Hong Kong", "World premiere: Andrew Moses", "A new work for cello and percussion, with Haruka Fujii."], ["2023-03-30", "", "Chamber Music Society of Palm Beach", "West Palm Beach, Florida", "", "With Alessio Bax, piano, and Arnaud Sussmann, violin."], ["2023-03-20", "", "Jupiter Chamber Players", "New York", "Haydn · Spohr · Mozart · Farrenc", ""], ["2023-03-10", "", "Orquesta Sinfónica Nacional de Colombia", "Bogotá", "", ""], ["2023-02-21", "", "Jupiter Chamber Players", "New York", "", ""], ["2023-02-17", "", "Kravis Center", "West Palm Beach, Florida", "Recital: Saint-Saëns · Fauré · Rachmaninoff", ""], ["2023-01-24", "", "Modelroom Musicales", "New York", "Beethoven and Dvořák", "With Mira Wang, Chad Hoopes and others."], ["2023-01-21", "", "Knoxville Symphony", "Knoxville", "Dvořák: Cello Concerto", "Lidiya Yankovskaya, conductor. Tennessee Theatre."], ["2023-01-09", "", "St Barts Music Festival", "St. Barthélemy", "", ""], ["2022-11-13", "", "Illinois Philharmonic", "Park Forest, Illinois", "Haydn: Cello Concerto in C", "Stilian Kirov, conductor."], ["2022-10-16", "", "Amarillo Symphony", "Amarillo, Texas", "", ""], ["2022-09-10", "", "Capital Region Classical", "New Lebanon, New York", "", ""], ["2022-09-03", "", "Beethoven Sonatas on fortepiano", "Cologne", "With Arash Rokni, fortepiano", ""], ["2022-08-28", "", "Rheingau Musik Festival", "Mainz", "Schubert · Martinů · Mozart", "With Chad Hoopes, violin, and Matthew Lipman, viola."], ["2022-08-17", "", "Peninsula Music Festival", "Fish Creek, Wisconsin", "Shostakovich: Cello Concerto No. 1", "Yaniv Dinur, conductor."], ["2022-06-27", "", "Marlboro Music", "Marlboro, Vermont", "", ""], ["2022-05-06", "", "Queen Elisabeth Competition", "Brussels", "", ""], ["2022-04-23", "", "Atlantic Classical Orchestra", "Palm Beach, Florida", "Tchaikovsky: Rococo Variations (original version)", "David Amado, conductor."], ["2022-04-13", "", "Guarneri Hall", "Chicago", "The complete Beethoven sonatas", "Two programs with Xiaohui Yang, piano."], ["2022-04-03", "", "Buffalo Philharmonic", "Buffalo", "Schumann: Cello Concerto", "Elizabeth Schulze, conductor. Kleinhans Music Hall."], ["2022-03-26", "", "Lieder Alive", "San Francisco", "Recital: Beethoven and Schumann", "With Peter Grunberg, piano."], ["2022-03-06", "", "Kitchener-Waterloo Symphony", "Kitchener, Canada", "Barber: Cello Concerto", "Edwin Outwater, conductor."], ["2022-02-13", "", "Rhode Island Philharmonic", "Providence", "", ""], ["2022-02-08", "", "Jupiter Symphony Chamber Players", "New York", "Bach: Goldberg Variations (arr. Sitkovetsky)", "With Robyn Scott, violin, and Milena Pajaro-van de Stadt, viola."], ["2022-02-03", "", "Philadelphia Chamber Music Society", "Philadelphia", "", ""]];
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function when(c, year) {
+    var a = c[0].split('-').map(Number), b = (c[1] || c[0]).split('-').map(Number), y = year ? ' ' + a[0] : '';
+    if (!c[1] || c[1] === c[0]) return a[2] + ' ' + MONTHS[a[1] - 1] + y;
+    if (a[1] === b[1] && a[0] === b[0]) return a[2] + '–' + b[2] + ' ' + MONTHS[a[1] - 1] + y;
+    if (a[0] === b[0]) return a[2] + ' ' + MONTHS[a[1] - 1] + ' – ' + b[2] + ' ' + MONTHS[b[1] - 1] + y;
+    return a[2] + ' ' + MONTHS[a[1] - 1] + ' ' + a[0] + ' – ' + b[2] + ' ' + MONTHS[b[1] - 1] + ' ' + b[0];
+  }
+  var TODAY = new Date().toISOString().slice(0, 10);
+  var UPCOMING = CONCERTS.filter(function (c) { return (c[1] || c[0]) >= TODAY; }).reverse();
+  var PAST = CONCERTS.filter(function (c) { return (c[1] || c[0]) < TODAY; });
+  /* rail, title, detail, where, YouTube id */
+  var FILMS = [
+    ['Schnittke', 'Cello Sonata No. 2', 'Live', '', '7rHCol4Jv0s'],
+    ['Desenne', 'Jaguar Songs', 'For solo cello, live', '', 'o55-bh9YSAQ'],
+    ['Beethoven', 'Sonata in G minor, Op. 5 No. 2', 'On fortepiano', 'Arash Rokni, fortepiano', 'suTU3-AbS0Q'],
+    ['Pressure / Druck', 'Aftermovie', 'Hindemith · Shostakovich · Schoenberg', '', 'W2--KrUIkkc']
+  ];
+  /* cover, title, detail, with */
+  var ALBUMS = [
+    ['album', 'Frame of Mind', 'Fauré and Janáček', 'Xiaohui Yang, piano'],
+    ['haydn', 'Haydn: Cello Concerto No. 2', 'Warner Classics', 'San Francisco Symphony, Michael Tilson Thomas']
+  ];
+  var PROJECTS = [
+    { id: 'schnittke', title: 'Alfred Schnittke', sub: 'Cello Concerto No. 1 · Cello Sonata No. 2', img: 'score', ratio: '4 / 5',
+      cap: 'Cello Concerto No. 1 with Alexander Prior and the Erfurt Philharmonic, my German concerto debut, 2023.', extra: 'schnittke',
+      text: ["Schnittke's cello music has become a focus in recent years, something I revisit very often. A composer who resists easy placement, whose music cuts through artifice and circumstance and draws us intensely into the now.",
+             "The Cello Concerto No. 1 was originally conceived as a three movement work, the fourth movement added after an episode of heart failure: it is said that this is the music he heard when he briefly crossed over to death. Ecstatic, powerful, of extraordinary scope."],
+      watch: ['Cello Sonata No. 2 (live)', '7rHCol4Jv0s'] },
+    { id: 'wiebitte', title: 'Wie Bitte?', sub: 'A concert about re-hearing', img: 'wiebitte', ratio: '16 / 9',
+      text: ["Do you know that moment when you hear something and you're not quite sure you understood it correctly? In German: Wie bitte? Pardon? That was the central question of my last Mittwochskonzert at the Kronberg Academy. A concert about repetition, re-hearing, and how we construct meaning when things return."] },
+    { id: 'desenne', title: 'Paul Desenne', sub: '1959–2023 · Venezuelan composer and cellist', img: 'desenne', ratio: '3 / 2',
+      text: ["Many coincidences and variables in my life, as well as spending lots of time in Colombia, led me to a growing interest in music from Latin America. Paul's work became a gateway, opening up a deeper curiosity and sense of connection with the colorful intensity and universality of that musical language."],
+      watch: ['Jaguar Songs for Solo Cello (live)', 'o55-bh9YSAQ'] },
+    { id: 'pressure', title: 'Pressure / Druck', sub: 'Hindemith · Shostakovich · Schoenberg', img: 'pressure', ratio: '16 / 9',
+      text: ["The starting point for this project was a phenomenon that I find interesting: the moment when someone pursuing power, political or otherwise, crosses a threshold they cannot come back from. The pressure of preserving what has already been built begins to take over, and leads them in directions they themselves could never have conceived of at the beginning."],
+      watch: ['Aftermovie', 'W2--KrUIkkc'] },
+    { id: 'beethoven', title: 'Ludwig van Beethoven', sub: 'The Complete Cello Sonatas', img: 'beethoven', ratio: '16 / 9',
+      text: ["As I keep returning to these sonatas, I thought I'd carve out a little corner to spotlight them. They span Beethoven's entire creative life, from the bold and original Op. 5 pair written at 25, through the optimism, balance, and rustic quality of Op. 69, to the visionary and soulful Op. 102. Returning to them is never the same experience twice."],
+      watch: ['Sonata Op. 5 No. 2 on fortepiano, with Arash Rokni', 'suTU3-AbS0Q'] },
+    { id: 'trio', title: 'Trio Saye', sub: 'Oliver Herbert · Abigél Králik · Arash Rokni', img: 'trio', ratio: '4 / 5',
+      text: ["My piano trio with violinist Abigél Králik and pianist Arash Rokni.",
+             "Our first concert was in 2024 in Brussels, which included the world premiere of Diurne by Helena Winkelman, written as a sibling piece to Schubert's Notturno, as well as Beethoven's Piano Trio Op. 70 No. 2."] },
+    { id: 'williams', title: 'John Williams', sub: 'Cello Concerto (1994)', img: 'williams', ratio: '3 / 2',
+      text: ["Recently I had the pleasure of playing John Williams' Cello Concerto for the first time."] },
+    { id: 'tica', title: 'TICA Festival', sub: 'Kwai Tsing Theatre, Hong Kong · with Haruka Fujii, percussion', img: 'tica', ratio: '1 / 1',
+      text: ["A concert curated for Toolbox Percussion's TICA Festival in Hong Kong, with percussionist Haruka Fujii. The program ran from Bach to the world premiere of Andrew Moses' Ecstatic Immanence."] },
+    { id: 'raderberg', title: 'Raderbergkonzerte', sub: 'Deutschlandfunk, Cologne', img: 'raderberg', ratio: '4 / 5',
+      text: ["A program for Deutschlandfunk's Raderbergkonzerte in Cologne: Desenne, Ruth Crawford Seeger, Villa-Lobos, and Fauré. There has been such a rich history of exchange between the Americas and Europe, where those musical worlds blur into each other."] },
+    { id: 'sf', title: 'San Francisco', sub: 'Where it began', img: 'sf', ratio: '4 / 3',
+      text: ["I grew up in a family of musicians, my mom a violinist (my first music teacher on violin), and my dad a timpanist.",
+             "San Francisco is a city where new ideas are embraced and actively explored, a spirit of innovation that gives the place its dynamic energy. At the same time, the transcendental natural beauty always puts that energy in context."] },
+    { id: 'stop', title: 'Stop Motion', sub: 'Short films', img: null, ratio: '4 / 3',
+      text: ["A parallel practice in image-making."] },
+    { id: 'timeline', title: 'From the beginning', sub: 'San Francisco to now', img: 'timeline', ratio: '3 / 2', chrono: true, text: [] }
+  ];
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function $(id) { return document.getElementById(id); }
+
+  /* Build the lists */
+  function rows(list, prefix, withYear) {
+    return list.map(function (c, i) {
+      var pid = prefix + '-panel-' + i, open = !!c[5];
+      var head = '<span class="row-head">' +
+        '<span class="row-meta"><span class="row-when">' + esc(when(c, withYear)) + '</span><span class="row-where">' + esc(c[3]) + '</span></span>' +
+        '<span class="row-main"><span class="row-title">' + esc(c[2]) + '</span>' + (c[4] ? '<span class="row-work">' + esc(c[4]) + '</span>' : '') + '</span>' +
+        (open ? '<span class="plus" aria-hidden="true"></span>' : '') + '</span>';
+      return '<div class="rise">' + (open
+        ? '<button class="row" aria-expanded="false" aria-controls="' + pid + '">' + head + '</button><div class="panel" id="' + pid + '"><div><p>' + esc(c[5]) + '</p></div></div>'
+        : '<div class="row still">' + head + '</div>') + '</div>';
+    }).join('');
+  }
+  $('upcoming').innerHTML = rows(UPCOMING, 'up', true);
+  /* The homepage looks forward: past concerts appear only when fewer than three are coming up; the full calendar holds the rest */
+  if (UPCOMING.length < 3) $('past').innerHTML = rows(PAST.slice(0, 2), 'past', true);
+  else { $('today').remove(); $('past-h').remove(); $('past').remove(); }
+  /* Explore: titles in a loose stagger; each takes the colour of its photo */
+  var XC = { schnittke: '#E8867C', wiebitte: '#CDB297', desenne: '#E49680', pressure: '#97C3CD', beethoven: '#D4B090', trio: '#CDAF97', williams: '#CDAD97', tica: '#CDC297', raderberg: '#CDA197', sf: '#DD9D87', stop: '#E8867C', timeline: '#D9D6CC' };
+  var XOFF = ['0%', '14%', '5%', '20%', '9%', '2%', '17%', '7%', '21%', '3%', '12%', '18%'];
+  $('grid').innerHTML = PROJECTS.map(function (p, n) {
+    var th = p.img ? '<img src="../img/' + p.img + '.jpg" alt="" loading="lazy">' : '';
+    return '<button class="xrow rise" data-id="' + p.id + '" style="--c:' + (XC[p.id] || '#E8867C') + ';--off:' + XOFF[n % XOFF.length] + '">' +
+      '<span class="xthumb" aria-hidden="true">' + th + '</span><span><span class="xt">' + esc(p.title) + '</span><span class="xs">' + esc(p.sub) + '</span></span></button>';
+  }).join('') + '<div class="xpeek" id="xpeek" aria-hidden="true"></div>';
+  (function () {
+    var list = $('grid'), peek = $('xpeek'), on = null, px = 0, py = 0, tx = 0, ty = 0, raf = 0;
+    var wide = window.matchMedia('(min-width: 900px) and (hover: hover)');
+    function frame() {
+      px += (tx - px) * 0.14; py += (ty - py) * 0.14;
+      peek.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px)';
+      raf = (Math.abs(tx - px) + Math.abs(ty - py) > 0.3) ? requestAnimationFrame(frame) : 0;
+    }
+    function aim(row, mx) {
+      var lb = list.getBoundingClientRect(), rb = row.getBoundingClientRect(), w = peek.offsetWidth, h = peek.offsetHeight;
+      tx = lb.width - w + ((mx - lb.left) / lb.width - 0.5) * 40;
+      ty = Math.max(-40, Math.min(lb.height - h + 40, rb.top - lb.top + rb.height / 2 - h / 2));
+      if (!raf) raf = requestAnimationFrame(frame);
+    }
+    function show(row, mx) {
+      if (row !== on) {
+        if (on) on.classList.remove('on');
+        on = row; row.classList.add('on'); list.classList.add('peeking');
+        var p = PROJECTS.filter(function (x) { return x.id === row.dataset.id; })[0];
+        var wasOn = peek.classList.contains('on');
+        peek.style.aspectRatio = p.ratio;
+        peek.innerHTML = p.img ? '<img src="../img/' + p.img + '.jpg" alt="">' : '<span class="blank"><span class="dot">' + TRI + '</span></span>';
+        peek.classList.add('on');
+        if (!wasOn) { aim(row, mx); px = tx; py = ty; frame(); return; }
+      }
+      aim(row, mx);
+    }
+    function hide() { if (on) on.classList.remove('on'); on = null; list.classList.remove('peeking'); peek.classList.remove('on'); }
+    list.addEventListener('pointermove', function (e) {
+      if (!wide.matches || e.pointerType !== 'mouse') return;
+      list.classList.add('ready');
+      var row = e.target.closest('.xrow'); if (row) show(row, e.clientX); else hide();
+    });
+    list.addEventListener('pointerleave', hide);
+    list.addEventListener('focusin', function (e) { var row = e.target.closest('.xrow'); if (row && wide.matches) { var b = row.getBoundingClientRect(); show(row, b.left + 200); } });
+    list.addEventListener('focusout', hide);
+    window.xPeekFrom = function (row) { return (wide.matches && on === row) ? peek.querySelector('img') : row.querySelector('.xthumb img'); };
+  })();
+  $('films').innerHTML = FILMS.map(function (f) {
+    return '<a class="vrow rise" href="' + YT + f[4] + '" target="_blank" rel="noopener" data-title="' + esc(f[0] + ': ' + f[1]) + '"><span class="row-head">' +
+      '<span class="row-meta"><span class="row-when">' + esc(f[0]) + '</span>' + (f[3] ? '<span class="row-where">' + esc(f[3]) + '</span>' : '') + '</span>' +
+      '<span class="row-main"><span class="row-title">' + esc(f[1]) + '</span><span class="row-work">' + esc(f[2]) + '</span></span>' +
+      '<span class="vplay" aria-hidden="true">' + TRI + '</span></span></a>';
+  }).join('');
+  $('albums').innerHTML = ALBUMS.map(function (a) {
+    return '<div class="arow rise"><span class="cover"><img src="../img/' + a[0] + '.jpg" alt="Album cover of ' + esc(a[1]) + '" loading="lazy"></span>' +
+      '<span class="row-main"><span class="row-title">' + esc(a[1]) + '</span><span class="row-work">' + esc(a[2]) + '</span></span><span class="row-where muted">' + esc(a[3]) + '</span></div>';
+  }).join('');
+
+  /* Concert rows open in place */
+  document.addEventListener('click', function (e) {
+    var row = e.target.closest('.row');
+    if (row) row.setAttribute('aria-expanded', row.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+  });
+
+  /* Text arrives like a phrase; photos settle as they come into view */
+  function stagger(scope) {
+    var groups = new Map();
+    scope.querySelectorAll('.rise').forEach(function (el) {
+      var n = groups.get(el.parentNode) || 0;
+      el.style.setProperty('--i', Math.min(n, 7));
+      groups.set(el.parentNode, n + 1);
+    });
+  }
+  var seen = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); seen.unobserve(en.target); } });
+  }, { rootMargin: '0px 0px -8% 0px' }) : null;
+  function watch(scope) {
+    stagger(scope);
+    scope.querySelectorAll('.rise, .open-img').forEach(function (el) { if (seen) seen.observe(el); else el.classList.add('in'); });
+  }
+  watch(document);
+
+  /* Color changes like weather: the ground follows the section at mid-screen */
+  var home = $('home'), project = $('project');
+  if ('IntersectionObserver' in window) {
+    var tone = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting && !home.hidden) document.body.dataset.tone = en.target.dataset.tone; });
+    }, { rootMargin: '-48% 0px -48% 0px' });
+    document.querySelectorAll('[data-tone]').forEach(function (el) { tone.observe(el); });
+  }
+
+  /* The name settles into the corner */
+  var ticking = false;
+  function settle() {
+    ticking = false;
+    var p = home.hidden ? 1 : Math.max(0, Math.min(1, window.scrollY / 240));
+    root.style.setProperty('--p', p.toFixed(4));
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(settle); } }, { passive: true });
+  settle();
+
+  /* A photo becomes the page */
+  var lastScroll = 0, lastCard = null;
+  /* The dot: the page changes behind a circle that grows from where you clicked */
+  var REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var wipe = document.createElement('div'); wipe.className = 'wipe'; wipe.hidden = true; wipe.setAttribute('aria-hidden', 'true');
+  wipe.innerHTML = '<span class="wipe-mono">' + $('mono').innerHTML + '</span>';
+  document.body.appendChild(wipe);
+  var wmono = wipe.firstChild, wiping = false, pendingDot = null;
+  var MONO_ON = { '#C0362C': '#FFFFFF', '#111314': '#C0362C', '#343426': '#FBFBF9', '#FBFBF9': '#C0362C' };
+  function dot(x, y, color, swap) {
+    if (REDUCE || !wipe.animate) { swap(); return; }
+    if (wiping) return;
+    wiping = true;
+    var W = window.innerWidth, H = window.innerHeight, R = Math.hypot(Math.max(x, W - x), Math.max(y, H - y)) + 4;
+    wipe.style.background = color; wipe.style.color = MONO_ON[color] || '#FBFBF9';
+    wipe.style.opacity = '1'; wipe.hidden = false;
+    var at = ' at ' + x.toFixed(0) + 'px ' + y.toFixed(0) + 'px)';
+    var grow = wipe.animate([{ clipPath: 'circle(0px' + at }, { clipPath: 'circle(' + R.toFixed(0) + 'px' + at }], { duration: 400, easing: 'cubic-bezier(0.65, 0, 0.3, 1)', fill: 'forwards' });
+    var m = wmono.animate([{ opacity: 0, transform: 'scale(0.8)' }, { opacity: 1, transform: 'none' }], { duration: 240, delay: 180, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)', fill: 'forwards' });
+    grow.onfinish = function () {
+      wiping = 'swap';
+      try { swap(); } catch (err) { console.error(err); }
+      wiping = true;
+      requestAnimationFrame(function () {
+        var out = wipe.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', fill: 'forwards' });
+        var m2 = wmono.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'scale(1.1)' }], { duration: 240, easing: 'ease-in', fill: 'forwards' });
+        out.onfinish = function () { wipe.hidden = true; grow.cancel(); m.cancel(); m2.cancel(); out.cancel(); wiping = false; };
+      });
+    };
+  }
+  function pointOf(e, el) {
+    if (e && e.detail !== 0 && (e.clientX || e.clientY)) return [e.clientX, e.clientY];
+    var b = el.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2];
+  }
+  /* which colour grows from what: the colour of where you are going */
+  document.addEventListener('click', function (e) {
+    var t = e.target, el, c = null;
+    if ((el = t.closest('#all-concerts'))) c = '#C0362C';
+    else if ((el = t.closest('#full-bio'))) c = '#343426';
+    else if ((el = t.closest('.p-next, .ch-link, #back, #ab-back, #cal-back, .legal-back, a[href="#impressum"], a[href="#privacy"]'))) c = '#111314';
+    else if ((el = t.closest('#top-link, #mono')) && home.hidden) c = '#111314';
+    if (!c) return;
+    var p = pointOf(e, el); pendingDot = { x: p[0], y: p[1], c: c };
+    setTimeout(function () { pendingDot = null; }, 0);
+  }, true);
+  function change(fn) {
+    if (wiping === 'swap') { fn(); return null; }
+    if (pendingDot) { var d = pendingDot; pendingDot = null; dot(d.x, d.y, d.c, fn); return null; }
+    if (document.startViewTransition && !REDUCE) return document.startViewTransition(fn);
+    fn(); return null;
+  }
+  function loopLine(t) {
+    var one = '<span class="lp-t">' + esc(t) + '</span><span class="lp-l">Next</span>', run = one + one + one + one;
+    return '<span class="loop" aria-hidden="true"><span class="loop-track">' + run + run + '</span></span>';
+  }
+  function renderProject(p) {
+    var idx = PROJECTS.indexOf(p), next = PROJECTS[(idx + 1) % PROJECTS.length];
+    if (p.chrono) {
+      project.innerHTML =
+        '<div class="wrap"><button class="back" id="back"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Explore</span></button>' +
+        '<div class="p-head"><h1 class="rise">' + esc(p.title) + '</h1><div class="p-sub rise">' + esc(p.sub) + '</div></div>' +
+        '<div class="tl-shot"><img id="p-img" src="../img/' + p.img + '.jpg" alt="Oliver Herbert in rehearsal" style="aspect-ratio:' + p.ratio + ';object-fit:cover"></div>' +
+        '<div class="tl-body">' + chronoHTML() + '</div>' +
+        '<button class="p-next loop-next tl-next rise" data-id="' + next.id + '" style="width:100%" aria-label="Next project: ' + esc(next.title) + '"><span class="label muted">Next project</span>' + loopLine(next.title) + '</button></div>';
+      watch(project); return;
+    }
+    var shot = p.img ? '<div class="p-shot"><img id="p-img" src="../img/' + p.img + '.jpg" alt="' + esc(p.title) + '" style="aspect-ratio:' + p.ratio + ';object-fit:cover">' +
+      '</div>' : '<div></div>';
+    project.innerHTML =
+      '<div class="wrap"><button class="back" id="back"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Explore</span></button>' +
+      '<div class="p-head"><h1 class="rise">' + esc(p.title) + '</h1><div class="p-sub rise">' + esc(p.sub) + '</div></div></div>' +
+      '<div class="p-cols">' + shot + '<div class="wrap p-body">' +
+      p.text.map(function (t) { return '<p class="rise">' + esc(t) + '</p>'; }).join('') +
+      (p.extra ? '<div class="p-extra rise"><img src="../img/' + p.extra + '.jpg" alt="' + esc(p.title) + '">' + (p.cap ? '<span class="p-cap muted">' + esc(p.cap) + '</span>' : '') + '</div>' : '') +
+      (p.watch ? '<a class="p-watch film rise" href="' + YT + p.watch[1] + '" target="_blank" rel="noopener"><span class="dot">' + TRI + '</span><span>' + esc(p.watch[0]) + '</span></a>' : '') +
+      '</div></div><div class="wrap">' + '<button class="p-next loop-next rise" data-id="' + next.id + '" style="width:100%" aria-label="Next project: ' + esc(next.title) + '"><span class="label muted">Next project</span>' + loopLine(next.title) + '</button></div>';
+    watch(project);
+  }
+  function openProject(id, card, fromImg) {
+    var p = PROJECTS.filter(function (x) { return x.id === id; })[0];
+    if (!p) return;
+    var from = fromImg || (card ? card.querySelector('img') : null);
+    if (card) { lastScroll = window.scrollY; lastCard = card; }
+    if (from) from.style.viewTransitionName = 'shot';
+    change(function () {
+      if (from) from.style.viewTransitionName = '';
+      renderProject(p);
+      home.hidden = true; if (typeof cal !== 'undefined') cal.hidden = true; if (typeof ab !== 'undefined') ab.hidden = true; project.hidden = false;
+      document.body.dataset.tone = 'light';
+      var to = $('p-img'); if (to && from) to.style.viewTransitionName = 'shot';
+      root.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); root.style.scrollBehavior = '';
+      settle();
+    });
+  }
+  function closeProject() {
+    var from = $('p-img'), to = lastCard ? lastCard.querySelector('img') : null;
+    if (to && !to.offsetParent) to = null;
+    var same = lastCard && from && to && from.getAttribute('src') === to.getAttribute('src');
+    if (!same && from) from.style.viewTransitionName = '';
+    var t = change(function () {
+      project.hidden = true; cal.hidden = true; ab.hidden = true; $('impressum').hidden = true; $('privacy').hidden = true; home.hidden = false; project.innerHTML = ''; cal.innerHTML = '';
+      document.body.dataset.tone = lastCard ? 'dark' : 'light';
+      if (same) to.style.viewTransitionName = 'shot';
+      root.style.scrollBehavior = 'auto'; window.scrollTo(0, lastScroll); root.style.scrollBehavior = '';
+      settle();
+    });
+    var clear = function () { if (to) to.style.viewTransitionName = ''; };
+    if (t && t.finished) t.finished.then(clear, clear); else clear();
+  }
+  document.addEventListener('click', function (e) {
+    var card = e.target.closest('.xrow');
+    if (card) { openProject(card.dataset.id, card, window.xPeekFrom(card)); return; }
+    var next = e.target.closest('.p-next');
+    if (next) { openProject(next.dataset.id, null); return; }
+    if (e.target.closest('#back')) { closeProject(); return; }
+    if ((e.target.closest('#top-link') || e.target.closest('#mono')) && home.hidden) { e.preventDefault(); closeProject(); }
+  });
+
+  /* Chronology: milestones only; every concert lives in the calendar. [year, kind, text, project id?] and photos per year. */
+  var CHRONO = [
+    ['Beginnings', [['Grows up in San Francisco in a family of musicians: his mother a violinist and his first teacher, his father a timpanist. Violin first, then the cello.']]],
+    ['2013', [['First appearance as a concerto soloist, with the Prometheus Symphony.']]],
+    ['2014', [['Colburn School, with Clive Greensmith. Soloist with the San Francisco Symphony Youth Orchestra.']]],
+    ['2015', [['Curtis Institute of Music, with Carter Brey, Peter Wiley and Pamela Frank.']]],
+    ['2016', [['First summers of chamber music: ChamberFest Cleveland, Caramoor, Music in the Vineyards.']]],
+    ['2017', [['Strauss’ Don Quixote with the Chicago Symphony Orchestra, on its Family Matinee Series. Verbier Festival Academy.']]],
+    ['2018', [['Debut with the San Francisco Symphony at the All San Francisco Concert: Tchaikovsky’s Rococo Variations.']]],
+    ['2019', [['Subscription debut with the San Francisco Symphony and Michael Tilson Thomas: Haydn’s Concerto in D major. Graduates from Curtis.']], ['chrono-sfs', 'With Michael Tilson Thomas and the San Francisco Symphony']],
+    ['2020', [['Debut album, Frame of Mind: Fauré and Janáček, with Xiaohui Yang.'], ['Haydn’s Concerto in D major with the San Francisco Symphony and Michael Tilson Thomas, on Warner Classics.']]],
+    ['2021', [['First summer at Marlboro Music. The complete Bach suites in one program.']]],
+    ['2022', [['The complete Beethoven sonatas with Xiaohui Yang, Chicago.', 'beethoven']]],
+    ['2023', [['Kronberg Academy, with Frans Helmerson.'], ['German concerto debut: Schnittke’s First Concerto in Erfurt.', 'schnittke'], ['World premiere of Andrew Moses’ Ecstatic Immanence, Hong Kong.', 'tica']], ['schnittke', 'With Alexander Prior in Erfurt']],
+    ['2024', [['On tour with Mitsuko Uchida and musicians from Marlboro, ending at Carnegie Hall.'], ['A program for Deutschlandfunk on the music of the Americas and Europe.', 'raderberg'], ['Trio Saye’s first concert, in Brussels, with Helena Winkelman’s Diurne.', 'trio']], ['chrono-uchida', 'With Mitsuko Uchida']],
+    ['2025', [['“The Chamber Cello” at the New World Symphony, with music by Paul Desenne.', 'desenne']]],
+    ['2026', [['John Williams’ Cello Concerto for the first time.', 'williams'], ['Wie Bitte?, a concert about hearing again.', 'wiebitte'], ['The complete Brahms piano quartets with Kirill Gerstein, Carnegie Hall.'], ['Graduates from Kronberg Academy.']]]
+  ];
+  function chronoHTML() {
+    return '<div class="chrono">' + CHRONO.map(function (y) {
+      var items = y[1].map(function (it) {
+        var t = esc(it[0]);
+        if (it[1]) t = '<a href="#" class="ch-link" data-id="' + it[1] + '">' + t + '</a>';
+        return '<li>' + t + '</li>';
+      }).join('');
+      var ph = y[2] ? '<figure class="ch-photo"><img src="../img/' + y[2][0] + '.jpg" alt="' + esc(y[2][1]) + '" loading="lazy"><figcaption class="label muted">' + esc(y[2][1]) + '</figcaption></figure>' : '';
+      return '<div class="ch-year rise"><span class="ch-y' + (/^\d/.test(y[0]) ? '' : ' word') + '">' + esc(y[0]) + '</span><ul class="ch-items">' + items + '</ul>' + ph + '</div>';
+    }).join('') + '</div>';
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('.ch-link');
+    if (a) { e.preventDefault(); openProject(a.dataset.id, null); }
+  });
+
+  /* Legal pages open as their own pages */
+  function openPage(id) {
+    lastScroll = window.scrollY; lastCard = null;
+    change(function () {
+      home.hidden = true; project.hidden = true; cal.hidden = true; ab.hidden = true;
+      $('impressum').hidden = id !== 'impressum'; $('privacy').hidden = id !== 'privacy';
+      document.body.dataset.tone = 'light';
+      root.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); root.style.scrollBehavior = '';
+      settle();
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href="#impressum"], a[href="#privacy"]');
+    if (a) { e.preventDefault(); openPage(a.getAttribute('href').slice(1)); return; }
+    if (e.target.closest('.legal-back')) { closeProject(); }
+  });
+
+  /* The About page opens as its own page */
+  var ab = $('aboutpage');
+  function openAbout() {
+    lastScroll = window.scrollY; lastCard = null;
+    change(function () {
+      home.hidden = true; project.hidden = true; cal.hidden = true; ab.hidden = false;
+      document.body.dataset.tone = 'light';
+      root.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); root.style.scrollBehavior = '';
+      watch(ab); settle();
+    });
+  }
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('#full-bio')) { e.preventDefault(); openAbout(); return; }
+    if (e.target.closest('#ab-back')) { closeProject(); return; }
+    if (e.target.closest('#ab-contact')) { e.preventDefault(); closeProject(); setTimeout(function () { var t = $('contact'); if (t) t.scrollIntoView({ behavior: 'smooth' }); }, 650); }
+  });
+
+  /* The full calendar opens as its own page */
+  var cal = $('calendar');
+  function renderCalendar() {
+    var years = [], byYear = {};
+    PAST.forEach(function (c) { var y = c[0].slice(0, 4); if (!byYear[y]) { byYear[y] = []; years.push(y); } byYear[y].push(c); });
+    cal.innerHTML = '<button class="back" id="cal-back"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Home</span></button>' +
+      '<h1 class="rise">Concerts</h1>' +
+      '<nav class="cal-years rise" aria-label="Jump to a year"><a href="#cal-upcoming">Upcoming</a>' + years.map(function (y) { return '<a href="#cal-' + y + '">' + y + '</a>'; }).join('') + '</nav>' +
+      '<h2 id="cal-upcoming" class="rise">Upcoming</h2><div class="rows">' + rows(UPCOMING, 'cal-up', true) + '</div>' +
+      years.map(function (y) { return '<h2 id="cal-' + y + '" class="rise">' + y + '</h2><div class="rows">' + rows(byYear[y], 'cal-' + y, false) + '</div>'; }).join('');
+    watch(cal);
+  }
+  function openCalendar() {
+    lastScroll = window.scrollY; lastCard = null;
+    change(function () {
+      renderCalendar();
+      home.hidden = true; project.hidden = true; ab.hidden = true; cal.hidden = false;
+      document.body.dataset.tone = 'light';
+      root.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); root.style.scrollBehavior = '';
+      settle();
+    });
+  }
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('#all-concerts')) { e.preventDefault(); openCalendar(); return; }
+    if (e.target.closest('#cal-back')) { closeProject(); return; }
+    var y = e.target.closest('.cal-years a');
+    if (y) { e.preventDefault(); var t = document.querySelector(y.getAttribute('href')); if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' }); }
+  });
+
+  /* Press quotes */
+  (function () {
+    var box = $('quotes'), qs = box.querySelectorAll('.q'), dots = document.querySelectorAll('.qdots button'), i = 0, timer = null;
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function show(n) {
+      qs.item(i).classList.remove('on'); qs.item(i).setAttribute('aria-hidden', 'true'); dots.item(i).classList.remove('on'); dots.item(i).removeAttribute('aria-current');
+      i = (n + qs.length) % qs.length;
+      qs.item(i).classList.add('on'); qs.item(i).setAttribute('aria-hidden', 'false'); dots.item(i).classList.add('on'); dots.item(i).setAttribute('aria-current', 'true');
+    }
+    function run() { stop(); if (!still) timer = setInterval(function () { show(i + 1); }, 6000); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    box.addEventListener('click', function () { show(i + 1); run(); });
+    dots.forEach(function (d, n) { d.addEventListener('click', function () { if (n !== i) show(n); run(); }); });
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) run(); else stop(); }); }).observe(box);
+  })();
+
+  /* Menu */
+  var menu = $('menu'), openBtn = $('menu-open');
+  function setMenu(open) {
+    var b = openBtn.getBoundingClientRect();
+    menu.style.setProperty('--mx', (b.left + b.width / 2).toFixed(0) + 'px'); menu.style.setProperty('--my', (b.top + b.height / 2).toFixed(0) + 'px');
+    if (open) {
+      menu.hidden = false;
+      var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+      menu.querySelectorAll('.md').forEach(function (d) {
+        d.style.transition = 'none'; d.style.transform = 'none';
+        var r = d.getBoundingClientRect();
+        d.style.setProperty('--fx', (cx - r.left - r.width / 2).toFixed(0) + 'px'); d.style.setProperty('--fy', (cy - r.top - r.height / 2).toFixed(0) + 'px');
+        d.style.transform = ''; void d.offsetWidth; d.style.transition = '';
+      });
+      requestAnimationFrame(function () { requestAnimationFrame(function () { menu.classList.add('open'); }); }); document.body.style.overflow = 'hidden';
+    }
+    else { menu.classList.remove('open'); document.body.style.overflow = ''; setTimeout(function () { if (!menu.classList.contains('open')) menu.hidden = true; }, 580); }
+    openBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  openBtn.addEventListener('click', function () { setMenu(true); });
+  $('menu-close').addEventListener('click', function () { setMenu(false); openBtn.focus(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) setMenu(false); });
+  var NAVC = { about: '#343426', concerts: '#C0362C', projects: '#111314', recordings: '#343426', contact: '#C0362C' };
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('.menu-links a, .menu-next, .topnav > a');
+    if (!a) { if (e.target.closest('.menu-langs a') && !menu.hidden) setMenu(false); return; }
+    var href = a.getAttribute('href');
+    if (href.charAt(0) !== '#') return;
+    e.preventDefault();
+    var md = a.querySelector('.md'), p = md ? pointOf(null, md) : pointOf(e, a);
+    dot(p[0], p[1], NAVC[href.slice(1)] || '#111314', function () {
+      if (!menu.hidden) { menu.classList.remove('open'); menu.hidden = true; document.body.style.overflow = ''; openBtn.setAttribute('aria-expanded', 'false'); }
+      if (home.hidden) closeProject();
+      var t = document.querySelector(href);
+      if (t) {
+        root.style.scrollBehavior = 'auto'; t.scrollIntoView({ block: 'start', behavior: 'instant' }); root.style.scrollBehavior = '';
+        if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+        t.focus({ preventScroll: true });
+      }
+      settle();
+    });
+  });
+
+  /* Listen: a printed program drops down; music plays across the page, with a line of progress along the top.
+     Silent until recordings are attached: each track's src goes below. */
+  var TRACKS = [
+    { comp: 'Leoš Janáček', work: 'Pohádka', mvt: 'III. Allegro', with: 'Xiaohui Yang, piano · Frame of Mind', short: 'Janáček: Pohádka, III', len: 202, src: '' },
+    { comp: 'Gabriel Fauré', work: 'Cello Sonata No. 2', mvt: 'II. Andante', with: 'Xiaohui Yang, piano · Frame of Mind', short: 'Fauré: Sonata No. 2, II', len: 391, src: '' },
+    { comp: 'Joseph Haydn', work: 'Cello Concerto No. 2 in D', mvt: 'II. Adagio', with: 'San Francisco Symphony, Michael Tilson Thomas · Warner Classics', short: 'Haydn: Concerto No. 2, II', len: 337, src: '' },
+    { comp: 'Alfred Schnittke', work: 'Cello Sonata No. 2', mvt: 'IV. Largo', with: 'Live', short: 'Schnittke: Sonata No. 2, IV', len: 268, src: '' }
+  ];
+  var ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+  var btn = $('listen'), label = $('listen-label'), icon = $('listen-icon');
+  var player = $('player'), list = $('pl-list'), seek = $('pl-seek'), time = $('pl-time'), playBtn = $('pl-play'), plIcon = $('pl-icon');
+  var cur = 0, playing = false, pos = 0, last = 0, started = false, dragging = false;
+  function cur_i() { return cur; }
+  var audio = new Audio(); audio.preload = 'none';
+  var PLAY = '<path d="M2 1 L13 8 L2 15 Z" fill="currentColor"></path>', PAUSE = '<path d="M3 1 V15 M11 1 V15" stroke="currentColor" stroke-width="2.6" fill="none"></path>';
+  function mmss(t) { t = Math.max(0, Math.round(t)); return Math.floor(t / 60) + ':' + ('0' + t % 60).slice(-2); }
+  function len() { return (TRACKS[cur].src && audio.duration) ? audio.duration : TRACKS[cur].len; }
+  list.innerHTML = TRACKS.map(function (t, n) {
+    return '<li><button type="button" class="pl-item" data-n="' + n + '"><span class="pl-num">' + ROMAN[n] + '</span><span><span class="pl-comp">' + esc(t.comp) + '</span><span class="pl-work">' + esc(t.work) + '</span><span class="pl-mvt">' + esc(t.mvt) + '</span><span class="pl-with">' + esc(t.with) + '</span></span><span class="pl-dur">' + mmss(t.len) + '</span></button></li>';
+  }).join('');
+  function paint() {
+    var L = len(), f = L ? pos / L : 0;
+    root.style.setProperty('--prog', (f * 100).toFixed(2) + '%');
+    if (!dragging) { seek.value = Math.round(f * 1000); }
+    seek.style.setProperty('--pos', (seek.value / 10) + '%');
+    time.textContent = mmss(pos) + ' / ' + mmss(L);
+  }
+  function mark() {
+    list.querySelectorAll('.pl-item').forEach(function (b, n) { b.classList.toggle('on', n === cur); if (n === cur) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+    var t = TRACKS[cur];
+    if (playing || started) { label.textContent = t.short; }
+    if ('mediaSession' in navigator && window.MediaMetadata) navigator.mediaSession.metadata = new MediaMetadata({ title: t.work + ', ' + t.mvt, artist: 'Oliver Herbert, cello · ' + t.comp, album: t.with });
+  }
+  function setPlaying(on) {
+    playing = on; started = started || on;
+    if (on) document.body.dataset.playing = ''; else delete document.body.dataset.playing;
+    plIcon.innerHTML = on ? PAUSE : PLAY; playBtn.setAttribute('aria-label', on ? 'Pause' : 'Play');
+    icon.innerHTML = on ? '<path d="M2 1 V13 M10 1 V13" stroke="currentColor" stroke-width="2.5" fill="none"></path>' : '<path d="M1 1 L11 7 L1 13 Z" fill="currentColor"></path>';
+    btn.setAttribute('aria-label', on ? 'Now playing: ' + TRACKS[cur].short : 'Listen');
+    var t = TRACKS[cur];
+    if (t.src) { if (on) audio.play().catch(function () {}); else audio.pause(); }
+    if ('mediaSession' in navigator) navigator.mediaSession.playbackState = on ? 'playing' : 'paused';
+    mark();
+    if (on) { last = performance.now(); requestAnimationFrame(tick); }
+  }
+  function load(n, autoplay) {
+    cur = (n + TRACKS.length) % TRACKS.length; pos = 0;
+    var t = TRACKS[cur];
+    audio.pause(); if (t.src) { audio.src = t.src; audio.currentTime = 0; } else audio.removeAttribute('src');
+    paint(); setPlaying(autoplay);
+  }
+  function tick(now) {
+    if (!playing) return;
+    var t = TRACKS[cur];
+    if (t.src) pos = audio.currentTime || 0; else pos += (now - last) / 1000;
+    last = now;
+    if (pos >= len()) { load(cur + 1, true); return; }
+    paint(); requestAnimationFrame(tick);
+  }
+  audio.addEventListener('ended', function () { load(cur + 1, true); });
+
+  function openPlayer() {
+    player.hidden = false; btn.setAttribute('aria-expanded', 'true');
+    requestAnimationFrame(function () { requestAnimationFrame(function () { player.classList.add('open'); }); });
+    if (!started) setPlaying(true);
+  }
+  function closePlayer() {
+    player.classList.remove('open'); btn.setAttribute('aria-expanded', 'false');
+    setTimeout(function () { if (!player.classList.contains('open')) player.hidden = true; }, 600);
+  }
+  btn.addEventListener('click', function () { if (player.hidden || !player.classList.contains('open')) openPlayer(); else closePlayer(); });
+  $('hero-listen').addEventListener('click', function (e) { e.stopPropagation(); if (player.hidden || !player.classList.contains('open')) openPlayer(); if (!playing) setPlaying(true); });
+  $('pl-close').addEventListener('click', function () { closePlayer(); btn.focus(); });
+  playBtn.addEventListener('click', function () { setPlaying(!playing); });
+  $('pl-prev').addEventListener('click', function () { if (pos > 3) { pos = 0; if (TRACKS[cur].src) audio.currentTime = 0; paint(); } else load(cur - 1, playing); });
+  $('pl-next').addEventListener('click', function () { load(cur + 1, playing); });
+  list.addEventListener('click', function (e) { var b = e.target.closest('.pl-item'); if (!b) return; var n = +b.dataset.n; if (n === cur) setPlaying(!playing); else load(n, true); });
+  seek.addEventListener('input', function () { dragging = true; pos = seek.value / 1000 * len(); if (TRACKS[cur].src) audio.currentTime = pos; paint(); });
+  seek.addEventListener('change', function () { dragging = false; });
+  document.addEventListener('click', function (e) { if (!player.hidden && player.classList.contains('open') && !e.target.closest('#player') && !e.target.closest('#listen')) closePlayer(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !player.hidden) { closePlayer(); btn.focus(); } });
+  if ('mediaSession' in navigator) {
+    try {
+      navigator.mediaSession.setActionHandler('play', function () { setPlaying(true); });
+      navigator.mediaSession.setActionHandler('pause', function () { setPlaying(false); });
+      navigator.mediaSession.setActionHandler('previoustrack', function () { load(cur - 1, true); });
+      navigator.mediaSession.setActionHandler('nexttrack', function () { load(cur + 1, true); });
+    } catch (err) {}
+  }
+  paint(); mark();
+  function pauseMusic() { if (playing) setPlaying(false); }
+
+  /* Videos: open in a window over the page; the music pauses while a film plays */
+  var vmodal = $('vmodal'), vframe = $('vframe'), vtitle = $('vtitle'), vback = null;
+  var resumeAfterVideo = false;
+  function openVideo(id, title) {
+    resumeAfterVideo = playing; pauseMusic();
+    vback = document.activeElement;
+    vframe.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0&playsinline=1" title="' + esc(title) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    vtitle.textContent = title;
+    vmodal.hidden = false; document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function () { requestAnimationFrame(function () { vmodal.classList.add('open'); }); });
+    $('vclose').focus();
+  }
+  function closeVideo() {
+    vmodal.classList.remove('open'); document.body.style.overflow = '';
+    setTimeout(function () { vframe.innerHTML = ''; vmodal.hidden = true; }, 320);
+    if (resumeAfterVideo) { resumeAfterVideo = false; setPlaying(true); }
+    if (vback) vback.focus();
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href*="youtube.com/watch?v="]');
+    if (a) { e.preventDefault(); openVideo(new URL(a.href).searchParams.get('v'), a.dataset.title || a.textContent.trim()); return; }
+    if (!vmodal.hidden && (e.target === vmodal || e.target.closest('#vclose'))) closeVideo();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !vmodal.hidden) closeVideo(); });
+
+
+  /* The cursor */
+  (function () {
+    var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (still) return;
+    if (!fine) {
+      /* phones and tablets: a ripple where you tap */
+      document.addEventListener('pointerdown', function (e) {
+        if (e.pointerType === 'mouse') return;
+        if (!e.target.closest('a, button, .xrow, .row, .vrow')) return;
+        var r = document.createElement('span'); r.className = 'ripple';
+        r.style.left = e.clientX + 'px'; r.style.top = e.clientY + 'px';
+        document.body.appendChild(r); setTimeout(function () { r.remove(); }, 700);
+      }, { passive: true });
+      return;
+    }
+    root.classList.add('has-cur');
+    var cur = $('cur'), dot = cur.querySelector('.cur-dot'), lab = $('cur-label');
+    var tx = -100, ty = -100, x = -100, y = -100, state = '', word = '';
+    function set(st, w) {
+      if (st === state && w === word) return;
+      if (state) cur.classList.remove(state); if (st) cur.classList.add(st); state = st;
+      if (w !== word) { lab.textContent = w || ''; word = w; }
+    }
+    function read(t) {
+      if (!t || !t.closest) return set('', '');
+      if (t.closest('input, textarea, select')) return set('text', '');
+      if (t.closest('.vmodal')) return set(t.closest('#vclose') ? 'link' : 'away', '');
+      if (t.closest('.xrow, .vrow, .row:not(.still), .pl-item, .p-next, .ch-link, .hero-next, .hero-listen')) return set('link', '');
+      if (t.closest('a, button, summary, label')) return set('link', '');
+      set('', '');
+    }
+    document.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      tx = e.clientX; ty = e.clientY; cur.classList.add('on'); read(e.target);
+      var card = e.target.closest && e.target.closest('.card');
+      if (card) {
+        var b = card.getBoundingClientRect();
+        card.style.setProperty('--dx', ((tx - b.left) / b.width - 0.5) * -12 + 'px');
+        card.style.setProperty('--dy2', ((ty - b.top) / b.height - 0.5) * -12 + 'px');
+      }
+    }, { passive: true });
+    document.addEventListener('pointerdown', function () { cur.classList.add('down'); });
+    document.addEventListener('pointerup', function () { cur.classList.remove('down'); setTimeout(function () { var el = document.elementFromPoint(tx, ty); read(el); }, 30); });
+    document.documentElement.addEventListener('mouseleave', function () { cur.classList.remove('on'); });
+    window.addEventListener('blur', function () { cur.classList.remove('on'); });
+
+    /* breathing: follows the real loudness of the recording when there is one */
+    var ctx = null, an = null, buf = null;
+    function level(now) {
+      if (!playing) return 0;
+      if (TRACKS[cur_i()].src && audio.src) {
+        try {
+          if (!ctx) { ctx = new (window.AudioContext || window.webkitAudioContext)(); var srcN = ctx.createMediaElementSource(audio); an = ctx.createAnalyser(); an.fftSize = 512; buf = new Uint8Array(an.fftSize); srcN.connect(an); an.connect(ctx.destination); }
+          an.getByteTimeDomainData(buf); var sum = 0; for (var i = 0; i < buf.length; i++) { var v = (buf[i] - 128) / 128; sum += v * v; }
+          return Math.min(1, Math.sqrt(sum / buf.length) * 3.2);
+        } catch (err) { /* fall through to the gentle stand-in */ }
+      }
+      var t = now / 1000; return 0.35 + 0.22 * Math.sin(t * 1.9) + 0.12 * Math.sin(t * 4.7 + 1.3);
+    }
+    var lv = 0;
+    (function loop(now) {
+      x += (tx - x) * 0.28; y += (ty - y) * 0.28;
+      cur.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+      var target = level(now || 0); lv += (target - lv) * 0.15;
+      dot.style.setProperty('--s', (1 + lv * 0.3).toFixed(3));
+      requestAnimationFrame(loop);
+    })();
+  })();
+
+  /* Contact form (in the built site this posts to Netlify Forms) */
+  $('cform').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!this.checkValidity()) { this.reportValidity(); return; }
+    this.querySelectorAll('.field, .cform .btn').forEach(function (el) { el.hidden = true; });
+    $('c-sent').hidden = false;
+  });
+})();
+</script>
+</body></html>
