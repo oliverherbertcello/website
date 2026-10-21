@@ -451,6 +451,12 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 article#aboutpage > h1 { margin-top: var(--head); margin-bottom: 0; padding-bottom: 18px; border-bottom: 1px solid currentColor; font-size: clamp(44px, 5.4vw, 80px); line-height: 1; }
 article#aboutpage > h1 + .ab-open-fig { margin-top: 24px; }
 @media (min-width: 900px) { article#aboutpage > h1 { margin-left: calc(var(--rail) + var(--rail-gap)); } }
+/* Newspaper column: one width, one rhythm, whole images */
+:root { --np-w: 760px; --np-gap: clamp(64px, 7vw, 104px); }
+article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wide.in-col, #aboutpage > .railed { max-width: var(--np-w) !important; }
+.np-sec, .np-q, .np-wide, #aboutpage > .railed { margin-top: var(--np-gap) !important; }
+.ab-open-fig + .np-lead { margin-top: var(--block); }
+.ab-open-fig img, .np-f img, .np-wide img, .np-wide.in-col img, .np-f.tall img { aspect-ratio: auto !important; height: auto; object-fit: initial; }
 /* Weave: photos interleaved with the text, snapped to a 12-column grid */
 .weave { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: 12px; align-items: start; margin-top: var(--section); }
 .weave + .railed, .weave + .ab-band { margin-top: var(--section); }
@@ -982,7 +988,7 @@ article#aboutpage > h1 + .ab-open-fig { margin-top: 24px; }
 <article id="aboutpage" class="wrap" hidden>
   <button class="back" id="ab-back"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Home</span></button>
   <h1 class="rise">About</h1>
-  <figure class="ab-open-fig rise"><img src="../img/about-open-g.jpg" srcset="../img/about-open-g-1400.jpg 1400w, ../img/about-open-g.jpg 2400w" sizes="(min-width: 900px) 80vw, 100vw" alt="Oliver Herbert seated with his cello against a green backdrop"><figcaption class="label muted">Photo: Todd Rosenberg</figcaption></figure>
+  <figure class="ab-open-fig rise"><img src="../img/about-open.jpg" srcset="../img/about-open.jpg 1600w, ../img/about-open-2400.jpg 2400w" sizes="(min-width: 900px) 760px, 100vw" alt="Oliver Herbert seated with his cello against a green backdrop"><figcaption class="label muted">Photo: Todd Rosenberg</figcaption></figure>
 
   <div class="np-lead">
 <p class="lead rise ab-lead">Oliver Herbert was born in 1997 in San Francisco, growing up in a house full of music. Much of what he does still comes from there: playing with and for other people, and following the music wherever it leads.</p>
@@ -1010,7 +1016,7 @@ article#aboutpage > h1 + .ab-open-fig { margin-top: 24px; }
     <figure class="np-f r w46 rise"><img src="../img/chrono-uchida.jpg" alt="With Mitsuko Uchida" loading="lazy"><figcaption class="label muted">With Mitsuko Uchida</figcaption></figure><p class="rise">Chamber music is at the core of his musical life. He spent formative summers at the Ravinia Steans Music Institute, Verbier Festival Academy, and Marlboro Music. He is a regular guest at festivals and venues such as the Moritzburg Festival, La Jolla SummerFest, Rheingau Festival, ChamberFest Cleveland, Philadelphia Chamber Music Society, Capital Region Classical, Utrecht Festival, 92nd Street Y, and the Ravinia Festival. A highlight of recent seasons was a North American tour with Mitsuko Uchida and musicians from Marlboro Music, including a performance at Carnegie Hall. He has collaborated with artists such as Janine Jansen, Jonathan Biss, and Tabea Zimmermann. He plays in Trio Saye with Abigél Králik and Arash Rokni, and keeps looking for new ways of making music with colleagues and friends.</p>
   </section>
 
-  <figure class="np-f np-wide in-col rise"><img src="../img/w-kam.jpg" alt="Chamber music at Kronberg Academy" loading="lazy"><figcaption class="label muted">Kronberg Academy</figcaption></figure>
+  <figure class="np-f np-wide in-col rise"><img src="../img/w-kam.jpg" alt="Playing chamber music, in close-up" loading="lazy"></figure>
 
   <section class="np-sec ">
     <h2 class="np-h rise">In recital</h2>
@@ -1034,11 +1040,11 @@ article#aboutpage > h1 + .ab-open-fig { margin-top: 24px; }
     <p class="rise">He has learned a great deal from musicians such as Reinhard Goebel, Andreas Staier, and Marcel Ponseele and Il Gardellino. Early on, his teacher Peter Wyrick introduced him to the playing of Anner Bylsma, an encounter that left a lasting impression. For him, period instruments have never been about being “correct”. They are a way in: to the core of a piece’s sound, and to the deeper layers of meaning within it.</p>
   </section>
 
-  <figure class="np-f np-wide rise"><img src="../img/chrono-kronberg.jpg" alt="On stage at Kronberg Academy" loading="lazy"><figcaption class="label muted">Kronberg Academy</figcaption></figure>
+  <figure class="np-f np-wide rise"><img src="../img/chrono-kronberg.jpg" alt="Bowing on stage with a period-instrument ensemble" loading="lazy"></figure>
 
   <section class="np-sec ">
     <h2 class="np-h rise">Across disciplines</h2>
-    <figure class="np-f r w34 tall rise"><img src="../img/w-dark.jpg" alt="Oliver Herbert playing in low light" loading="lazy"></figure><p class="rise">Across disciplines, he has collaborated with Kyle Marshall Choreography on the music of Julius Eastman at the New World Symphony, and on multimedia work with filmmaker Mimi Pfahler. He also makes stop motion films of his own. For the 2026 Kronberg Festival he created a program centered on courage with actor Michael Rotschopf, with a focus on the music of Dawn Avery, Xenakis, and Henze. He also facilitated a commission from the Max Planck Institute for the Science of Light: Zeitgeber for two cellos by Žibuoklė Martinaitytė, written for the institute’s opening ceremony in 2024. The piece draws on the body’s circadian rhythms and the Fourier transform, and on the literal meaning of the word: a “giver of time.”</p>
+    <figure class="np-f r w46 rise"><img src="../img/np-dark.jpg" alt="Oliver Herbert playing in low light" loading="lazy"></figure><p class="rise">Across disciplines, he has collaborated with Kyle Marshall Choreography on the music of Julius Eastman at the New World Symphony, and on multimedia work with filmmaker Mimi Pfahler. He also makes stop motion films of his own. For the 2026 Kronberg Festival he created a program centered on courage with actor Michael Rotschopf, with a focus on the music of Dawn Avery, Xenakis, and Henze. He also facilitated a commission from the Max Planck Institute for the Science of Light: Zeitgeber for two cellos by Žibuoklė Martinaitytė, written for the institute’s opening ceremony in 2024. The piece draws on the body’s circadian rhythms and the Fourier transform, and on the literal meaning of the word: a “giver of time.”</p>
   </section>
 
   <section class="np-sec ">
