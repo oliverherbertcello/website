@@ -458,9 +458,14 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
 .ab-open-fig + .np-lead { margin-top: var(--block); }
 .ab-open-fig img, .np-f img, .np-wide img, .np-wide.in-col img, .np-f.tall img { aspect-ratio: auto !important; height: auto; object-fit: initial; }
 @media (max-width: 639px) { .np-sec .spec { clear: both; } }
+@media (min-width: 640px) { .np-f.clr { clear: left; } }
 .np-strip { display: flex; gap: 12px; margin: 8px 0 0; clear: both; }
 .np-strip figure { margin: 0; flex: var(--ar) 1 0; min-width: 0; }
 .np-strip img { display: block; width: 100%; height: auto; }
+/* Centred column: equal margins left and right */
+@media (min-width: 900px) {
+  article#aboutpage > h1, #aboutpage .ab-open-fig, #aboutpage .np-lead, #aboutpage .np-sec, #aboutpage .np-q, #aboutpage .np-wide, #aboutpage > .railed, #aboutpage > .btn-row { margin-left: auto !important; margin-right: auto !important; max-width: var(--np-w) !important; }
+}
 /* Weave: photos interleaved with the text, snapped to a 12-column grid */
 .weave { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: 12px; align-items: start; margin-top: var(--section); }
 .weave + .railed, .weave + .ab-band { margin-top: var(--section); }
@@ -1020,17 +1025,17 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
 
   <section class="np-sec ">
     <h2 class="np-h rise">In recital</h2>
-    <figure class="np-f l w46 rise"><img src="../img/beethoven.jpg" alt="Oliver Herbert and Xiaohui Yang in recital" loading="lazy"><figcaption class="label muted">With Xiaohui Yang</figcaption></figure><p class="rise">Some of the most intense concerts have the fewest people on stage: the six Bach suites in a single program, the complete Beethoven sonatas across one series in Chicago, Beethoven on a fortepiano with Arash Rokni. His recital programs often set a well-known work beside one that is rarely heard, so that each sounds new: Villa-Lobos and Rachmaninov, Beethoven’s first and last sonatas framing Fauré’s two, or Lyatoshinsky and Gubaidulina alongside Brahms, Schnittke and Shostakovich. Frequent piano partners include Xiaohui Yang, Arash Rokni, Olga Zado and Martin Klett. His solo repertoire also includes Xenakis, Dutilleux, Hindemith and Dawn Avery, alongside several world premieres.</p>
+    <figure class="np-f l w46 rise"><img src="../img/np-recital.jpg" alt="In recital with piano" loading="lazy"></figure><p class="rise">Some of the most intense concerts have the fewest people on stage: the six Bach suites in a single program, the complete Beethoven sonatas across one series in Chicago, Beethoven on a fortepiano with Arash Rokni. His recital programs often set a well-known work beside one that is rarely heard, so that each sounds new: Villa-Lobos and Rachmaninov, Beethoven’s first and last sonatas framing Fauré’s two, or Lyatoshinsky and Gubaidulina alongside Brahms, Schnittke and Shostakovich. Frequent piano partners include Xiaohui Yang, Arash Rokni, Olga Zado and Martin Klett. His solo repertoire also includes Xenakis, Dutilleux, Hindemith and Dawn Avery, alongside several world premieres.</p>
   </section>
 
   <blockquote class="np-q rise"><p>&ldquo;Deeply moving vocal inflections in extreme ranges.&rdquo;</p><cite class="label muted">Philadelphia Inquirer</cite></blockquote>
 
   <section class="np-sec np-progs">
     <h2 class="np-h rise">Projects of his own</h2>
-    <figure class="np-f r w46 rise"><img src="../img/wiebitte.jpg" alt="Wie Bitte? at Kronberg Academy" loading="lazy"><figcaption class="label muted">Wie Bitte?, 2026</figcaption></figure><p class="rise">His own programs grew out of a habit that started early. As a teenager he went through scores, archives and recordings, often leading him to one question in particular: why is this great piece so seldom played? Over time, that curiosity shaped how he combines music and builds programs, and the programs became a way of thinking about the world.</p>
+    <figure class="np-f r w34 rise"><img src="../img/np-castro.jpg" alt="The Castro Theatre marquee poster for the Britten centenary concert" loading="lazy"><figcaption class="label muted">Castro Theatre, San Francisco, 2013</figcaption></figure><p class="rise">His own programs grew out of a habit that started early. As a teenager he went through scores, archives and recordings, often leading him to one question in particular: why is this great piece so seldom played? Over time, that curiosity shaped how he combines music and builds programs, and the programs became a way of thinking about the world.</p>
     <p class="rise"><a href="#" class="ch-link" data-id="wiebitte">Wie Bitte?</a> (2026) was a reflection on repetition and re-hearing, and on how meaning is constructed when things return. It ran from Bach’s Canon for Four Voices to Helena Winkelman’s Sleipnir the Eight-Legged, the world premiere of Andrew Moses’ Absconditus, and Adams’ Shaker Loops.</p>
     <p class="rise"><a href="#" class="ch-link" data-id="wolicht">Wo Licht ist…</a> (2024) started from the German saying “where there is light, there is also shadow,” moving from French viol music through Crawford Seeger and Beethoven to Desenne’s Jaguar Songs, from light and shadow in opposition, to dialogue, to their integration.</p>
-    <p class="rise"><a href="#" class="ch-link" data-id="pressure">Pressure / Druck</a> paired Hindemith, Shostakovich and Schoenberg with silent film scenes from the first half of the 20th century. Its subject was ambition, the pressure of building and maintaining power for those who seek it, and the fragmentation of the self.</p>
+    <figure class="np-f r w46 rise"><img src="../img/np-film.jpg" alt="Live performance under a projected silent film" loading="lazy"><figcaption class="label muted">Pressure / Druck</figcaption></figure><p class="rise"><a href="#" class="ch-link" data-id="pressure">Pressure / Druck</a> paired Hindemith, Shostakovich and Schoenberg with silent film scenes from the first half of the 20th century. Its subject was ambition, the pressure of building and maintaining power for those who seek it, and the fragmentation of the self.</p>
     <figure class="np-f l w34 rise"><img src="../img/raderberg.jpg" alt="The Raderberg group with flowers at Köln Hbf" loading="lazy"><figcaption class="label muted">Köln Hbf, after the Raderbergkonzerte</figcaption></figure><p class="rise">For Deutschlandfunk’s <a href="#" class="ch-link" data-id="raderberg">Raderbergkonzerte</a> in Cologne (2024), Desenne, Crawford Seeger, Villa-Lobos and Fauré traced the exchange between the Americas and Europe.</p>
     <p class="rise">At the <a href="#" class="ch-link" data-id="tica">TICA Festival</a> in Hong Kong (2023), Andrew Moses’ Ecstatic Immanence had its premiere with elements including a live feedback loop between cello and thundersheet, exploring the line between acoustic and electronic sound.</p>
   </section>
@@ -1042,9 +1047,10 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
 
   <figure class="np-f np-wide rise"><img src="../img/chrono-kronberg.jpg" alt="Bowing on stage with a period-instrument ensemble" loading="lazy"></figure>
 
-  <section class="np-sec ">
+  <section class="np-sec">
     <h2 class="np-h rise">Across disciplines</h2>
-    <figure class="np-f r w46 rise"><img src="../img/np-film.jpg" alt="Live performance under a projected silent film" loading="lazy"><figcaption class="label muted">Pressure / Druck, with film by Mimi Pfahler</figcaption></figure><p class="rise">Across disciplines, he has collaborated with Kyle Marshall Choreography on the music of Julius Eastman at the New World Symphony, and on multimedia work with filmmaker Mimi Pfahler. He also makes stop motion films of his own. For the 2026 Kronberg Festival he created a program centered on courage with actor Michael Rotschopf, with a focus on the music of Dawn Avery, Xenakis, and Henze. He also facilitated a commission from the Max Planck Institute for the Science of Light: Zeitgeber for two cellos by Žibuoklė Martinaitytė, written for the institute’s opening ceremony in 2024. The piece draws on the body’s circadian rhythms and the Fourier transform, and on the literal meaning of the word: a “giver of time.”</p>
+    <figure class="np-f l w34 rise"><img src="../img/np-felt.jpg" alt="Still from a stop motion film: a small felt fruit on a grey surface" loading="lazy"><figcaption class="label muted">Felt, unfinished…, stop motion, 2025</figcaption></figure><p class="rise">Across disciplines, he has collaborated with Kyle Marshall Choreography on the music of Julius Eastman at the New World Symphony, and on multimedia work with filmmaker Mimi Pfahler. He also makes stop motion films of his own.</p>
+    <figure class="np-f r w46 clr rise"><img src="../img/np-courage.jpg" alt="On stage with actor Michael Rotschopf" loading="lazy"><figcaption class="label muted">With Michael Rotschopf, Kronberg Festival 2026</figcaption></figure><p class="rise">For the 2026 Kronberg Festival he created a program centered on courage with actor Michael Rotschopf, with a focus on the music of Dawn Avery, Xenakis, and Henze. He also facilitated a commission from the Max Planck Institute for the Science of Light: Zeitgeber for two cellos by Žibuoklė Martinaitytė, written for the institute’s opening ceremony in 2024. The piece draws on the body’s circadian rhythms and the Fourier transform, and on the literal meaning of the word: a “giver of time.”</p>
   </section>
 
   <section class="np-sec ">
