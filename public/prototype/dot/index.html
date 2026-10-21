@@ -383,27 +383,93 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .arow .cover img { width: 100%; height: 100%; object-fit: cover; }
 .ab-sec { margin-top: var(--block); }
 
-/* Varied image placement */
+/* About opening: one wide portrait above the lead */
+.ab-open-fig { margin: var(--head) 0 0; }
+.ab-open-fig img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 64% 30%; }
+.ab-open-fig figcaption { margin-top: 10px; }
+.ab-open-fig + .ab-first { margin-top: var(--block); }
+@media (min-width: 900px) {
+  .ab-open-fig { margin-left: calc(var(--rail) + var(--rail-gap)); }
+  .ab-open-fig img { aspect-ratio: 2 / 1; object-position: center; }
+}
+/* Varied image placement: same edges, different shapes */
 .names-pair + p { margin-top: var(--row); }
-.v-rail .ab-side .ab-fig img, .v-rail .ab-side .ph-img { aspect-ratio: 4 / 5 !important; }
 .v-tall .ab-side .ab-fig img, .v-tall .ab-side .ph-img { aspect-ratio: 3 / 4 !important; }
 .ab-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .ab-row .ab-fig { margin-top: 0; }
 .ab-row .ab-fig img, .ab-row .ph-img { aspect-ratio: 3 / 2 !important; }
-@media (max-width: 899px) { .v-rail .ab-side { max-width: 260px; } }
 @media (min-width: 900px) {
-  .railed.ab-sec.v-rail { align-items: start; }
-  .railed.ab-sec.v-rail > .bio { grid-row: 1 / span 3; }
-  .railed.ab-sec.v-rail > .ab-side { grid-column: 1; grid-row: 2 / span 2; position: static; margin: 20px 0 0; max-width: var(--rail); }
-  .railed.ab-sec.v-below > .ab-side { grid-column: 2 / -1; grid-row: auto; position: static; margin: var(--block) 0 0; max-width: 1000px; }
+  .railed.ab-sec.v-below > .ab-side { grid-column: 2 / -1; grid-row: auto; position: static; margin: var(--block) 0 0; max-width: none; }
+  .railed.ab-sec.v-below > .bio { grid-row: 1; }
+}
+
+
+/* About page as a newspaper column: clear sections, text wrapping photos */
+.np-lead, .np-sec, .np-q, .np-wide { max-width: 760px; }
+.np-lead { margin-top: var(--block); }
+.np-lead .ab-lead { max-width: none; margin: 0; font-size: var(--fs-lead); line-height: 1.2; letter-spacing: -0.02em; text-wrap: pretty; }
+.np-sec { display: flow-root; margin-top: var(--section); }
+.np-h { margin: 0 0 24px; padding-top: 18px; border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); font-family: var(--serif); font-weight: 400; font-size: clamp(26px, 2.4vw, 34px); line-height: 1.1; letter-spacing: -0.01em; }
+.np-sec p { margin: 0 0 1.1em; font-size: var(--fs-body); line-height: 1.62; text-wrap: pretty; }
+.np-f { margin: 0 0 24px; }
+.np-f img, .np-f .ph-img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.np-f.tall img, .np-f.tall .ph-img { aspect-ratio: 4 / 5; }
+.np-f figcaption { display: block; margin-top: 8px; line-height: 1.4; }
+.np-wide { margin: var(--section) 0 0; }
+.np-wide img { display: block; width: 100%; height: auto; }
+.np-wide figcaption { margin-top: 10px; }
+.np-q { margin: var(--section) 0 0; padding: 32px 0 28px; border-top: 1px solid currentColor; border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+.np-q p { margin: 0; font-family: var(--serif); font-size: clamp(28px, 3.4vw, 46px); line-height: 1.08; letter-spacing: -0.015em; text-wrap: balance; }
+.np-q cite { display: block; margin-top: 16px; font-style: normal; }
+.np-sec .names-pair { clear: both; margin: 8px 0 20px; }
+.np-progs .ch-link { font-family: var(--serif); font-size: 1.12em; color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); }
+.np-sec .recs { margin-top: 4px; }
+.np-awards .awards { margin-top: 0; }
+@media (min-width: 640px) {
+  .np-f.r { float: right; margin: 6px 0 20px 36px; }
+  .np-f.l { float: left; margin: 6px 36px 20px 0; }
+  .np-f.w46 { width: 46%; } .np-f.w38 { width: 38%; } .np-f.w34 { width: 34%; }
+}
+@media (min-width: 900px) {
+  .np-lead, .np-sec, .np-q, .np-wide, .ab-open-fig { margin-left: calc(var(--rail) + var(--rail-gap)); }
+  .np-wide { max-width: none; } .np-wide.in-col { max-width: 760px; }
+}
+.np-wide img { aspect-ratio: auto !important; }
+.np-wide.in-col img { aspect-ratio: 3 / 2 !important; }
+.np-f .ph-img { display: flex; align-items: center; justify-content: center; }
+.np-sec, .np-q, .np-wide { margin-top: clamp(64px, 7vw, 104px); }
+.np-awards .small-print { margin-top: var(--row); font-size: var(--fs-label); line-height: 1.6; opacity: 0.7; }
+#aboutpage > .railed { display: block; max-width: 760px; margin-top: clamp(64px, 7vw, 104px); }
+#aboutpage > .railed > .lab { display: block; margin: 0 0 24px; padding-top: 18px; border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); font-family: var(--serif); font-weight: 400; font-size: clamp(26px, 2.4vw, 34px); line-height: 1.1; letter-spacing: -0.01em; text-transform: none; color: inherit; }
+#aboutpage > .railed > .bio, #aboutpage > .railed > div { max-width: none; }
+@media (min-width: 900px) { #aboutpage > .railed { margin-left: calc(var(--rail) + var(--rail-gap)); } }
+@media (max-width: 639px) {
+  .np-f.tall, .np-f.w34 { float: right; width: 44%; margin: 4px 0 12px 16px; }
+  .np-f.l.w34 { float: left; margin: 4px 16px 12px 0; }
+}
+/* About title as a masthead over the column */
+article#aboutpage > h1 { margin-top: var(--head); margin-bottom: 0; padding-bottom: 18px; border-bottom: 1px solid currentColor; font-size: clamp(44px, 5.4vw, 80px); line-height: 1; }
+article#aboutpage > h1 + .ab-open-fig { margin-top: 24px; }
+@media (min-width: 900px) { article#aboutpage > h1 { margin-left: calc(var(--rail) + var(--rail-gap)); } }
+/* Weave: photos interleaved with the text, snapped to a 12-column grid */
+.weave { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: 12px; align-items: start; margin-top: var(--section); }
+.weave + .railed, .weave + .ab-band { margin-top: var(--section); }
+.wv { margin: var(--my) 0 0; grid-column: var(--m); }
+.wv img { display: block; width: 100%; height: auto; }
+.wv figcaption { margin-top: 10px; }
+.ab-side .sd-small { max-width: 46% !important; margin-left: auto !important; margin-top: 16px !important; }
+.sd-small img { aspect-ratio: 1 !important; }
+@media (min-width: 900px) {
+  .weave { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 16px; margin-left: calc(var(--rail) + var(--rail-gap)); }
+  .wv { grid-column: var(--d); margin-top: var(--dy); }
 }
 @media (min-width: 1100px) {
-  .railed.ab-sec.v-mirror { grid-template-columns: var(--rail) minmax(0, 1fr) minmax(0, 36em); }
-  .railed.ab-sec.v-mirror > .bio { grid-column: 3; grid-row: 1 / span 3; }
-  .railed.ab-sec.v-mirror > .ab-side { grid-column: 2; grid-row: 1 / span 3; margin: 0 var(--block) 0 0; justify-self: stretch; max-width: 520px; }
-  .railed.ab-sec.v-rail > .bio { grid-row: 1 / span 3; } .railed.ab-sec.v-below > .bio { grid-row: 1; }
-  .railed.ab-sec.v-tall > .ab-side { max-width: 340px; }
+  .railed.ab-sec > .ab-side.sd-b { max-width: 260px; margin-top: 96px; justify-self: end; }
+  .railed.ab-sec > .ab-side.sd-b .ab-fig img { aspect-ratio: 4 / 5; }
+  .railed.ab-sec > .ab-side.sd-c { margin-top: 140px; }
+  .ab-side .sd-small { max-width: 160px !important; margin-top: 24px !important; }
 }
+@media (max-width: 1099px) { .ab-side.sd-b { max-width: 70%; margin-left: auto; } }
 /* About page rhythm: quote bands, wide photo, collage, two-up */
 .ab-band { margin: var(--section) 0 0; }
 .ab-band + .railed, .ab-band + .ab-pair, .ab-pair + .railed { margin-top: var(--section); }
@@ -411,6 +477,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .ab-pull p { margin: 0; font-family: var(--serif); font-size: clamp(30px, 4.4vw, 64px); line-height: 1.06; letter-spacing: -0.015em; max-width: 15em; text-wrap: balance; }
 .ab-pull figcaption { margin-top: 18px; }
 .ab-wide img { display: block; width: 100%; aspect-ratio: 1400 / 385; object-fit: cover; }
+@media (min-width: 900px) { .ab-wide { margin-left: calc(var(--rail) + var(--rail-gap)); } }
 .ab-wide figcaption { margin-top: 10px; }
 .ab-pair { display: grid; gap: var(--block); margin-top: var(--section); }
 .ab-pair .lab { display: block; margin-bottom: 14px; color: color-mix(in srgb, currentColor 62%, transparent); }
@@ -419,7 +486,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .ab-collage .c1 { grid-column: 1 / -1; }
 .ab-collage .c2, .ab-collage .c3 { margin-top: 24px; }
 .ab-collage .c2 img, .ab-collage .c3 img { aspect-ratio: 4 / 5 !important; }
-@media (max-width: 899px) { .ab-wide img { aspect-ratio: 16 / 9; } }
+
 @media (min-width: 900px) {
   .ab-pull { margin-left: calc(var(--rail) + var(--rail-gap)); }
   .ab-pair { grid-template-columns: var(--rail) minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--rail-gap); }
@@ -429,8 +496,7 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 @media (min-width: 1100px) {
   .ab-pair .ab-col:last-child { padding-left: 24px; }
   .railed.ab-sec.ab-recsec > .bio { grid-column: 2 / -1; max-width: none; }
-  .ab-recsec .recs { gap: 32px; max-width: 980px; }
-  .ab-collage .c3 { margin-top: 84px; }
+  .ab-recsec .recs { gap: 32px; }
 }
 
 .bio-more p:first-child { margin-top: 0; }
@@ -916,109 +982,86 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 <article id="aboutpage" class="wrap" hidden>
   <button class="back" id="ab-back"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Home</span></button>
   <h1 class="rise">About</h1>
-  <div class="railed ab-sec ab-first">
-    <span class="lab" aria-hidden="true"></span>
-    <div class="ab-side ab-portrait-side"><figure class="ab-fig rise"><img src="../img/press-284.jpg" alt="Oliver Herbert standing with his cello" loading="lazy"><figcaption class="label muted">Photo: Todd Rosenberg</figcaption></figure></div>
-    <div class="bio">
-      <p class="lead rise ab-lead">Oliver Herbert was born in 1997 in San Francisco, growing up in a house full of music. Much of what he does still comes from there: playing with and for other people, and following the music wherever it leads.</p>
-    </div>
-  </div>
-  <div class="railed ab-sec v-rail ">
-    <span class="label lab rise">Where it began</span>
-    <div class="bio">
-      <p class="rise">He began on violin and piano before switching to the cello at seven. His formative teachers were Iris Pingel and later Peter Wyrick in San Francisco. He went on to study with Clive Greensmith at the Colburn School, with Carter Brey, Peter Wiley and Pamela Frank at the Curtis Institute of Music, and with Frans Helmerson at Kronberg Academy.</p>
-    </div>
-    <div class="ab-side">
-      <figure class="ab-fig rise"><img src="../img/sf.jpg" alt="San Francisco" loading="lazy"><figcaption class="label muted">San Francisco</figcaption></figure>
-    </div>
-  </div>
-  <div class="railed ab-sec ">
-    <span class="label lab rise">With orchestras</span>
-    <div class="bio">
-      <p class="rise">His first concerto was with the Prometheus Symphony in San Francisco, at 15. Since then he has played with orchestras and conductors including:</p>
-      <div class="names-pair">
+  <figure class="ab-open-fig rise"><img src="../img/about-open-g.jpg" srcset="../img/about-open-g-1400.jpg 1400w, ../img/about-open-g.jpg 2400w" sizes="(min-width: 900px) 80vw, 100vw" alt="Oliver Herbert seated with his cello against a green backdrop"><figcaption class="label muted">Photo: Todd Rosenberg</figcaption></figure>
+
+  <div class="np-lead">
+<p class="lead rise ab-lead">Oliver Herbert was born in 1997 in San Francisco, growing up in a house full of music. Much of what he does still comes from there: playing with and for other people, and following the music wherever it leads.</p>
+</div>
+
+  <section class="np-sec ">
+    <h2 class="np-h rise">Where it began</h2>
+    <figure class="np-f r w38 tall rise"><img src="../img/sf.jpg" alt="San Francisco" loading="lazy"><figcaption class="label muted">San Francisco</figcaption></figure><p class="rise">He began on violin and piano before switching to the cello at seven. His formative teachers were Iris Pingel and later Peter Wyrick in San Francisco. He went on to study with Clive Greensmith at the Colburn School, with Carter Brey, Peter Wiley and Pamela Frank at the Curtis Institute of Music, and with Frans Helmerson at Kronberg Academy.</p>
+  </section>
+
+  <section class="np-sec ">
+    <h2 class="np-h rise">With orchestras</h2>
+    <figure class="np-f l w46 rise"><img src="../img/chrono-sfs.jpg" alt="With Michael Tilson Thomas and the San Francisco Symphony, 2019" loading="lazy"><figcaption class="label muted">With Michael Tilson Thomas and the San Francisco Symphony, 2019</figcaption></figure><p class="rise">His first concerto was with the Prometheus Symphony in San Francisco, at 15. Since then he has played with orchestras and conductors including:</p>
+    <div class="names-pair">
       <div class="names rise"><span class="label muted">Orchestras</span><ul><li>San Francisco Symphony</li><li>Chicago Symphony Orchestra</li><li>Warsaw Philharmonic</li><li>Mannheimer Philharmoniker</li><li>Erfurt Philharmonic</li><li>Edmonton Symphony Orchestra</li><li>Buffalo Philharmonic</li><li>New World Symphony</li><li>Colombia National Symphony</li></ul></div>
       <div class="names rise"><span class="label muted">Conductors</span><ul><li>Michael Tilson Thomas</li><li>Giancarlo Guerrero</li><li>Juanjo Mena</li><li>Reinhard Goebel</li><li>Teddy Abrams</li><li>Alexander Shelley</li><li>Alexander Prior</li></ul></div>
       </div>
-      <p class="rise">The repertoire runs from C.P.E. Bach and Haydn through Dvořák, Tchaikovsky and Elgar to Shostakovich, Barber, Lutosławski, Ibert, Schnittke, John Williams, and more.</p>
-    </div>
-    <div class="ab-side">
-      <figure class="ab-fig rise"><img src="../img/chrono-sfs.jpg" alt="With Michael Tilson Thomas and the San Francisco Symphony, 2019" loading="lazy"><figcaption class="label muted">With Michael Tilson Thomas and the San Francisco Symphony, 2019</figcaption></figure>
-    </div>
-  </div>
-  <figure class="ab-band ab-pull rise"><blockquote><p>&ldquo;Full-throated but never indulgent tone, crisp yet expressive phrasing.&rdquo;</p></blockquote><figcaption class="label muted">San Francisco Classical Voice</figcaption></figure>
-  <div class="railed ab-sec v-below ">
-    <span class="label lab rise">Among musicians</span>
-    <div class="bio">
-      <p class="rise">Chamber music is at the core of his musical life. He spent formative summers at the Ravinia Steans Music Institute, Verbier Festival Academy, and Marlboro Music. He is a regular guest at festivals and venues such as the Moritzburg Festival, La Jolla SummerFest, Rheingau Festival, ChamberFest Cleveland, Philadelphia Chamber Music Society, Capital Region Classical, Utrecht Festival, 92nd Street Y, and the Ravinia Festival. A highlight of recent seasons was a North American tour with Mitsuko Uchida and musicians from Marlboro Music, including a performance at Carnegie Hall. He has collaborated with artists such as Janine Jansen, Jonathan Biss, and Tabea Zimmermann. He plays in Trio Saye with Abigél Králik and Arash Rokni, and keeps looking for new ways of making music with colleagues and friends.</p>
-    </div>
-    <div class="ab-side ab-row">
-      <figure class="ab-fig rise"><img src="../img/chrono-uchida.jpg" alt="With Mitsuko Uchida" loading="lazy"><figcaption class="label muted">With Mitsuko Uchida</figcaption></figure><figure class="ab-fig rise"><div class="ph-img" aria-hidden="true"><span class="label">Photo to come</span></div><figcaption class="label muted">[Trio Saye]</figcaption></figure>
-    </div>
-  </div>
-  <div class="railed ab-sec v-mirror ">
-    <span class="label lab rise">In recital</span>
-    <div class="bio">
-      <p class="rise">Some of the most intense concerts have the fewest people on stage: the six Bach suites in a single program, the complete Beethoven sonatas across one series in Chicago, Beethoven on a fortepiano with Arash Rokni. His recital programs often set a well-known work beside one that is rarely heard, so that each sounds new: Villa-Lobos and Rachmaninov, Beethoven’s first and last sonatas framing Fauré’s two, or Lyatoshinsky and Gubaidulina alongside Brahms, Schnittke and Shostakovich. Frequent piano partners include Xiaohui Yang, Arash Rokni, Olga Zado and Martin Klett. His solo repertoire also includes Xenakis, Dutilleux, Hindemith and Dawn Avery, alongside several world premieres.</p>
-    </div>
-    <div class="ab-side">
-      <figure class="ab-fig rise"><img src="../img/beethoven.jpg" alt="Oliver Herbert and Xiaohui Yang in recital" loading="lazy"><figcaption class="label muted">With Xiaohui Yang</figcaption></figure>
-    </div>
-  </div>
-  <figure class="ab-band ab-pull rise"><blockquote><p>&ldquo;Deeply moving vocal inflections in extreme ranges.&rdquo;</p></blockquote><figcaption class="label muted">Philadelphia Inquirer</figcaption></figure>
-  <div class="railed ab-sec">
-    <span class="label lab rise">Projects of his own</span>
-    <div class="bio">
-      <p class="rise">His own programs grew out of a habit that started early. As a teenager he went through scores, archives and recordings, often leading him to one question in particular: why is this great piece so seldom played? Over time, that curiosity shaped how he combines music and builds programs, and the programs became a way of thinking about the world.</p>
-      <div class="progs">
-        <p class="rise"><a href="#" class="ch-link" data-id="wiebitte">Wie Bitte?</a> (2026) was a reflection on repetition and re-hearing, and on how meaning is constructed when things return. It ran from Bach’s Canon for Four Voices to Helena Winkelman’s Sleipnir the Eight-Legged, the world premiere of Andrew Moses’ Absconditus, and Adams’ Shaker Loops.</p>
-        <p class="rise"><a href="#" class="ch-link" data-id="wolicht">Wo Licht ist…</a> (2024) started from the German saying “where there is light, there is also shadow,” moving from French viol music through Crawford Seeger and Beethoven to Desenne’s Jaguar Songs, from light and shadow in opposition, to dialogue, to their integration.</p>
-        <p class="rise"><a href="#" class="ch-link" data-id="pressure">Pressure / Druck</a> paired Hindemith, Shostakovich and Schoenberg with silent film scenes from the first half of the 20th century. Its subject was ambition, the pressure of building and maintaining power for those who seek it, and the fragmentation of the self.</p>
-        <p class="rise">For Deutschlandfunk’s <a href="#" class="ch-link" data-id="raderberg">Raderbergkonzerte</a> in Cologne (2024), Desenne, Crawford Seeger, Villa-Lobos and Fauré traced the exchange between the Americas and Europe.</p>
-        <p class="rise">At the <a href="#" class="ch-link" data-id="tica">TICA Festival</a> in Hong Kong (2023), Andrew Moses’ Ecstatic Immanence had its premiere with elements including a live feedback loop between cello and thundersheet, exploring the line between acoustic and electronic sound.</p>
-      </div>
-    </div>
-    <div class="ab-side">
-      <div class="ab-collage"><figure class="ab-fig rise c1"><img src="../img/wiebitte.jpg" alt="Wie Bitte? at Kronberg Academy" loading="lazy"><figcaption class="label muted">Wie Bitte?, 2026</figcaption></figure><figure class="ab-fig rise c2"><img src="../img/pressure.jpg" alt="Pressure / Druck, with film projection" loading="lazy"><figcaption class="label muted">Pressure / Druck</figcaption></figure><figure class="ab-fig rise c3"><img src="../img/tica.jpg" alt="TICA Festival poster" loading="lazy"><figcaption class="label muted">TICA Festival, 2023</figcaption></figure></div>
-    </div>
-  </div>
-  <div class="ab-pair">
-    <div class="ab-col"><span class="label lab rise">Period instruments</span><div class="bio"><p class="rise">He has learned a great deal from musicians such as Reinhard Goebel, Andreas Staier, and Marcel Ponseele and Il Gardellino. Early on, his teacher Peter Wyrick introduced him to the playing of Anner Bylsma, an encounter that left a lasting impression. For him, period instruments have never been about being “correct”. They are a way in: to the core of a piece’s sound, and to the deeper layers of meaning within it.</p></div></div>
-    <div class="ab-col"><span class="label lab rise">Across disciplines</span><div class="bio"><p class="rise">Across disciplines, he has collaborated with Kyle Marshall Choreography on the music of Julius Eastman at the New World Symphony, and on multimedia work with filmmaker Mimi Pfahler. He also makes stop motion films of his own. For the 2026 Kronberg Festival he created a program centered on courage with actor Michael Rotschopf, with a focus on the music of Dawn Avery, Xenakis, and Henze. He also facilitated a commission from the Max Planck Institute for the Science of Light: Zeitgeber for two cellos by Žibuoklė Martinaitytė, written for the institute’s opening ceremony in 2024. The piece draws on the body’s circadian rhythms and the Fourier transform, and on the literal meaning of the word: a “giver of time.”</p></div></div>
-  </div>
-  <figure class="ab-band ab-wide rise"><img src="../img/chrono-kronberg.jpg" alt="Chamber music on stage at Kronberg Academy" loading="lazy"><figcaption class="label muted">Kronberg Academy</figcaption></figure>
-  <div class="railed ab-sec top ab-recsec">
-    <span class="label lab rise">On record</span>
-    <div class="bio">
-      <div class="recs rise"><a href="#recordings" class="rec-c"><span class="rc-cover"><img src="../img/haydn.jpg" alt="" loading="lazy"></span><span class="rc-t">Haydn: Concerto in D</span><span class="rc-s muted">San Francisco Symphony, Michael Tilson Thomas &middot; Warner Classics</span></a><a href="#recordings" class="rec-c"><span class="rc-cover"><img src="../img/album.jpg" alt="" loading="lazy"></span><span class="rc-t">Frame of Mind</span><span class="rc-s muted">Faur&eacute;&rsquo;s two sonatas and Jan&aacute;&ccaron;ek&rsquo;s Poh&aacute;dka &middot; with Xiaohui Yang</span></a><a href="#recordings" class="rec-c"><span class="rc-cover"><img src="../img/triple.jpg" alt="" loading="lazy"></span><span class="rc-t">Beethoven: Triple Concerto</span><span class="rc-s muted">Live, with Dora Bratchkova, Olga Zado and the Mannheimer Philharmoniker &middot; MaPhil Records, 2026</span></a></div>
-    </div>
-  </div>
-  <div class="railed ab-sec v-tall ">
-    <span class="label lab rise">The instrument</span>
-    <div class="bio">
-      <p class="rise">He plays primarily on a Guadagnini cello that once belonged to the cellist Antonio Janigro, on loan from the Janigro family.</p>
+    <p class="rise">The repertoire runs from C.P.E. Bach and Haydn through Dvořák, Tchaikovsky and Elgar to Shostakovich, Barber, Lutosławski, Ibert, Schnittke, John Williams, and more.</p>
+  </section>
+
+  <blockquote class="np-q rise"><p>&ldquo;Full-throated but never indulgent tone, crisp yet expressive phrasing.&rdquo;</p><cite class="label muted">San Francisco Classical Voice</cite></blockquote>
+
+  <section class="np-sec ">
+    <h2 class="np-h rise">Among musicians</h2>
+    <figure class="np-f r w46 rise"><img src="../img/chrono-uchida.jpg" alt="With Mitsuko Uchida" loading="lazy"><figcaption class="label muted">With Mitsuko Uchida</figcaption></figure><p class="rise">Chamber music is at the core of his musical life. He spent formative summers at the Ravinia Steans Music Institute, Verbier Festival Academy, and Marlboro Music. He is a regular guest at festivals and venues such as the Moritzburg Festival, La Jolla SummerFest, Rheingau Festival, ChamberFest Cleveland, Philadelphia Chamber Music Society, Capital Region Classical, Utrecht Festival, 92nd Street Y, and the Ravinia Festival. A highlight of recent seasons was a North American tour with Mitsuko Uchida and musicians from Marlboro Music, including a performance at Carnegie Hall. He has collaborated with artists such as Janine Jansen, Jonathan Biss, and Tabea Zimmermann. He plays in Trio Saye with Abigél Králik and Arash Rokni, and keeps looking for new ways of making music with colleagues and friends.</p>
+  </section>
+
+  <figure class="np-f np-wide in-col rise"><img src="../img/w-kam.jpg" alt="Chamber music at Kronberg Academy" loading="lazy"><figcaption class="label muted">Kronberg Academy</figcaption></figure>
+
+  <section class="np-sec ">
+    <h2 class="np-h rise">In recital</h2>
+    <figure class="np-f l w46 rise"><img src="../img/beethoven.jpg" alt="Oliver Herbert and Xiaohui Yang in recital" loading="lazy"><figcaption class="label muted">With Xiaohui Yang</figcaption></figure><p class="rise">Some of the most intense concerts have the fewest people on stage: the six Bach suites in a single program, the complete Beethoven sonatas across one series in Chicago, Beethoven on a fortepiano with Arash Rokni. His recital programs often set a well-known work beside one that is rarely heard, so that each sounds new: Villa-Lobos and Rachmaninov, Beethoven’s first and last sonatas framing Fauré’s two, or Lyatoshinsky and Gubaidulina alongside Brahms, Schnittke and Shostakovich. Frequent piano partners include Xiaohui Yang, Arash Rokni, Olga Zado and Martin Klett. His solo repertoire also includes Xenakis, Dutilleux, Hindemith and Dawn Avery, alongside several world premieres.</p>
+  </section>
+
+  <blockquote class="np-q rise"><p>&ldquo;Deeply moving vocal inflections in extreme ranges.&rdquo;</p><cite class="label muted">Philadelphia Inquirer</cite></blockquote>
+
+  <section class="np-sec np-progs">
+    <h2 class="np-h rise">Projects of his own</h2>
+    <figure class="np-f r w46 rise"><img src="../img/wiebitte.jpg" alt="Wie Bitte? at Kronberg Academy" loading="lazy"><figcaption class="label muted">Wie Bitte?, 2026</figcaption></figure><p class="rise">His own programs grew out of a habit that started early. As a teenager he went through scores, archives and recordings, often leading him to one question in particular: why is this great piece so seldom played? Over time, that curiosity shaped how he combines music and builds programs, and the programs became a way of thinking about the world.</p>
+    <p class="rise"><a href="#" class="ch-link" data-id="wiebitte">Wie Bitte?</a> (2026) was a reflection on repetition and re-hearing, and on how meaning is constructed when things return. It ran from Bach’s Canon for Four Voices to Helena Winkelman’s Sleipnir the Eight-Legged, the world premiere of Andrew Moses’ Absconditus, and Adams’ Shaker Loops.</p>
+    <p class="rise"><a href="#" class="ch-link" data-id="wolicht">Wo Licht ist…</a> (2024) started from the German saying “where there is light, there is also shadow,” moving from French viol music through Crawford Seeger and Beethoven to Desenne’s Jaguar Songs, from light and shadow in opposition, to dialogue, to their integration.</p>
+    <figure class="np-f l w38 rise"><img src="../img/pressure.jpg" alt="Pressure / Druck, with film projection" loading="lazy"><figcaption class="label muted">Pressure / Druck</figcaption></figure><p class="rise"><a href="#" class="ch-link" data-id="pressure">Pressure / Druck</a> paired Hindemith, Shostakovich and Schoenberg with silent film scenes from the first half of the 20th century. Its subject was ambition, the pressure of building and maintaining power for those who seek it, and the fragmentation of the self.</p>
+    <p class="rise">For Deutschlandfunk’s <a href="#" class="ch-link" data-id="raderberg">Raderbergkonzerte</a> in Cologne (2024), Desenne, Crawford Seeger, Villa-Lobos and Fauré traced the exchange between the Americas and Europe.</p>
+    <p class="rise">At the <a href="#" class="ch-link" data-id="tica">TICA Festival</a> in Hong Kong (2023), Andrew Moses’ Ecstatic Immanence had its premiere with elements including a live feedback loop between cello and thundersheet, exploring the line between acoustic and electronic sound.</p>
+  </section>
+
+  <section class="np-sec ">
+    <h2 class="np-h rise">Period instruments</h2>
+    <p class="rise">He has learned a great deal from musicians such as Reinhard Goebel, Andreas Staier, and Marcel Ponseele and Il Gardellino. Early on, his teacher Peter Wyrick introduced him to the playing of Anner Bylsma, an encounter that left a lasting impression. For him, period instruments have never been about being “correct”. They are a way in: to the core of a piece’s sound, and to the deeper layers of meaning within it.</p>
+  </section>
+
+  <figure class="np-f np-wide rise"><img src="../img/chrono-kronberg.jpg" alt="On stage at Kronberg Academy" loading="lazy"><figcaption class="label muted">Kronberg Academy</figcaption></figure>
+
+  <section class="np-sec ">
+    <h2 class="np-h rise">Across disciplines</h2>
+    <figure class="np-f r w34 tall rise"><img src="../img/w-dark.jpg" alt="Oliver Herbert playing in low light" loading="lazy"></figure><p class="rise">Across disciplines, he has collaborated with Kyle Marshall Choreography on the music of Julius Eastman at the New World Symphony, and on multimedia work with filmmaker Mimi Pfahler. He also makes stop motion films of his own. For the 2026 Kronberg Festival he created a program centered on courage with actor Michael Rotschopf, with a focus on the music of Dawn Avery, Xenakis, and Henze. He also facilitated a commission from the Max Planck Institute for the Science of Light: Zeitgeber for two cellos by Žibuoklė Martinaitytė, written for the institute’s opening ceremony in 2024. The piece draws on the body’s circadian rhythms and the Fourier transform, and on the literal meaning of the word: a “giver of time.”</p>
+  </section>
+
+  <section class="np-sec ">
+    <h2 class="np-h rise">On record</h2>
+    <div class="recs rise"><a href="#recordings" class="rec-c"><span class="rc-cover"><img src="../img/haydn.jpg" alt="" loading="lazy"></span><span class="rc-t">Haydn: Concerto in D</span><span class="rc-s muted">San Francisco Symphony, Michael Tilson Thomas &middot; Warner Classics</span></a><a href="#recordings" class="rec-c"><span class="rc-cover"><img src="../img/album.jpg" alt="" loading="lazy"></span><span class="rc-t">Frame of Mind</span><span class="rc-s muted">Faur&eacute;&rsquo;s two sonatas and Jan&aacute;&ccaron;ek&rsquo;s Poh&aacute;dka &middot; with Xiaohui Yang</span></a><a href="#recordings" class="rec-c"><span class="rc-cover"><img src="../img/triple.jpg" alt="" loading="lazy"></span><span class="rc-t">Beethoven: Triple Concerto</span><span class="rc-s muted">Live, with Dora Bratchkova, Olga Zado and the Mannheimer Philharmoniker &middot; MaPhil Records, 2026</span></a></div>
+  </section>
+
+  <section class="np-sec ">
+    <h2 class="np-h rise">The instrument</h2>
+    <figure class="np-f r w34 tall rise"><div class="ph-img" aria-hidden="true"><span class="label">Photo to come</span></div><figcaption class="label muted">[The Guadagnini]</figcaption></figure><p class="rise">He plays primarily on a Guadagnini cello that once belonged to the cellist Antonio Janigro, on loan from the Janigro family.</p>
       <dl class="spec rise"><dt>Cello</dt><dd>G. B. Guadagnini, ex-Janigro</dd><dt>Bows</dt><dd>Jean Dominique Adam, Michel Groppe</dd><dt>Baroque piccolo cello</dt><dd>Chappuy, 1776</dd></dl>
-    </div>
-    <div class="ab-side">
-      <figure class="ab-fig rise"><div class="ph-img" aria-hidden="true"><span class="label">Photo to come</span></div><figcaption class="label muted">[The Guadagnini]</figcaption></figure>
-    </div>
-  </div>
-  <div class="railed ab-sec v-rail ">
-    <span class="label lab rise">Away from the stage</span>
-    <div class="bio">
-      <p class="rise">Oliver lives in Berlin with his boyfriend and spends much of the year traveling for concerts and projects. Away from the stage, he is usually planning the next project or journey, cooking, or recovering from a long concert evening.</p>
-    </div>
-    <div class="ab-side">
-      <figure class="ab-fig rise"><div class="ph-img" aria-hidden="true"><span class="label">Photo to come</span></div><figcaption class="label muted">[Berlin, or travels]</figcaption></figure>
-    </div>
-  </div>
-  <div class="railed ab-sec ">
-    <span class="label lab rise">Awards</span>
-    <div class="bio">
-      <dl class="spec awards rise"><dt>2025</dt><dd>Selected for the Orpheum Foundation program for young soloists</dd><dt>2021</dt><dd>Avery Fisher Career Grant</dd><dt>2018</dt><dd>Lutosławski International Cello Competition: 4th Prize and Special Award for the best interpretation of the Sacher Variation</dd><dt>2017</dt><dd>Verbier Festival: Prix Jean-Nicolas Firmenich</dd><dt>2015</dt><dd>Irving M. Klein International String Competition: 1st Prize and Pablo Casals Award for the best interpretation of Bach</dd><dt>2015</dt><dd>Stulberg International String Competition: 2nd Prize</dd></dl>
+  </section>
+
+  <section class="np-sec ">
+    <h2 class="np-h rise">Away from the stage</h2>
+    <figure class="np-f l w34 rise"><div class="ph-img" aria-hidden="true"><span class="label">Photo to come</span></div><figcaption class="label muted">[Berlin, or travels]</figcaption></figure><p class="rise">Oliver lives in Berlin with his boyfriend and spends much of the year traveling for concerts and projects. Away from the stage, he is usually planning the next project or journey, cooking, or recovering from a long concert evening.</p>
+  </section>
+
+  <section class="np-sec np-awards">
+    <h2 class="np-h rise">Awards</h2>
+    <dl class="spec awards rise"><dt>2025</dt><dd>Selected for the Orpheum Foundation program for young soloists</dd><dt>2021</dt><dd>Avery Fisher Career Grant</dd><dt>2018</dt><dd>Lutosławski International Cello Competition: 4th Prize and Special Award for the best interpretation of the Sacher Variation</dd><dt>2017</dt><dd>Verbier Festival: Prix Jean-Nicolas Firmenich</dd><dt>2015</dt><dd>Irving M. Klein International String Competition: 1st Prize and Pablo Casals Award for the best interpretation of Bach</dd><dt>2015</dt><dd>Stulberg International String Competition: 2nd Prize</dd></dl>
       <p class="small-print rise">Featured on PBS, NPR&rsquo;s From the Top, WQXR, WDR, Deutschlandfunk, HR and ARD</p>
-    </div>
-  </div>
+  </section>
   <div class="railed">
     <span class="label lab rise">Official biography</span>
     <div class="bio" id="ob-text">
