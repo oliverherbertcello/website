@@ -483,6 +483,11 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
 .pp-forces { font-size: var(--fs-label) !important; line-height: 1.5; }
 .p-body .p-watch { display: flex; width: fit-content; }
 .p-body .p-watch + .p-watch { margin-top: 14px; }
+.press .pr-item blockquote { font-size: clamp(21px, 1.9vw, 27px); line-height: 1.3; }
+.pr-item figcaption { display: grid; gap: 4px; }
+.press:has(.pr-item) { gap: calc(var(--block) * 0.75); }
+.pr-ctx { font-size: var(--fs-label); }
+.pr-link { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 /* Weave: photos interleaved with the text, snapped to a 12-column grid */
 .weave { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: 12px; align-items: start; margin-top: var(--section); }
 .weave + .railed, .weave + .ab-band { margin-top: var(--section); }
@@ -930,8 +935,8 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
 
   <section class="quote wrap" data-tone="orange" aria-label="Press">
     <button class="quotes rise" id="quotes" type="button" aria-label="Next quote">
-      <figure class="q on" aria-hidden="false"><blockquote>Youthful but magisterial.</blockquote><figcaption class="label">San Francisco Classical Voice</figcaption></figure>
-      <figure class="q" aria-hidden="true"><blockquote>…he makes his cello sing.</blockquote><figcaption class="label">Santa Cruz Sentinel</figcaption></figure>
+      <figure class="q on" aria-hidden="false"><blockquote>A knockout. Youthful but magisterial.</blockquote><figcaption class="label">San Francisco Classical Voice</figcaption></figure>
+      <figure class="q" aria-hidden="true"><blockquote>A generous and beautifully light-footed performance.</blockquote><figcaption class="label">San Francisco Chronicle</figcaption></figure>
       <figure class="q" aria-hidden="true"><blockquote>The performance was transfixing.</blockquote><figcaption class="label">Cleveland Classical</figcaption></figure>
       <figure class="q" aria-hidden="true"><blockquote>All the depth of an established soloist.</blockquote><figcaption class="label">Philadelphia Inquirer</figcaption></figure>
     </button>
@@ -1120,9 +1125,10 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
   <div class="railed">
     <span class="label lab rise">Press</span>
     <div class="press">
-      <figure class="rise"><blockquote>…he makes his cello sing.</blockquote><figcaption class="label muted">Santa Cruz Sentinel</figcaption></figure>
-      <figure class="rise"><blockquote>The performance was transfixing.</blockquote><figcaption class="label muted">Cleveland Classical</figcaption></figure>
-      <figure class="rise"><blockquote>All the depth of an established soloist.</blockquote><figcaption class="label muted">Philadelphia Inquirer</figcaption></figure>
+      <figure class="rise pr-item"><blockquote>&ldquo;The tricky pyrotechnics essential to any concerto came through cleanly, but even more impressive were the dexterity and sweetness that Herbert brought to his assignment.&rdquo;</blockquote><figcaption><span class="label muted">San Francisco Chronicle · Joshua Kosman</span><span class="pr-ctx muted">Haydn, Cello Concerto No. 2 · San Francisco Symphony, Michael Tilson Thomas · <a class="pr-link" href="https://www.opus3artists.com/cellist-oliver-herbert-triumphs-in-his-sf-symphony-subscription-debut/" target="_blank" rel="noopener">Read the review</a></span></figcaption></figure>
+      <figure class="rise pr-item"><blockquote>&ldquo;Expansive tone, rich and full yet strikingly clear. Crisp articulation, impressive spiccato.&rdquo;</blockquote><figcaption><span class="label muted">San Francisco Classical Voice</span><span class="pr-ctx muted">Elgar, Cello Concerto · Marin Symphony · <a class="pr-link" href="https://www.sfcv.org/articles/review/young-cellist-excels-marin-symphony-finale" target="_blank" rel="noopener">Read the review</a></span></figcaption></figure>
+      <figure class="rise pr-item"><blockquote>&ldquo;Throughout the performance, Herbert tested the limits of the cello’s softest dynamics, pulling the listener in. The performance was transfixing.&rdquo;</blockquote><figcaption><span class="label muted">Cleveland Classical</span><span class="pr-ctx muted">Wallen, Dervish · ChamberFest Cleveland</span></figcaption></figure>
+      <figure class="rise pr-item"><blockquote>&ldquo;From his opening notes it was immediately apparent that Herbert has a very vocal approach to his playing and regardless of the technical demands he makes his cello sing.&rdquo;</blockquote><figcaption><span class="label muted">Santa Cruz Sentinel</span><span class="pr-ctx muted">Haydn, Cello Concerto No. 2 · Rhode Island Philharmonic</span></figcaption></figure>
     </div>
   </div>
   <div class="railed" id="presskit">
