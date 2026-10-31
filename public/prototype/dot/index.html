@@ -444,8 +444,10 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 #aboutpage > .railed > .bio, #aboutpage > .railed > div { max-width: none; }
 @media (min-width: 900px) { #aboutpage > .railed { margin-left: calc(var(--rail) + var(--rail-gap)); } }
 @media (max-width: 639px) {
-  .np-f.tall, .np-f.w34 { float: right; width: 44%; margin: 4px 0 12px 16px; }
-  .np-f.l.w34 { float: left; margin: 4px 16px 12px 0; }
+  /* Phones: every photo on its own line, full width, never beside a narrow column of text */
+  .np-sec .np-f { float: none !important; width: 100% !important; margin: 4px 0 24px !important; }
+  .np-sec .np-f.port { width: 78% !important; }
+  .np-clear { display: none; }
 }
 /* About title as a masthead over the column */
 article#aboutpage > h1 { margin-top: var(--head); margin-bottom: 0; padding-bottom: 18px; border-bottom: 1px solid currentColor; font-size: clamp(44px, 5.4vw, 80px); line-height: 1; }
@@ -457,7 +459,7 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
 .np-sec, .np-q, .np-wide, #aboutpage > .railed { margin-top: var(--np-gap) !important; }
 .ab-open-fig + .np-lead { margin-top: var(--block); }
 .ab-open-fig img, .np-f img, .np-wide img, .np-wide.in-col img, .np-f.tall img { aspect-ratio: auto !important; height: auto; object-fit: initial; }
-@media (max-width: 639px) { .np-sec .spec { clear: both; } }
+@media (max-width: 639px) { .np-sec .spec { clear: both; } .np-sec .spec:not(.awards) { grid-template-columns: 1fr; gap: 2px 0; } .np-sec .spec:not(.awards) dd { margin-bottom: 12px; } }
 @media (min-width: 640px) { .np-f.clr { clear: left; } }
 .np-strip { display: flex; gap: 12px; margin: 8px 0 0; clear: both; }
 .np-strip figure { margin: 0; flex: var(--ar) 1 0; min-width: 0; }
@@ -1082,11 +1084,11 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
 
   <section class="np-sec np-progs">
     <h2 class="np-h rise">Projects of his own</h2>
-    <figure class="np-f r w34 rise"><img src="../img/np-castro.jpg" alt="The Castro Theatre marquee poster for the Britten centenary concert" loading="lazy"><figcaption class="label muted">Britten’s Third Suite, Castro Theatre, San Francisco, 2013</figcaption></figure><p class="rise">His own programs grew out of a habit that started early. As a teenager he went through scores, archives and recordings, often leading him to one question in particular: why is this great piece so seldom played? Over time, that curiosity shaped how he combines music and builds programs.</p>
+    <figure class="np-f r w34 rise port"><img src="../img/np-castro.jpg" alt="The Castro Theatre marquee poster for the Britten centenary concert" loading="lazy"><figcaption class="label muted">Britten’s Third Suite, Castro Theatre, San Francisco, 2013</figcaption></figure><p class="rise">His own programs grew out of a habit that started early. As a teenager he went through scores, archives and recordings, often leading him to one question in particular: why is this great piece so seldom played? Over time, that curiosity shaped how he combines music and builds programs.</p>
     <p class="rise"><a href="#" class="ch-link" data-id="wiebitte">Wie Bitte?</a> (2026) was a reflection on repetition and re-hearing, and on how meaning is constructed when things return.</p>
     <p class="rise"><a href="#" class="ch-link" data-id="wolicht">Wo Licht ist…</a> (2024) started from the German saying “where there is light, there is also shadow,” moving from French viol music through Crawford Seeger and Beethoven to Desenne’s Jaguar Songs.</p>
     <figure class="np-f r w46 rise"><img src="../img/np-film.jpg" alt="Live performance under a projected silent film" loading="lazy"><figcaption class="label muted">Pressure / Druck</figcaption></figure><p class="rise"><a href="#" class="ch-link" data-id="pressure">Pressure / Druck</a> (2025) paired Hindemith, Shostakovich and Schoenberg with silent film scenes from the first half of the 20th century.</p>
-    <div class="np-clear" aria-hidden="true"></div><figure class="np-f l w34 np-koeln rise"><img src="../img/raderberg.jpg" alt="The Raderberg group with flowers at Köln Hbf" loading="lazy"><figcaption class="label muted">Köln Hbf, after the Raderbergkonzerte</figcaption></figure><p class="rise">Other programs include Desenne, Crawford Seeger, Villa-Lobos and Fauré for Deutschlandfunk’s Raderbergkonzerte in Cologne (2024) and, at the TICA Festival in Hong Kong (2023), the premiere of Andrew Moses’ Ecstatic Immanence, with a live feedback loop between cello and thundersheet.</p>
+    <div class="np-clear" aria-hidden="true"></div><figure class="np-f l w34 np-koeln rise port"><img src="../img/raderberg.jpg" alt="The Raderberg group with flowers at Köln Hbf" loading="lazy"><figcaption class="label muted">Köln Hbf, after the Raderbergkonzerte</figcaption></figure><p class="rise">Other programs include Desenne, Crawford Seeger, Villa-Lobos and Fauré for Deutschlandfunk’s Raderbergkonzerte in Cologne (2024) and, at the TICA Festival in Hong Kong (2023), the premiere of Andrew Moses’ Ecstatic Immanence, with a live feedback loop between cello and thundersheet.</p>
   </section>
 
 
@@ -1103,7 +1105,7 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
 
   <section class="np-sec ">
     <h2 class="np-h rise">The instrument</h2>
-    <figure class="np-f r w38 rise"><img src="../img/np-cello.jpg" alt="The Guadagnini cello, resting against a chair" loading="lazy"></figure><p class="rise">He plays primarily on a Guadagnini cello that once belonged to the cellist Antonio Janigro, on loan from the Janigro family.</p>
+    <figure class="np-f r w38 rise port"><img src="../img/np-cello.jpg" alt="The Guadagnini cello, resting against a chair" loading="lazy"></figure><p class="rise">He plays primarily on a Guadagnini cello that once belonged to the cellist Antonio Janigro, on loan from the Janigro family.</p>
       <dl class="spec rise"><dt>Cello</dt><dd>G. B. Guadagnini, ex-Janigro</dd><dt>Bows</dt><dd>Jean Dominique Adam, Michel Groppe</dd><dt>Baroque piccolo cello</dt><dd>Chappuy, 1776</dd></dl>
   </section>
 
