@@ -452,6 +452,8 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 /* About title as a masthead over the column */
 article#aboutpage > h1 { margin-top: var(--head); margin-bottom: 0; padding-bottom: 18px; border-bottom: 1px solid currentColor; font-size: clamp(44px, 5.4vw, 80px); line-height: 1; }
 article#aboutpage > h1 + .ab-open-fig { margin-top: 24px; }
+article#aboutpage > h1 + .np-sec { margin-top: 40px !important; }
+article#aboutpage > h1 + .np-sec > .np-h:first-child { border-top: 0; padding-top: 0; }
 @media (min-width: 900px) { article#aboutpage > h1 { margin-left: calc(var(--rail) + var(--rail-gap)); } }
 /* Newspaper column: one width, one rhythm, whole images */
 :root { --np-w: 760px; --np-gap: clamp(64px, 7vw, 104px); }
@@ -933,7 +935,7 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
   <section class="about wrap" id="about" data-tone="light">
     <h2 class="sr-only">About</h2>
     <div class="ab-open" id="ab-open">
-    <p class="lead rise ab-lead">Oliver Herbert is a cellist who performs as a soloist with orchestras, as a chamber musician, and in programs of his own.</p>
+    <p class="lead rise ab-lead">Oliver Herbert is a cellist who performs as a soloist, as a chamber musician, and in programs of his own.</p>
     <p class="lead rise ab-lead ab-lead2">Alongside the cello classics, he plays rarely heard works and new music.</p>
     </div>
     <div class="ab-rest">
@@ -1054,11 +1056,6 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
 <article id="aboutpage" class="wrap" hidden>
   <button class="back" id="ab-back"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M7 1 L2 6 L7 11 M2 6 H16" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg><span>Home</span></button>
   <h1 class="rise">About</h1>
-  <figure class="ab-open-fig rise"><img src="../img/about-open.jpg" srcset="../img/about-open.jpg 1600w, ../img/about-open-2400.jpg 2400w" sizes="(min-width: 900px) 760px, 100vw" alt="Oliver Herbert seated with his cello against a green backdrop"><figcaption class="label muted">Photo: Todd Rosenberg</figcaption></figure>
-
-  <div class="np-lead">
-<p class="lead rise ab-lead">Oliver Herbert is a cellist who performs as a soloist with orchestras, as a chamber musician, and in programs of his own. He was born in 1997 in San Francisco.</p>
-</div>
 
 
   <section class="np-sec ">
@@ -1149,7 +1146,7 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
     <div class="bio" id="ob-text">
       <p class="ob-note muted rise">For programs and publicity, free to use. About 690 words.</p>
       <div class="bio-more" id="bio-more" hidden>
-        <p>Oliver Herbert is a cellist who performs as a soloist with orchestras, as a chamber musician, and in programs of his own. The recipient of a 2021 Avery Fisher Career Grant, he has appeared as soloist with the San Francisco Symphony, Nashville Symphony, New World Symphony, Buffalo Philharmonic, and Warsaw Philharmonic, as well as the Mannheimer Philharmoniker, Württembergisches Kammerorchester Heilbronn, and Philharmonisches Orchester Erfurt. He has worked with conductors including Michael Tilson Thomas, Giancarlo Guerrero, Juanjo Mena, Teddy Abrams, Alexander Shelley, and Reinhard Goebel. Of his subscription debut with the San Francisco Symphony under Tilson Thomas, San Francisco Classical Voice wrote: “His technical command, full-throated but never indulgent tone, crisp yet expressive phrasing, and tactful use of vibrato flowed together… youthful but magisterial.”</p>
+        <p>Oliver Herbert is a cellist who performs as a soloist, as a chamber musician, and in programs of his own. The recipient of a 2021 Avery Fisher Career Grant, he has appeared as soloist with the San Francisco Symphony, Nashville Symphony, New World Symphony, Buffalo Philharmonic, and Warsaw Philharmonic, as well as the Mannheimer Philharmoniker, Württembergisches Kammerorchester Heilbronn, and Philharmonisches Orchester Erfurt. He has worked with conductors including Michael Tilson Thomas, Giancarlo Guerrero, Juanjo Mena, Teddy Abrams, Alexander Shelley, and Reinhard Goebel. Of his subscription debut with the San Francisco Symphony under Tilson Thomas, San Francisco Classical Voice wrote: “His technical command, full-throated but never indulgent tone, crisp yet expressive phrasing, and tactful use of vibrato flowed together… youthful but magisterial.”</p>
         <p>Oliver approaches his work with a wide-ranging curiosity, exploring lesser-known repertoire, music of today, and connections that reveal new perspectives on familiar works. He has performed complete cycles of the Bach suites and Beethoven sonatas, the latter also on historical instruments with Arash Rokni, and the music of Paul Desenne has become an ongoing focus. His projects have included concert curations for Deutschlandfunk’s Raderbergkonzerte and the TICA Festival in Hong Kong, as well as premieres of works by composers such as Andrew Moses, Žibuoklė Martinaitytė, and Helena Winkelman, among them Moses’ Ecstatic Immanence, which he commissioned.</p>
         <p>His interdisciplinary work includes Druck (Pressure), a program about power that set music alongside literary texts and silent film scenes prepared with filmmaker Mimi Pfahler, with whom he had earlier made a video of Janáček’s Pohádka. For the 2026 Kronberg Festival he curated a program on the theme of courage with actor Michael Rotschopf. At New World Symphony, he performed Julius Eastman’s The Holy Presence of Joan d’Arc with Kyle Marshall Choreography.</p>
         <p>As a chamber musician, he returns regularly to ChamberFest Cleveland, Marlboro Music, Caramoor, and the St. Barts Music Festival. He has also appeared at the Schwetzinger SWR Festspiele, Moritzburg Festival, Rheingau Musik Festival, Ravinia, La Jolla SummerFest, and Philadelphia Chamber Music Society. Recent highlights include a North American tour with Mitsuko Uchida and musicians from Marlboro Music, a return to Carnegie Hall with Kirill Gerstein, and a performance at the Tonhalle Zürich with Julia Fischer. Other collaborators include Janine Jansen, Tabea Zimmermann, and Martin Helmchen.</p>
