@@ -7,7 +7,7 @@ cd "$(dirname "$0")/../.." || exit 1
 SRC=source/oliver-herbert-dot.html
 if [ "$LIVE" = 1 ]; then ROBOTS='<meta name="robots" content="index, follow">'; else ROBOTS='<meta name="robots" content="noindex">'; fi
 TITLE='Oliver Herbert, cellist'
-DESC='Oliver Herbert is a cellist who performs as a soloist, chamber musician, and in programs of his own. Concerts, recordings, videos and projects.'
+DESC='Oliver Herbert is a cellist who performs internationally as a soloist, as a chamber musician, and in creative projects of his own. Concerts, recordings, videos and projects.'
 URL='https://oliverherbertcello.com/'
 {
   echo '<!doctype html><html lang="en"><head><meta charset="utf-8">'
