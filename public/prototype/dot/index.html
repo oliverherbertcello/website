@@ -1254,6 +1254,15 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
   var TODAY = new Date().toISOString().slice(0, 10);
   var UPCOMING = CONCERTS.filter(function (c) { return (c[1] || c[0]) >= TODAY; }).reverse();
   var PAST = CONCERTS.filter(function (c) { return (c[1] || c[0]) < TODAY; });
+  /* Next concert on the portrait and in the menu, always the next one from today */
+  (function () {
+    var n = UPCOMING[0], M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var hero = document.querySelector('.hero-next'), menu = document.querySelector('.menu-next');
+    if (!n) { if (hero) hero.style.display = 'none'; if (menu) menu.style.display = 'none'; return; }
+    var d = n[0].split('-'), when = (+d[2]) + ' ' + M[+d[1] - 1];
+    if (hero) { hero.querySelector('.hn-what').textContent = when + ' · ' + n[2]; var w = hero.querySelector('.hn-where'); if (w && w.firstChild) w.firstChild.nodeValue = n[3]; }
+    if (menu) menu.lastElementChild.textContent = when + ' · ' + n[2] + ', ' + n[3];
+  })();
   /* rail, title, detail, where, YouTube id */
   var FILMS = [
     ['Beethoven', 'Triple Concerto', 'Live, Mannheimer Philharmoniker, Boian Videnoff', 'Dora Bratchkova, Olga Zado', 'I1UZpmasA6o', ''],
@@ -1670,10 +1679,9 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
   /* Listen: a printed program drops down; music plays across the page, with a line of progress along the top.
      Silent until recordings are attached: each track's src goes below. */
   var TRACKS = [
-    { comp: 'Leoš Janáček', work: 'Pohádka', mvt: 'III. Allegro', with: 'Xiaohui Yang, piano · Frame of Mind', short: 'Janáček: Pohádka, III', len: 202, src: '' },
-    { comp: 'Gabriel Fauré', work: 'Cello Sonata No. 2', mvt: 'II. Andante', with: 'Xiaohui Yang, piano · Frame of Mind', short: 'Fauré: Sonata No. 2, II', len: 391, src: '' },
-    { comp: 'Joseph Haydn', work: 'Cello Concerto No. 2 in D', mvt: 'II. Adagio', with: 'San Francisco Symphony, Michael Tilson Thomas · Warner Classics', short: 'Haydn: Concerto No. 2, II', len: 337, src: '' },
-    { comp: 'Alfred Schnittke', work: 'Cello Sonata No. 2', mvt: 'IV. Largo', with: 'Live', short: 'Schnittke: Sonata No. 2, IV', len: 268, src: '' }
+    { comp: 'Leoš Janáček', work: 'Pohádka', mvt: 'III. Allegro', with: 'Xiaohui Yang, piano · Frame of Mind', short: 'Janáček: Pohádka, III', len: 158, src: 'audio/janacek-pohadka-iii.mp3' },
+    { comp: 'Gabriel Fauré', work: 'Cello Sonata No. 2 in G minor', mvt: 'I. Allegro', with: 'Xiaohui Yang, piano · Frame of Mind', short: 'Fauré: Sonata No. 2, I', len: 360, src: 'audio/faure-sonata-2-i.mp3' },
+    { comp: 'Joseph Haydn', work: 'Cello Concerto No. 2 in D', mvt: 'III. Rondo. Allegro', with: 'San Francisco Symphony, Michael Tilson Thomas · Warner Classics', short: 'Haydn: Concerto No. 2, III', len: 296, src: 'audio/haydn-concerto-2-iii.mp3' }
   ];
   var ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
   var btn = $('listen'), label = $('listen-label'), icon = $('listen-icon');
