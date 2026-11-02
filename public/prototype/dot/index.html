@@ -6,6 +6,22 @@
 @font-face { font-family: 'DM Serif Display'; font-style: normal; font-weight: 400; font-display: swap; src: url(webfonts/dm-serif-display-latin-400-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
 @font-face { font-family: 'Schibsted Grotesk'; font-style: normal; font-weight: 400 800; font-display: swap; src: url(webfonts/schibsted-grotesk-latin-ext-wght-normal.woff2) format('woff2-variations'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
 @font-face { font-family: 'Schibsted Grotesk'; font-style: normal; font-weight: 400 800; font-display: swap; src: url(webfonts/schibsted-grotesk-latin-wght-normal.woff2) format('woff2-variations'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+
+/* Album: optional details under the streaming links */
+.a-links .a-trailer::after { content: ""; display: inline-block; margin: 0 0 0.1em 0.4em; border-style: solid; border-width: 0.32em 0 0.32em 0.52em; border-color: transparent transparent transparent currentColor; }
+.a-more { grid-column: 1 / -1; margin-top: 16px; }
+@media (min-width: 900px) { .arow.has-more { grid-template-rows: auto 1fr; } .arow.has-more .cover { grid-row: 1 / span 2; } .a-more { grid-column: 2 / span 2; grid-row: 2; margin-top: 4px; align-self: start; } }
+.a-more summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-label); font-weight: 600; padding: 6px 0; border-bottom: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+.a-more summary::-webkit-details-marker { display: none; }
+.a-more summary::after { content: "+"; font-weight: 400; transition: transform var(--fast) var(--ease); }
+.a-more[open] summary::after { transform: rotate(45deg); }
+.am-body { max-width: 560px; padding-top: 16px; font-size: var(--fs-body); line-height: 1.6; }
+.am-body p { margin: 0 0 1em; }
+.am-prog { list-style: none; margin: 0 0 1.1em; padding: 0; }
+.am-prog li { padding: 6px 0; border-bottom: 1px solid color-mix(in srgb, currentColor 14%, transparent); }
+.am-q { margin: 1.2em 0 0.4em; padding-left: 18px; border-left: 1px solid currentColor; }
+.am-q p { font-family: var(--serif); font-size: 1.15em; line-height: 1.35; margin: 0; }
+.am-q cite { display: block; margin-top: 10px; font-style: normal; }
 </style>
 <link rel="preload" href="webfonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="webfonts/dm-serif-display-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -1138,7 +1154,7 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
   </div>
   <div class="bb">
     <h2 class="bb-lab label rise">Recordings</h2>
-    <div class="bb-text rise"><div class="wf r s34 wcovers rise"><img src="../img/haydn.jpg" alt="Album cover: Haydn, Cello Concerto No. 2" loading="lazy"><img src="../img/album.jpg" alt="Album cover: Frame of Mind" loading="lazy"><img src="../img/triple.jpg" alt="Album cover: Beethoven, Triple Concerto" loading="lazy"></div><p>Oliver’s recordings include Haydn’s Cello Concerto in D major with the <span class="nm">San Francisco Symphony</span> and <span class="nm">Michael Tilson Thomas</span>, released by <span class="nm">Warner Classics</span> as part of highlights from Tilson Thomas’s final season as music director. His debut album with pianist <span class="nm">Xiaohui Yang</span>, Frame of Mind (2020), pairs the two cello sonatas of Gabriel Fauré with Leoš Janáček’s Pohádka (Fairy Tale). In 2026 the <span class="nm">Mannheimer Philharmoniker</span> released his recording of Beethoven’s Triple Concerto with violinist <span class="nm">Dora Bratchkova</span>, pianist <span class="nm">Olga Zado</span>, and conductor <span class="nm">Boian Videnoff</span>.</p><p>He has been featured on <span class="nm">PBS’s Now Hear This</span>, <span class="nm">NPR’s From the Top</span>, <span class="nm">WQXR</span>, and German radio including <span class="nm">WDR</span>, <span class="nm">Deutschlandfunk</span>, <span class="nm">HR</span>, and <span class="nm">ARD</span>, as well as the interview series <span class="nm">Living the Classical Life</span>.</p></div>
+    <div class="bb-text rise"><div class="wf r s34 wcovers rise"><img src="../img/haydn.jpg" alt="Album cover: Haydn, Cello Concerto No. 2" loading="lazy"><img src="../img/album.jpg" alt="Album cover: Frame of Mind" loading="lazy"><img src="../img/triple.jpg" alt="Album cover: Beethoven, Triple Concerto" loading="lazy"></div><p>Oliver’s recordings include Haydn’s Cello Concerto in D major with the <span class="nm">San Francisco Symphony</span> and <span class="nm">Michael Tilson Thomas</span>, released by <span class="nm">Warner Classics</span> as part of highlights from Tilson Thomas’s final season as music director. His debut album with pianist <span class="nm">Xiaohui Yang</span>, <a href="https://www.youtube.com/watch?v=FBCgctRSBBs" data-title="Frame of Mind: album trailer">Frame of Mind</a> (2020), pairs the two cello sonatas of Gabriel Fauré with Leoš Janáček’s Pohádka (Fairy Tale). In 2026 the <span class="nm">Mannheimer Philharmoniker</span> released his recording of Beethoven’s Triple Concerto with violinist <span class="nm">Dora Bratchkova</span>, pianist <span class="nm">Olga Zado</span>, and conductor <span class="nm">Boian Videnoff</span>.</p><p>He has been featured on <span class="nm">PBS’s Now Hear This</span>, <span class="nm">NPR’s From the Top</span>, <span class="nm">WQXR</span>, and German radio including <span class="nm">WDR</span>, <span class="nm">Deutschlandfunk</span>, <span class="nm">HR</span>, and <span class="nm">ARD</span>, as well as the interview series <span class="nm">Living the Classical Life</span>.</p></div>
   </div>
   <div class="bb">
     <h2 class="bb-lab label rise">Teaching</h2>
@@ -1281,7 +1297,10 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
       ['Apple Music', 'https://music.apple.com/us/album/frame-of-mind-faur%C3%A9-and-jan%C3%A1%C4%8Dek/1511947144'],
       ['Qobuz', 'https://www.qobuz.com/us-en/album/frame-of-mind-faure-and-janacek-oliver-herbert-xiaohui-yang/hmempqsm36n6b'],
       ['Amazon Music', 'https://www.amazon.com/dp/B088PHK93S'],
-      ['Bandcamp', 'https://oliverherbert.bandcamp.com/album/frame-of-mind-faur-and-jan-ek']]],
+      ['Bandcamp', 'https://oliverherbert.bandcamp.com/album/frame-of-mind-faur-and-jan-ek']], { trailer: ['FBCgctRSBBs', 'Frame of Mind: album trailer'],
+      program: ['Fauré: Cello Sonata No. 1 in D minor, Op. 109', 'Janáček: Pohádka (Fairy Tale)', 'Fauré: Cello Sonata No. 2 in G minor, Op. 117'],
+      text: ['Frame of Mind, released on 12 June 2020, is Oliver Herbert’s debut album, recorded with pianist Xiaohui Yang. An independent project, it was made with audio engineer Drew Schlegel, producer Ronaldo Rolim and visual artist Jeong Im Yi, who created the original artwork for the cover.'],
+      quote: ['Both Fauré and Janáček’s music is otherworldly, yet profoundly human… My hope is that listeners will be taken by surprise, finding themselves on a journey within their own minds.', 'Oliver Herbert'] }],
     ['triple', 'Beethoven: Triple Concerto', 'Live · MaPhil Records, 2026', 'Dora Bratchkova, Olga Zado, Mannheimer Philharmoniker, Boian Videnoff', [
       ['Spotify', 'https://open.spotify.com/album/704NMp2EFsb3zA2cUThfKV'],
       ['Apple Music', 'https://music.apple.com/us/album/beethoven-triple-concerto-live/6805485312'],
@@ -1371,9 +1390,15 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
   }).join('');
   $('albums').innerHTML = ALBUMS.map(function (a) {
     var cover = a[0] ? '<img src="../img/' + a[0] + '.jpg" alt="Album cover of ' + esc(a[1]) + '" loading="lazy">' : '<span class="cover-ph" aria-hidden="true">' + TRI + '</span>';
-    var links = a[4] ? '<span class="a-links">' + a[4].map(function (l) { return '<a href="' + l[1] + '" target="_blank" rel="noopener">' + esc(l[0]) + '</a>'; }).join('') + '</span>' : '';
-    return '<div class="arow rise"><span class="cover">' + cover + '</span>' +
-      '<span class="row-main"><span class="row-title">' + esc(a[1]) + '</span><span class="row-work">' + esc(a[2]) + '</span>' + links + '</span><span class="row-where muted">' + esc(a[3]) + '</span></div>';
+    var m = a[5] || null;
+    var links = a[4] ? '<span class="a-links">' + (m && m.trailer ? '<a class="a-trailer" href="' + YT + m.trailer[0] + '" data-title="' + esc(m.trailer[1]) + '">Trailer</a>' : '') + a[4].map(function (l) { return '<a href="' + l[1] + '" target="_blank" rel="noopener">' + esc(l[0]) + '</a>'; }).join('') + '</span>' : '';
+    var more = m ? '<details class="a-more"><summary>About the album</summary><div class="am-body">' +
+      (m.program ? '<ul class="am-prog">' + m.program.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
+      (m.text || []).map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') +
+      (m.quote ? '<blockquote class="am-q"><p>&ldquo;' + esc(m.quote[0]) + '&rdquo;</p><cite class="label muted">' + esc(m.quote[1]) + '</cite></blockquote>' : '') +
+      '</div></details>' : '';
+    return '<div class="arow rise' + (m ? ' has-more' : '') + '"><span class="cover">' + cover + '</span>' +
+      '<span class="row-main"><span class="row-title">' + esc(a[1]) + '</span><span class="row-work">' + esc(a[2]) + '</span>' + links + '</span><span class="row-where muted">' + esc(a[3]) + '</span>' + more + '</div>';
   }).join('');
 
   /* Concert rows open in place */
