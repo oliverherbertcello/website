@@ -1683,7 +1683,7 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
   var player = $('player'), list = $('pl-list'), seek = $('pl-seek'), time = $('pl-time'), playBtn = $('pl-play'), plIcon = $('pl-icon');
   var cur = 0, playing = false, pos = 0, last = 0, started = false, dragging = false;
   function cur_i() { return cur; }
-  var audio = new Audio(); audio.preload = 'none';
+  var audio = new Audio(); audio.preload = 'none'; if (TRACKS[0].src) audio.src = TRACKS[0].src;
   var PLAY = '<path d="M2 1 L13 8 L2 15 Z" fill="currentColor"></path>', PAUSE = '<path d="M3 1 V15 M11 1 V15" stroke="currentColor" stroke-width="2.6" fill="none"></path>';
   function mmss(t) { t = Math.max(0, Math.round(t)); return Math.floor(t / 60) + ':' + ('0' + t % 60).slice(-2); }
   function len() { return (TRACKS[cur].src && audio.duration) ? audio.duration : TRACKS[cur].len; }
@@ -1710,7 +1710,7 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
     icon.innerHTML = on ? '<path d="M2 1 V13 M10 1 V13" stroke="currentColor" stroke-width="2.5" fill="none"></path>' : '<path d="M1 1 L11 7 L1 13 Z" fill="currentColor"></path>';
     btn.setAttribute('aria-label', on ? 'Now playing: ' + TRACKS[cur].short : 'Listen');
     var t = TRACKS[cur];
-    if (t.src) { if (on) audio.play().catch(function () {}); else audio.pause(); }
+    if (t.src) { if (on) { if (!audio.getAttribute('src')) audio.src = t.src; audio.play().catch(function (err) { if (err && err.name === 'NotAllowedError' && playing) setPlaying(false); }); } else audio.pause(); }
     if ('mediaSession' in navigator) navigator.mediaSession.playbackState = on ? 'playing' : 'paused';
     mark();
     if (on) { last = performance.now(); requestAnimationFrame(tick); }
