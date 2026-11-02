@@ -1099,7 +1099,7 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
     </div>
     <div class="railed">
       <span class="label lab wide-only rise">Send a message</span>
-      <form class="cform rise" id="cform" name="contact" method="POST" data-netlify="true" novalidate>
+      <form class="cform rise" id="cform" name="contact" method="POST" data-netlify="true" netlify-honeypot="company" novalidate><input type="hidden" name="form-name" value="contact"><p hidden><label>Leave empty <input name="company" tabindex="-1" autocomplete="off"></label></p>
         <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" autocomplete="name" required></div>
         <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
         <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="message" rows="4" required></textarea></div>
@@ -1930,8 +1930,11 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
   $('cform').addEventListener('submit', function (e) {
     e.preventDefault();
     if (!this.checkValidity()) { this.reportValidity(); return; }
-    this.querySelectorAll('.field, .cform .btn').forEach(function (el) { el.hidden = true; });
-    $('c-sent').hidden = false;
+    var form = this, sendBtn = form.querySelector('.btn');
+    if (sendBtn) sendBtn.disabled = true;
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); form.querySelectorAll('.field, .cform .btn').forEach(function (el) { el.hidden = true; }); $('c-sent').hidden = false; })
+      .catch(function () { if (sendBtn) sendBtn.disabled = false; var m = $('c-err'); if (!m) { m = document.createElement('p'); m.id = 'c-err'; m.setAttribute('role', 'alert'); form.appendChild(m); } m.textContent = 'The message could not be sent. Please try again, or write to contact@oliverherbertcello.com.'; });
   });
 })();
 </script>
