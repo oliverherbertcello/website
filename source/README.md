@@ -1,10 +1,14 @@
 # Site source
 
-`oliver-herbert-dot.html` is the single source file for the site (all pages, text, data and styles).
-Edit this file, never the deployed copy in `public/prototype/dot/index.html`.
+The whole site is one file: `source/oliver-herbert-dot.html` (all pages, text, concert data, styles and scripts).
+Edit that file, then run `source/gen/deploy.sh "what changed"`. It writes `public/index.html`
+(adding the head: title, description, link-preview tags), commits and pushes; Netlify publishes `public/`.
 
-Deploy: the deployed copy is this file with `img/` paths rewritten to `../img/`
-(see `gen/deploy_dot.sh`). Audio lives in `public/prototype/dot/audio/`, fonts in
-`public/prototype/dot/webfonts/`, images in `public/prototype/img/`.
+Assets sit beside the page in `public/`: `img/`, `audio/`, `webfonts/`, `files/`, plus `og.jpg` (link preview).
+Redirects (old test address, old Wix pages) are in `netlify.toml`.
 
-Checks before each deploy: accessibility (`gen/axe_dot.py`), no em-dashes, no missing assets.
+Launch switch: `LIVE=0` in `deploy.sh` keeps a noindex tag while the domain still points to Wix.
+Set `LIVE=1` and redeploy once oliverherbertcello.com points to Netlify.
+
+House rules for text: no em-dashes; quotes and attributions exact; Explore pages in third person.
+Before each deploy: no missing images or audio, accessibility check clean.

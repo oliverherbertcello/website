@@ -1,61 +1,76 @@
+# The site is one page, built by source/gen/deploy.sh into public/. No build step.
 [build]
-  command = "npm run build"
-  publish = "dist"
+  command = ""
+  publish = "public"
 
-[build.environment]
-  NODE_VERSION = "22"
-
-# The design prototype is for review only.
+# Long cache for assets that never change name
 [[headers]]
-  for = "/prototype/*"
+  for = "/webfonts/*"
   [headers.values]
-    X-Robots-Tag = "noindex"
+    Cache-Control = "public, max-age=31536000, immutable"
 
-# Until the real homepage is built, the preview opens on the prototype.
+# Old test address
 [[redirects]]
-  from = "/"
-  to = "/prototype/"
-  status = 302
-  force = true
-
-# Old addresses from the Wix site and the earlier HTML site, sent to their new homes (permanent, so search engines move with them).
-# 160 concert pages on Wix all lived under /event-details/; they now point to the full calendar.
-[[redirects]]
-  from = "/event-details/*"
-  to = "/concerts/"
+  from = "/prototype/*"
+  to = "/"
   status = 301
 
+# Old Wix pages: send each to the matching part of the new page
+[[redirects]]
+  from = "/about"
+  to = "/#about"
+  status = 301
+[[redirects]]
+  from = "/bio"
+  to = "/#about"
+  status = 301
+[[redirects]]
+  from = "/biography"
+  to = "/#about"
+  status = 301
+[[redirects]]
+  from = "/concerts"
+  to = "/#concerts"
+  status = 301
 [[redirects]]
   from = "/calendar"
-  to = "/concerts/"
+  to = "/#concerts"
   status = 301
-
 [[redirects]]
-  from = "/dates.html"
-  to = "/concerts/"
+  from = "/schedule"
+  to = "/#concerts"
   status = 301
-
 [[redirects]]
-  from = "/media-hub"
+  from = "/events"
+  to = "/#concerts"
+  status = 301
+[[redirects]]
+  from = "/media"
   to = "/#recordings"
   status = 301
-
 [[redirects]]
-  from = "/media.html"
+  from = "/videos"
   to = "/#recordings"
   status = 301
-
 [[redirects]]
-  from = "/explore.html"
-  to = "/explore/"
+  from = "/recordings"
+  to = "/#recordings"
   status = 301
-
 [[redirects]]
-  from = "/contact.html"
+  from = "/listen"
+  to = "/#recordings"
+  status = 301
+[[redirects]]
+  from = "/discography"
+  to = "/#recordings"
+  status = 301
+[[redirects]]
+  from = "/contact"
   to = "/#contact"
   status = 301
 
+# Anything else that no longer exists goes to the homepage
 [[redirects]]
-  from = "/index.html"
+  from = "/*"
   to = "/"
   status = 301
