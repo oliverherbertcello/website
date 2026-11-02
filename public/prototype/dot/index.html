@@ -730,7 +730,13 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
 .vs:hover .vstill img { transform: scale(1.04); }
 .vs .vplay { position: absolute; left: 50%; top: 50%; width: 34px; height: 34px; margin: -17px 0 0 -17px; color: #fff; border-color: #fff; background: rgba(0,0,0,0.28); }
 .vs:hover .vplay { background: #fff; color: #111; }
-.vs .row-kick { display: block; margin-bottom: 6px; font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.04em; }
+.vs .row-kick { display: block; margin-bottom: 4px; font-family: var(--serif); font-size: calc(var(--fs-title) * 1.12); font-weight: 400; letter-spacing: -0.01em; line-height: 1.05; transition: transform var(--fast) var(--ease); }
+.vs .row-title { font-weight: 500; }
+.vrow.vs:hover .row-kick { transform: translateX(8px); }
+.vhead { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin: var(--block) 0 16px; }
+.vhead h3 { margin: 0; }
+.vhead .yt-more { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: 1px solid currentColor; border-radius: 999px; font-size: var(--fs-label); font-weight: 600; white-space: nowrap; transition: background var(--fast) var(--ease), color var(--fast) var(--ease); }
+.vhead .yt-more:hover, .vhead .yt-more:focus-visible { background: var(--fg); color: var(--bg); }
 .vs .row-where { display: block; grid-column: 2; margin-top: 6px; font-size: var(--fs-label); opacity: 0.62; }
 .vs .row-where::before { content: none; }
 @media (min-width: 900px) {
@@ -1047,9 +1053,8 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
     <h2 class="rise">Recordings</h2>
     <h3 class="rise">Albums</h3>
     <div class="rows" id="albums"></div>
-    <h3 class="rise">Videos</h3>
+    <div class="vhead rise"><h3>Videos</h3><a class="yt-more" href="https://www.youtube.com/@OliverHerbertCello" target="_blank" rel="noopener">YouTube channel<svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 11 L11 3 M4.5 3 H11 V9.5" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
     <div class="rows" id="films"></div>
-    <div class="btn-row on-line rise"><a class="btn fill yt-more" href="https://www.youtube.com/@OliverHerbertCello" target="_blank" rel="noopener">More on YouTube<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 11 L11 3 M4.5 3 H11 V9.5" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
   </section>
 
   <section class="quote wrap" data-tone="orange" aria-label="Press">
