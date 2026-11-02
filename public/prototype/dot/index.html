@@ -1266,11 +1266,13 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
   })();
   /* rail, title, detail, where, YouTube id */
   var FILMS = [
-    ['Beethoven', 'Triple Concerto', 'Live, Mannheimer Philharmoniker, Boian Videnoff', 'Dora Bratchkova, Olga Zado', 'I1UZpmasA6o', ''],
-    ['Schnittke', 'Cello Sonata No. 2', 'Live', '', '7rHCol4Jv0s', ''],
-    ['Desenne', 'Jaguar Songs', 'For solo cello, live', '', 'o55-bh9YSAQ', ''],
-    ['Beethoven', 'Sonata in G minor, Op. 5 No. 2', 'On fortepiano', 'Arash Rokni, fortepiano', 'suTU3-AbS0Q', ''],
-    ['Pressure / Druck', 'Aftermovie', 'Hindemith · Shostakovich · Schoenberg', '', 'W2--KrUIkkc', '']
+    ['Beethoven', 'Triple Concerto', 'Live, Mannheimer Philharmoniker, Boian Videnoff', 'Dora Bratchkova, Olga Zado', 'I1UZpmasA6o', 'v-triple', 175],
+    ['Debussy', 'Cello Sonata in D minor', 'Live', 'Martin Klett, piano', 'KOMrvubA6X8', 'v-debussy', 372],
+    ['Bach', 'Suite No. 4 in E-flat major, Prelude', 'Live', '', 'c3VFHXmxHQk', 'v-bach', 0],
+    ['Schnittke', 'Cello Concerto No. 1, IV', 'Live, Philharmonisches Orchester Erfurt, Alexander Prior', '', 'ypj1zgKjIx0', 'v-schnittke', 0],
+    ['Beethoven', 'Sonata in G minor, Op. 5 No. 2', 'On fortepiano', 'Arash Rokni, fortepiano', 'suTU3-AbS0Q', 'v-beethoven', 670],
+    ['Desenne', 'Jaguar Songs', 'For solo cello, live', '', 'o55-bh9YSAQ', 'v-desenne', 0],
+    ['Pressure / Druck', 'Aftermovie', 'Hindemith · Shostakovich · Schoenberg', '', 'W2--KrUIkkc', 'v-aftermovie', 0]
   ];
   /* cover, title, detail, with, [platform, url] links */
   var ALBUMS = [
@@ -1368,7 +1370,7 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
     window.xPeekFrom = function (row) { return (wide.matches && on === row) ? peek.querySelector('img') : row.querySelector('.xthumb img'); };
   })();
   $('films').innerHTML = FILMS.map(function (f) {
-    return '<a class="vrow vs rise" href="' + YT + f[4] + '" target="_blank" rel="noopener" data-title="' + esc(f[0] + ': ' + f[1]) + '">' +
+    return '<a class="vrow vs rise" href="' + YT + f[4] + (f[6] ? '&t=' + f[6] : '') + '" target="_blank" rel="noopener" data-title="' + esc(f[0] + ': ' + f[1]) + '">' +
       '<span class="vstill">' + (f[5] ? '<img src="../img/' + f[5] + '.jpg" alt="" loading="lazy">' : '') + '<span class="vplay" aria-hidden="true">' + TRI + '</span></span>' +
       '<span class="row-main"><span class="row-kick">' + esc(f[0]) + '</span><span class="row-title">' + esc(f[1]) + '</span><span class="row-work">' + esc(f[2]) + '</span></span>' +
       (f[3] ? '<span class="row-where">' + esc(f[3]) + '</span>' : '') + '</a>';
@@ -1773,10 +1775,10 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
   /* Videos: open in a window over the page; the music pauses while a film plays */
   var vmodal = $('vmodal'), vframe = $('vframe'), vtitle = $('vtitle'), vback = null;
   var resumeAfterVideo = false;
-  function openVideo(id, title) {
+  function openVideo(id, title, start) {
     resumeAfterVideo = playing; pauseMusic();
     vback = document.activeElement;
-    vframe.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0&playsinline=1" title="' + esc(title) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    vframe.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0&playsinline=1' + (start ? '&start=' + parseInt(start, 10) : '') + '" title="' + esc(title) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
     vtitle.textContent = title;
     vmodal.hidden = false; document.body.style.overflow = 'hidden';
     requestAnimationFrame(function () { requestAnimationFrame(function () { vmodal.classList.add('open'); }); });
@@ -1790,7 +1792,7 @@ article#aboutpage > h1, .ab-open-fig, .np-lead, .np-sec, .np-q, .np-wide, .np-wi
   }
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href*="youtube.com/watch?v="]');
-    if (a) { e.preventDefault(); openVideo(new URL(a.href).searchParams.get('v'), a.dataset.title || a.textContent.trim()); return; }
+    if (a) { e.preventDefault(); var vu = new URL(a.href); openVideo(vu.searchParams.get('v'), a.dataset.title || a.textContent.trim(), vu.searchParams.get('t')); return; }
     if (!vmodal.hidden && (e.target === vmodal || e.target.closest('#vclose'))) closeVideo();
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !vmodal.hidden) closeVideo(); });
