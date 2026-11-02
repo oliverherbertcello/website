@@ -2,6 +2,8 @@
 [build]
   command = ""
   publish = "public"
+  # Skip a Netlify build (and its credits) when a push changes nothing that is published
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- public/ netlify.toml"
 
 # Long cache for assets that never change name
 [[headers]]
