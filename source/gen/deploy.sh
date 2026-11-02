@@ -2,7 +2,7 @@
 # Build public/index.html from source/oliver-herbert-dot.html, then commit and push (Netlify publishes public/).
 # Usage: source/gen/deploy.sh "commit message"
 # LIVE=1 once oliverherbertcello.com points to Netlify (search engines may index). Until then the page says noindex.
-LIVE=0
+LIVE=1
 cd "$(dirname "$0")/../.." || exit 1
 SRC=source/oliver-herbert-dot.html
 if [ "$LIVE" = 1 ]; then ROBOTS='<meta name="robots" content="index, follow">'; else ROBOTS='<meta name="robots" content="noindex">'; fi
