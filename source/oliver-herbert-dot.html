@@ -400,6 +400,15 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .xt { display: block; font-family: var(--serif); font-size: var(--fs-lead); font-weight: 400; letter-spacing: -0.02em; line-height: 1.02; overflow-wrap: break-word; transition: color 420ms var(--ease); }
 .xs { display: block; margin-top: 6px; font-size: var(--fs-label); line-height: 1.35; opacity: 0.66; }
 .xpeek { display: none; }
+/* Phones: Explore as a numbered index, no thumbnails, so it reads unlike the video rows */
+@media (max-width: 899px) {
+  .xlist .xrows { counter-reset: x; border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent); }
+  .xlist .xrow { counter-increment: x; grid-template-columns: 34px minmax(0, 1fr); column-gap: 10px; align-items: baseline; padding: 20px 0 22px; border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent); }
+  .xlist .xrow::before { content: counter(x, decimal-leading-zero); grid-row: 1 / span 2; align-self: start; padding-top: 0.55em; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: var(--c); font-variant-numeric: tabular-nums; }
+  .xlist .xrow .xthumb { display: none; }
+  .xlist .xt { font-size: clamp(32px, 9.4vw, 40px); line-height: 1.02; }
+  .xlist .xs { margin-top: 8px; }
+}
 @media (min-width: 900px) {
   .xlist { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--block); align-items: start; }
   .xrows { grid-column: 1; padding: 4px 0; }
