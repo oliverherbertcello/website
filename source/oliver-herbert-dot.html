@@ -32,6 +32,9 @@
 .btn-row.ab-entry { margin-top: 0; gap: 12px; }
 .ab-entry .btn { min-width: 150px; }
 @media (max-width: 899px) { .btn-row.ab-entry { flex-wrap: nowrap; } .ab-entry .btn { flex: 1 1 0; min-width: 0; width: auto; } }
+
+/* The About page marks its menu entry */
+body.on-about .topnav .nav-about { border-bottom-color: var(--accent); }
 </style>
 <link rel="preload" href="webfonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="webfonts/dm-serif-display-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -1004,7 +1007,7 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
 
 <header class="bar">
   <nav class="topnav" aria-label="Main">
-    <a href="#about">About</a>
+    <a href="#biography" class="nav-about">About</a>
     <a href="#concerts">Concerts</a>
     <a href="#projects">Explore</a>
     <a href="#recordings">Recordings</a>
@@ -1038,7 +1041,7 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
 <div class="menu" id="menu" hidden>
   <div class="menu-head"><button class="menu-btn menu-close" id="menu-close">Close</button></div>
   <nav class="menu-links" aria-label="Main">
-    <a href="#about" style="--i:0">About</a>
+    <a href="#biography" class="nav-about" style="--i:0">About</a>
     <a href="#concerts" style="--i:1">Concerts</a>
     <a href="#projects" style="--i:2">Explore</a>
     <a href="#recordings" style="--i:3">Recordings</a>
@@ -1480,6 +1483,8 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
     ticking = false;
     var p = home.hidden ? 1 : Math.max(0, Math.min(1, window.scrollY / 240));
     root.style.setProperty('--p', p.toFixed(4));
+    var abp = document.getElementById('aboutpage'); document.body.classList.toggle('on-about', !!abp && !abp.hidden);
+    document.querySelectorAll('.nav-about').forEach(function (n) { if (abp && !abp.hidden) n.setAttribute('aria-current', 'page'); else n.removeAttribute('aria-current'); });
   }
   window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(settle); } }, { passive: true });
   settle();
@@ -1580,6 +1585,7 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
     if (!same && from) from.style.viewTransitionName = '';
     var t = change(function () {
       project.hidden = true; cal.hidden = true; ab.hidden = true; $('impressum').hidden = true; $('privacy').hidden = true; home.hidden = false; project.innerHTML = ''; cal.innerHTML = '';
+      if (location.hash === '#biography') { try { history.replaceState(null, '', location.pathname + location.search); } catch (err) {} }
       document.body.dataset.tone = lastCard ? 'dark' : 'light';
       if (same) to.style.viewTransitionName = 'shot';
       root.style.scrollBehavior = 'auto'; window.scrollTo(0, lastScroll); root.style.scrollBehavior = '';
@@ -1653,10 +1659,14 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
   /* The About page opens as its own page */
   var ab = $('aboutpage');
   (function(){var y=document.getElementById('yr'); if(y) y.textContent=new Date().getFullYear();})();
-  function openAbout() {
-    lastScroll = window.scrollY; lastCard = null;
+  function openAbout(fromHistory) {
+    if (!ab.hidden) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (!home.hidden) lastScroll = window.scrollY;
+    lastCard = null;
+    if (!fromHistory && location.hash !== '#biography') { try { history.pushState({ view: 'about' }, '', '#biography'); } catch (err) {} }
     change(function () {
       home.hidden = true; project.hidden = true; cal.hidden = true; ab.hidden = false;
+      $('impressum').hidden = true; $('privacy').hidden = true;
       document.body.dataset.tone = 'light';
       root.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); root.style.scrollBehavior = '';
       watch(ab); settle();
@@ -1670,6 +1680,10 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
     if (e.target.closest('#ab-contact, .kit-ask')) { e.preventDefault(); closeProject(); setTimeout(function () { var t = $('contact'); if (t) t.scrollIntoView({ behavior: 'smooth' }); }, 650); }
   });
 
+
+  /* About as its own address: oliverherbertcello.com/#biography opens it; the browser's back button returns home */
+  window.addEventListener('popstate', function () { if (location.hash === '#biography') { if (ab.hidden) openAbout(true); } else if (!ab.hidden) closeProject(); });
+  if (location.hash === '#biography') setTimeout(function () { window.scrollTo(0, 0); openAbout(true); lastScroll = 0; }, 60);
   /* The full calendar opens as its own page */
   var cal = $('calendar');
   function renderCalendar() {
@@ -1733,6 +1747,7 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
     if (!a) return;
     var href = a.getAttribute('href');
     if (!menu.hidden) setMenu(false);
+    if (href === '#biography') { e.preventDefault(); openAbout(); return; }
     if (home.hidden && href.charAt(0) === '#') {
       e.preventDefault(); closeProject();
       setTimeout(function () { var t = document.querySelector(href); if (t) t.scrollIntoView({ behavior: 'smooth' }); }, 650);
