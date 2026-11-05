@@ -54,13 +54,13 @@ body.on-about .topnav .nav-about { border-bottom-color: var(--accent); }
 #press .more-toggle { margin: 8px 0 calc(var(--block) * 0.6); }
 
 /* Homepage entry: two overlapping ovals, About and Listen. The orange is where they meet. */
-.ab-entry { position: relative; width: min(494px, 100%); aspect-ratio: 494 / 226; }
+.ab-entry { position: relative; width: min(370px, 78%); aspect-ratio: 494 / 226; }
 .ab-ovals { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .ab-ovals ellipse { fill: transparent; stroke: currentColor; stroke-width: 1.8; vector-effect: non-scaling-stroke; transform-box: fill-box; transform-origin: center; transition: fill 0.35s ease, transform 0.6s var(--ease), stroke-dashoffset 1.2s var(--ease); }
 .ab-ovals .e1, .ab-ovals .e2 { stroke-dasharray: 1; stroke-dashoffset: 0; }
 .ab-ovals .lens { fill: var(--accent); stroke: none; opacity: 0.92; transition: opacity 0.6s ease 0.9s; }
-.ab-door { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 12px; padding: 0; border: 0; background: none; color: inherit; font-family: var(--serif); font-weight: 400; font-size: clamp(26px, 2.6vw, 38px); letter-spacing: -0.01em; line-height: 1; cursor: pointer; transition: color 0.3s ease, transform 0.6s var(--ease); }
-.ab-door::before { content: ""; position: absolute; inset: -34px -44px; }
+.ab-door { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 12px; padding: 0; border: 0; background: none; color: inherit; font-family: var(--serif); font-weight: 400; font-size: var(--fs-title); letter-spacing: -0.01em; line-height: 1; cursor: pointer; transition: color 0.3s ease, transform 0.6s var(--ease); }
+.ab-door::before { content: ""; position: absolute; inset: -26px -34px; }
 #full-bio.ab-door { left: 27.3%; top: 37.6%; }
 #ab-listen.ab-door { left: 72.7%; top: 62.4%; }
 .ab-door:hover, .ab-door:focus-visible { color: var(--accent); }
@@ -113,7 +113,7 @@ body.on-about .topnav .nav-about { border-bottom-color: var(--accent); }
   --fs-title: clamp(22px, 2vw, 28px);      /* concert, project and film titles */
   --fs-lead: clamp(26px, 2.8vw, 38px);     /* the About sentence, the email address */
   --fs-display: clamp(52px, 7vw, 100px);   /* every section heading and project title */
-  --fs-quote: clamp(44px, 8vw, 120px);     /* the one deliberate exception: press quotes */
+  --fs-quote: var(--fs-display);         /* press quotes sit on the display tier */
   --section: 80px;              /* space between sections */
   --head: 32px;                 /* heading to what follows */
   --block: 48px;                /* between groups inside a section */
@@ -811,7 +811,7 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
 .vs:hover .vstill img { transform: scale(1.04); }
 .vs .vplay { position: absolute; left: 50%; top: 50%; width: 34px; height: 34px; margin: -17px 0 0 -17px; color: #fff; border-color: #fff; background: rgba(0,0,0,0.28); }
 .vs:hover .vplay { background: #fff; color: #111; }
-.vs .row-kick { display: block; margin-bottom: 4px; font-family: var(--serif); font-size: calc(var(--fs-title) * 1.12); font-weight: 400; letter-spacing: -0.01em; line-height: 1.05; transition: transform var(--fast) var(--ease); }
+.vs .row-kick { display: block; margin-bottom: 4px; font-family: var(--serif); font-size: var(--fs-lead); font-weight: 400; letter-spacing: -0.01em; line-height: 1.05; transition: transform var(--fast) var(--ease); }
 .vs .row-title { font-weight: 500; }
 .vrow.vs:hover .row-kick { transform: translateX(8px); }
 .vhead { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin: var(--block) 0 16px; }
