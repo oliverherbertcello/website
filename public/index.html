@@ -50,7 +50,6 @@ body.on-about .topnav .nav-about { border-bottom-color: var(--accent); }
 .more-toggle .mt-sign::before { content: "+"; font-weight: 400; }
 .more-toggle[aria-expanded="true"] .mt-sign::before { content: "\2212"; }
 .more-toggle:hover { color: var(--accent); }
-@media (min-width: 900px) { #films + .more-toggle { margin-left: calc(var(--rail) + var(--rail-gap)); } }
 #press .more-toggle { margin: 8px 0 calc(var(--block) * 0.6); }
 
 /* Homepage entry: two overlapping ovals, About and Listen. The orange is where they meet. */
@@ -81,6 +80,12 @@ body.on-about .topnav .nav-about { border-bottom-color: var(--accent); }
 
 /* Desktop navigation, one step quieter */
 @media (min-width: 900px) { .topnav a { font-size: 14px; } }
+
+/* The two "more" buttons under lists (All concerts, More videos): one style, set on the left edge like the headings */
+.list-more-row { margin-top: 32px; }
+.list-more, .list-more.more-toggle { display: inline-flex; align-items: center; gap: 12px; height: 48px; margin: 0; padding: 0 24px; border: 1px solid currentColor; border-radius: 999px; background: none; color: inherit; font-family: inherit; font-size: 15px; font-weight: 600; letter-spacing: 0; cursor: pointer; transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease); }
+.list-more:hover, .list-more:focus-visible { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.list-more .mt-sign::before { font-size: 18px; line-height: 1; }
 </style>
 <link rel="preload" href="webfonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="webfonts/dm-serif-display-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -1121,7 +1126,7 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
     <div class="today label rise" id="today">Today</div>
     <h3 class="rise" id="past-h">Past</h3>
     <div id="past"></div>
-    <div class="btn-row on-line rise"><a class="btn fill" href="#all-concerts" id="all-concerts">All concerts<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
+    <div class="list-more-row rise"><a class="list-more" href="#all-concerts" id="all-concerts">All concerts<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11 1 L16 6 L11 11 M16 6 H1" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
   </section>
 
   <div class="frame interlude open-img"><img src="img/live.jpg" alt="Oliver Herbert in performance" loading="lazy"></div>
@@ -1139,7 +1144,7 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
     <div class="rows" id="albums"></div>
     <div class="vhead rise"><h3>Videos</h3><a class="yt-more" href="https://www.youtube.com/@OliverHerbertCello" target="_blank" rel="noopener">YouTube channel<svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 11 L11 3 M4.5 3 H11 V9.5" stroke="currentColor" stroke-width="1.6" fill="none"></path></svg></a></div>
     <div class="rows" id="films"></div>
-    <button type="button" class="more-toggle rise" data-more="films" aria-expanded="false"><span class="mt-show">More videos</span><span class="mt-hide">Fewer videos</span><span class="mt-sign" aria-hidden="true"></span></button>
+    <div class="list-more-row rise"><button type="button" class="list-more more-toggle" data-more="films" aria-expanded="false"><span class="mt-show">More videos</span><span class="mt-hide">Fewer videos</span><span class="mt-sign" aria-hidden="true"></span></button></div>
   </section>
 
   <section class="quote wrap" data-tone="orange" aria-label="Press">
