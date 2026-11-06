@@ -403,7 +403,6 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .row-main { display: block; min-width: 0; }
 .row-title { display: block; font-size: var(--fs-title); font-weight: 600; letter-spacing: -0.015em; line-height: 1.12; text-wrap: balance; transition: transform var(--fast) var(--ease); }
 .row-work { display: block; margin-top: 6px; font-size: var(--fs-body); line-height: 1.35; opacity: 0.68; transition: transform var(--fast) var(--ease); }
-.row:hover .row-title, .row:hover .row-work { transform: translateX(8px); }
 .plus { position: relative; width: 16px; height: 16px; margin-top: 0.55em; }
 .plus::before, .plus::after { content: ""; position: absolute; left: 0; top: 7px; width: 16px; height: 1.5px; background: currentColor; transition: transform var(--fast) var(--ease); }
 .plus::after { transform: rotate(90deg); }
@@ -482,7 +481,6 @@ h3 { margin: 34px 0 12px; font-size: 15px; font-weight: 700; }
 .vrow .row-head { grid-template-columns: minmax(0, 1fr) 44px; }
 .vplay { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid currentColor; border-radius: 22px; transition: transform var(--fast) var(--ease), background-color var(--fast) var(--ease), color var(--fast) var(--ease); }
 .vrow:hover .vplay { background: var(--fg); color: var(--bg); }
-.vrow:hover .row-title, .vrow:hover .row-work { transform: translateX(8px); }
 .vrow .vplay { grid-row: 2; grid-column: 2; align-self: center; }
 .arow { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 0 16px; align-items: start; padding: var(--row) 0; border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
 .arow .cover { aspect-ratio: 1; overflow: hidden; grid-row: span 2; }
@@ -816,7 +814,6 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
 .vs:hover .vplay { background: #fff; color: #111; }
 .vs .row-kick { display: block; margin-bottom: 4px; font-family: var(--serif); font-size: var(--fs-lead); font-weight: 400; letter-spacing: -0.01em; line-height: 1.05; transition: transform var(--fast) var(--ease); }
 .vs .row-title { font-weight: 500; }
-.vrow.vs:hover .row-kick { transform: translateX(8px); }
 .vhead { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin: var(--block) 0 16px; }
 .vhead h3 { margin: 0; }
 .vhead .yt-more { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: 1px solid currentColor; border-radius: 999px; font-size: var(--fs-label); font-weight: 600; white-space: nowrap; transition: background var(--fast) var(--ease), color var(--fast) var(--ease); }
@@ -1072,6 +1069,19 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
 :root.js .quotes.rise, :root.js .pr-item.rise { opacity: 0; transition: opacity 1.1s ease; }
 :root.js .quotes.rise.in, :root.js .pr-item.rise.in { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { :root.js .rise, :root.js .rise .cover { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important; } }
+
+/* ---- Tempo: quick responses, unhurried arrivals, departures faster than arrivals ---- */
+:root { --fast: 220ms; }
+.panel { transition: grid-template-rows 520ms cubic-bezier(0.4, 0, 0.2, 1); }
+.row[aria-expanded="true"] + .panel { transition: grid-template-rows var(--slow) var(--ease); }
+::view-transition-old(root) { animation-duration: 300ms; animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+::view-transition-new(root) { animation-duration: 620ms; animation-timing-function: cubic-bezier(0.2, 0.6, 0.2, 1); }
+.menu:not(.open) .menu-links a, .menu:not(.open) .menu-links .ml, .menu:not(.open) .menu-next, .menu:not(.open) .menu-langs { transition-duration: 180ms; transition-delay: 0s; }
+/* Hover on list rows: nothing slides; the line above the row is drawn across */
+.row, .vrow { position: relative; }
+.row::after, .vrow::after { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left center; transition: transform 160ms cubic-bezier(0.4, 0, 1, 1); pointer-events: none; }
+.row:hover::after, .vrow:hover::after, .row:focus-visible::after, .vrow:focus-visible::after { transform: scaleX(1); transition: transform 460ms cubic-bezier(0.2, 0.6, 0.2, 1); }
+@media (prefers-reduced-motion: reduce) { .row::after, .vrow::after { transition: none !important; } }
 </style>
 
 <header class="bar">
@@ -1813,6 +1823,16 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
 
   /* Menu */
   var menu = $('menu'), openBtn = $('menu-open');
+  /* A long jump is a cut, not a pan: fade out, move, fade in at the destination */
+  function cutTo(tgt) {
+    var m = document.querySelector('main');
+    m.style.transition = 'opacity 200ms ease-in'; m.style.opacity = '0';
+    setTimeout(function () {
+      root.style.scrollBehavior = 'auto'; tgt.scrollIntoView(); root.style.scrollBehavior = '';
+      var toneEl = tgt.closest('[data-tone]') || tgt; if (toneEl.dataset && toneEl.dataset.tone) document.body.dataset.tone = toneEl.dataset.tone;
+      requestAnimationFrame(function () { m.style.transition = 'opacity 520ms cubic-bezier(0.2, 0.6, 0.2, 1)'; m.style.opacity = '1'; setTimeout(function () { m.style.transition = ''; m.style.opacity = ''; }, 560); });
+    }, 210);
+  }
   function setMenu(open) {
     if (open) { menu.hidden = false; requestAnimationFrame(function () { requestAnimationFrame(function () { menu.classList.add('open'); }); }); document.body.style.overflow = 'hidden'; }
     else { menu.classList.remove('open'); document.body.style.overflow = ''; setTimeout(function () { if (!menu.classList.contains('open')) menu.hidden = true; }, 320); }
@@ -1827,6 +1847,10 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
     var href = a.getAttribute('href');
     if (!menu.hidden) setMenu(false);
     if (href === '#biography') { e.preventDefault(); openAbout(); return; }
+    if (!home.hidden && href.charAt(0) === '#' && href.length > 1) {
+      var tgt = document.querySelector(href);
+      if (tgt && !REDUCE && Math.abs(tgt.getBoundingClientRect().top) > window.innerHeight * 1.5) { e.preventDefault(); cutTo(tgt); return; }
+    }
     if (home.hidden && href.charAt(0) === '#') {
       e.preventDefault(); closeProject();
       setTimeout(function () { var t = document.querySelector(href); if (t) t.scrollIntoView({ behavior: 'smooth' }); }, 650);
