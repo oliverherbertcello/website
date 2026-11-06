@@ -1046,6 +1046,29 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
 .bb-text a[href*="youtube.com/watch"]::after { content: ""; display: inline-block; width: 0; height: 0; margin: 0 0 0.12em 0.35em; border-style: solid; border-width: 0.3em 0 0.3em 0.5em; border-color: transparent transparent transparent currentColor; opacity: 0.7; }
 #presskit .ob-note { font-size: var(--fs-body); line-height: 1.6; margin: 0; }
 #presskit .kit-ask { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+/* ---- Bespoke pass ---- */
+/* Explore on phones: a small tilted oval in each project's color, echoing the ovals on the homepage */
+@media (max-width: 899px) {
+  .xlist .xrow { grid-template-columns: 26px minmax(0, 1fr); }
+  .xlist .xrow::before { content: ""; width: 15px; height: 9px; padding: 0; margin-top: 0.62em; border: 1.6px solid var(--c); border-radius: 50%; transform: rotate(var(--rot, -18deg)); background: none; letter-spacing: 0; font-size: 0; }
+  .xlist .xrow:nth-child(8n+2)::before { --rot: 14deg; } .xlist .xrow:nth-child(8n+3)::before { --rot: -6deg; } .xlist .xrow:nth-child(8n+4)::before { --rot: 28deg; }
+  .xlist .xrow:nth-child(8n+5)::before { --rot: -30deg; } .xlist .xrow:nth-child(8n+6)::before { --rot: 6deg; } .xlist .xrow:nth-child(8n+7)::before { --rot: -12deg; } .xlist .xrow:nth-child(8n+8)::before { --rot: 22deg; }
+}
+/* Labels in sentence case, as in a printed program */
+:root .label, :root .field label, :root .ch-items .k, :root .spec dt, :root .pl-comp { text-transform: none; letter-spacing: 0.005em; }
+:root .label { font-size: 14px; font-weight: 500; }
+:root .pl-comp { font-size: 12px; }
+:root .list h3, :root #calendar h2, :root .legal-text h2, :root .ch-y.word { text-transform: none; letter-spacing: -0.005em; font-family: var(--serif); font-weight: 400; font-size: 21px; opacity: 0.9; }
+/* Motion: text simply appears; only a few things move, each in its own way */
+:root.js .rise { opacity: 1; transform: none; transition: none; }
+:root.js h2.big.rise, :root.js section > h2.rise, :root.js .np-h.rise { clip-path: inset(0 0 100% 0); transform: translateY(0.18em); transition: clip-path 1s var(--ease), transform 1s var(--ease); }
+:root.js h2.big.rise.in, :root.js section > h2.rise.in, :root.js .np-h.rise.in { clip-path: inset(0 0 -0.2em 0); transform: none; }
+:root.js figure.wf.rise, :root.js figure.rise:not(.pr-item), :root.js .arow.rise .cover { opacity: 0; transform: scale(1.03); transition: opacity 1.3s ease, transform 1.6s var(--ease); }
+:root.js figure.wf.rise.in, :root.js figure.rise.in:not(.pr-item), :root.js .arow.rise.in .cover { opacity: 1; transform: none; }
+:root.js .quotes.rise, :root.js .pr-item.rise { opacity: 0; transition: opacity 1.1s ease; }
+:root.js .quotes.rise.in, :root.js .pr-item.rise.in { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { :root.js .rise, :root.js .rise .cover { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important; } }
 </style>
 
 <header class="bar">
@@ -1937,17 +1960,7 @@ button.p-listen { background: none; border-left: 0; border-right: 0; border-bott
     var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (still) return;
-    if (!fine) {
-      /* phones and tablets: a ripple where you tap */
-      document.addEventListener('pointerdown', function (e) {
-        if (e.pointerType === 'mouse') return;
-        if (!e.target.closest('a, button, .xrow, .row, .vrow')) return;
-        var r = document.createElement('span'); r.className = 'ripple';
-        r.style.left = e.clientX + 'px'; r.style.top = e.clientY + 'px';
-        document.body.appendChild(r); setTimeout(function () { r.remove(); }, 700);
-      }, { passive: true });
-      return;
-    }
+    return; /* no custom cursor or tap ripple: the system pointer is enough */
     root.classList.add('has-cur');
     var cur = $('cur'), dot = cur.querySelector('.cur-dot'), lab = $('cur-label');
     var tx = -100, ty = -100, x = -100, y = -100, state = '', word = '';
